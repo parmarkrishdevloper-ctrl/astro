@@ -36,7 +36,7 @@ const BrandingSchema = new Schema<IBrandingDoc>({
   },
 }, { timestamps: true });
 
-const BrandingModel = mongoose.model<IBrandingDoc>('Branding', BrandingSchema);
+export const BrandingModel = mongoose.model<IBrandingDoc>('Branding', BrandingSchema);
 
 const DEFAULT_BRANDING: Partial<IBranding> = {
   companyName: 'Astrologer Hemraj Laddha',
