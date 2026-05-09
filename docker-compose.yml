@@ -1,0 +1,43 @@
+# Self-host the Vedic astrology suite via Docker. Persistence is embedded
+# SQLite (sql.js) so no external database is required — the only volume that
+# matters is `./data` where the DB file lives.
+#
+#   docker compose up -d              # start in background
+#   docker compose logs -f server     # follow logs
+#   docker compose down               # stop
+#
+# Visit http://localhost:8080 once both containers are healthy.
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: jyotish-server
+    restart: unless-stopped
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      - JYOTISH_DB_PATH=/app/data/jyotish.sqlite
+      - JYOTISH_CLIENT_DIST=/app/client/dist
+      - EPHE_PATH=/app/server/ephe
+      - DEFAULT_AYANAMSA=lahiri
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./data:/app/data
+      - ./server/ephe:/app/server/ephe:ro
+      - ./storage:/app/server/storage
+
+  # Optional: nginx proxy at :8080 → :4000 for cleaner URLs and simple TLS
+  # termination. Skip this whole service if you just want raw access on :4000.
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: jyotish-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "8080:80"

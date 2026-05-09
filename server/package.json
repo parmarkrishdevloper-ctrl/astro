@@ -1,0 +1,34 @@
+{
+  "name": "@jyotish/server",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json || true",
+    "start": "node dist/index.js",
+    "verify:swisseph": "tsx src/scripts/verify-swisseph.ts",
+    "verify:phase2": "tsx src/scripts/verify-phase2.ts",
+    "verify:phase4": "tsx src/scripts/verify-phase4.ts",
+    "verify:phase5": "tsx src/scripts/verify-phase5.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.1",
+    "mongoose": "^9.6.2",
+    "puppeteer": "^24.40.0",
+    "swisseph": "^0.5.17"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^20.16.11",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.3"
+  }
+}

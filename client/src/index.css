@@ -1,0 +1,546 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════════════════
+   JYOTISH PRO — ENTERPRISE DESIGN SYSTEM
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* User-controllable font zoom. The Zustand store
+   (`client/src/store/font-scale.store.ts`) sets `--font-scale` on the root,
+   which we multiply with the design baseline (16 px) to scale every
+   rem-based size globally. Default 1 keeps the original look exact. */
+:root { --font-scale: 1; }
+html { font-size: calc(16px * var(--font-scale)); }
+
+/* ─── Design tokens (CSS custom properties) ─────────────────────────────── */
+:root {
+  /* Surface colour stack — light theme */
+  --surface-0: #FBF7EE;   /* page background (warm ivory) */
+  --surface-1: #FFFFFF;   /* card */
+  --surface-2: #F4EEDE;   /* subtle panel */
+  --surface-3: #EDE3CC;   /* divider / muted */
+
+  /* Brand */
+  --brand-primary: #7B1E1E;     /* vedic maroon */
+  --brand-primary-hover: #9a2525;
+  --brand-accent: #C89B3C;      /* softer gold (not yellow) */
+  --brand-accent-hover: #D4AF37;
+  --saffron: #E8833A;
+
+  /* Text */
+  --text-strong: #1A1513;       /* near-black warm */
+  --text-body: #2F2622;
+  --text-muted: #6F635C;
+  --text-subtle: #958A82;
+  --text-on-brand: #FBF7EE;
+
+  /* Semantic */
+  --good:  #047857;
+  --warn:  #B45309;
+  --bad:   #B91C1C;
+  --info:  #1D4ED8;
+
+  /* Borders */
+  --border-subtle: #E8DCC2;
+  --border-soft:   #D6C49F;
+  --border-strong: #B8A072;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(26, 21, 19, 0.04);
+  --shadow-sm: 0 1px 3px rgba(26, 21, 19, 0.06), 0 1px 2px rgba(26, 21, 19, 0.04);
+  --shadow-md: 0 4px 12px rgba(26, 21, 19, 0.08), 0 2px 4px rgba(26, 21, 19, 0.04);
+  --shadow-lg: 0 12px 32px rgba(26, 21, 19, 0.12), 0 4px 8px rgba(26, 21, 19, 0.06);
+  --shadow-xl: 0 24px 48px rgba(26, 21, 19, 0.16);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Layout */
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 68px;
+  --topbar-h: 60px;
+  --content-max: 1400px;
+}
+
+/* Force the browser's color-scheme to match the app theme (not the OS).
+   This keeps native form controls (inputs, date pickers, scrollbars,
+   selects) consistent with the chosen theme regardless of macOS/Windows
+   system dark-mode setting. */
+html[data-theme="classic"],
+html[data-theme="modern-minimal"],
+html[data-theme="royal-traditional"] { color-scheme: light; }
+html[data-theme="dark-cosmic"]        { color-scheme: dark; }
+
+/* Dark Cosmic theme overrides */
+html[data-theme="dark-cosmic"] {
+  --surface-0: #0D0B09;
+  --surface-1: #17130F;
+  --surface-2: #211A14;
+  --surface-3: #2D231B;
+
+  --brand-primary: #B53030;
+  --brand-primary-hover: #D03939;
+  --brand-accent: #D4B060;
+  --brand-accent-hover: #E8C47A;
+
+  --text-strong: #F5EBD4;
+  --text-body: #E8D9B5;
+  --text-muted: #B09B7A;
+  --text-subtle: #80714F;
+  --text-on-brand: #FBF7EE;
+
+  --border-subtle: #2A2218;
+  --border-soft: #3D3020;
+  --border-strong: #5A4628;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
+}
+
+/* Modern Minimal — cool professional */
+html[data-theme="modern-minimal"] {
+  --surface-0: #F8FAFC;
+  --surface-1: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --surface-3: #E2E8F0;
+
+  --brand-primary: #1E40AF;
+  --brand-primary-hover: #2849c7;
+  --brand-accent: #0891B2;
+  --brand-accent-hover: #0e9cc2;
+
+  --text-strong: #0F172A;
+  --text-body: #334155;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+
+  --border-subtle: #E2E8F0;
+  --border-soft: #CBD5E1;
+  --border-strong: #94A3B8;
+}
+
+/* Royal Traditional — opulent Indian palette */
+html[data-theme="royal-traditional"] {
+  --surface-0: #FBEEC8;
+  --surface-1: #FFF8E7;
+  --surface-2: #F3E1B0;
+  --surface-3: #E8CF8F;
+
+  --brand-primary: #5B0A0A;
+  --brand-primary-hover: #7a1313;
+  --brand-accent: #C79A3A;
+  --brand-accent-hover: #D4AF37;
+
+  --text-strong: #2E0A0A;
+  --text-body: #4A1616;
+}
+
+/* ─── Base resets & typography ──────────────────────────────────────────── */
+html, body, #root { height: 100%; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--surface-0);
+  color: var(--text-body);
+  transition: background-color 200ms ease, color 200ms ease;
+  letter-spacing: -0.005em;
+}
+
+/* Display serif for brand / major headings */
+.font-display, .font-serif {
+  font-family: 'Fraunces', 'Noto Serif', Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+}
+
+.font-mono, code, pre, .tabular-nums {
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+.font-devanagari {
+  font-family: 'Noto Sans Devanagari', 'Inter', serif;
+}
+
+h1, h2, h3 {
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+}
+
+/* Dark Cosmic constellation background (retained from Phase 20D) */
+html[data-theme="dark-cosmic"] body {
+  background-color: var(--surface-0);
+  background-image:
+    radial-gradient(1px 1px at 23% 18%,  rgba(255, 245, 200, 0.5), transparent 40%),
+    radial-gradient(1px 1px at 71% 32%,  rgba(255, 245, 200, 0.4), transparent 40%),
+    radial-gradient(1.2px 1.2px at 49% 62%, rgba(255, 245, 200, 0.5), transparent 40%),
+    radial-gradient(1px 1px at 13% 82%,  rgba(255, 245, 200, 0.4), transparent 40%),
+    radial-gradient(1.5px 1.5px at 87% 77%, rgba(255, 245, 200, 0.6), transparent 40%),
+    radial-gradient(0.8px 0.8px at 34% 45%, rgba(212, 175, 55, 0.4), transparent 40%),
+    radial-gradient(1400px 900px at 50% 100%, rgba(123, 30, 30, 0.15), transparent 70%);
+  background-attachment: fixed;
+  background-size: 100vw 100vh;
+}
+
+/* ─── Utility class mappings for backwards compat ─────────────────────────
+   Legacy components reference Tailwind palette utilities like
+   bg-parchment, bg-white, text-vedicMaroon, border-vedicGold. We rewire
+   them to the new token system so the whole app inherits the refresh. */
+
+.bg-parchment         { background-color: var(--surface-2); }
+.bg-parchment\/40     { background-color: color-mix(in srgb, var(--surface-2) 40%, transparent); }
+.bg-parchment\/50     { background-color: color-mix(in srgb, var(--surface-2) 50%, transparent); }
+.bg-parchment\/60     { background-color: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+.bg-parchment\/70     { background-color: color-mix(in srgb, var(--surface-2) 70%, transparent); }
+.bg-parchment\/80     { background-color: color-mix(in srgb, var(--surface-2) 80%, transparent); }
+.bg-parchment\/90     { background-color: color-mix(in srgb, var(--surface-2) 90%, transparent); }
+
+.bg-white             { background-color: var(--surface-1); }
+.bg-white\/60         { background-color: color-mix(in srgb, var(--surface-1) 60%, transparent); }
+.bg-white\/70         { background-color: color-mix(in srgb, var(--surface-1) 70%, transparent); }
+
+.bg-vedicMaroon       { background-color: var(--brand-primary); }
+.bg-vedicMaroon\/90   { background-color: color-mix(in srgb, var(--brand-primary) 90%, transparent); }
+.bg-vedicMaroon\/10   { background-color: color-mix(in srgb, var(--brand-primary) 10%, transparent); }
+
+.bg-vedicGold         { background-color: var(--brand-accent); }
+
+.text-vedicMaroon     { color: var(--brand-primary); }
+.text-vedicMaroon\/90 { color: color-mix(in srgb, var(--brand-primary) 90%, transparent); }
+.text-vedicMaroon\/80 { color: color-mix(in srgb, var(--text-body) 95%, transparent); }
+.text-vedicMaroon\/70 { color: var(--text-muted); }
+.text-vedicMaroon\/60 { color: var(--text-muted); }
+.text-vedicMaroon\/50 { color: var(--text-subtle); }
+.text-vedicMaroon\/40 { color: var(--text-subtle); }
+.text-vedicMaroon\/30 { color: color-mix(in srgb, var(--text-subtle) 60%, transparent); }
+.text-vedicGold       { color: var(--brand-accent); }
+.text-parchment       { color: var(--text-on-brand); }
+
+.border-vedicGold\/40 { border-color: color-mix(in srgb, var(--border-soft) 90%, transparent); }
+.border-vedicGold\/30 { border-color: var(--border-subtle); }
+.border-vedicGold\/20 { border-color: var(--border-subtle); }
+.border-vedicGold\/10 { border-color: color-mix(in srgb, var(--border-subtle) 50%, transparent); }
+.border-vedicMaroon   { border-color: var(--brand-primary); }
+
+.bg-saffron           { background-color: var(--saffron); }
+.hover\:bg-deepSaffron:hover { background-color: #D06B1F; }
+
+/* ─── Component primitives ──────────────────────────────────────────────── */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-header-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-strong);
+  letter-spacing: -0.01em;
+}
+
+.card-body { padding: 20px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: all 160ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--brand-primary);
+  color: var(--text-on-brand);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover:not(:disabled) { background: var(--brand-primary-hover); box-shadow: var(--shadow-md); }
+
+.btn-secondary {
+  background: var(--surface-1);
+  color: var(--text-body);
+  border-color: var(--border-soft);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--surface-2); border-color: var(--border-strong); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text-body); }
+
+.btn-accent {
+  background: var(--saffron);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.btn-accent:hover:not(:disabled) { background: #D06B1F; }
+
+/* Inputs — applied BOTH via .input class AND as a baseline for every native
+   control so forms that use raw Tailwind classes still look right. */
+.input,
+input[type="text"], input[type="number"], input[type="date"],
+input[type="time"], input[type="datetime-local"], input[type="email"],
+input[type="password"], input[type="search"], input[type="tel"],
+input[type="url"], textarea, select {
+  background: var(--surface-1);
+  color: var(--text-body);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+}
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.input:focus,
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-primary) 15%, transparent);
+}
+.input::placeholder,
+input::placeholder, textarea::placeholder { color: var(--text-subtle); }
+/* Force calendar picker icon tint to match current theme */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  opacity: 0.7;
+  cursor: pointer;
+}
+html[data-theme="dark-cosmic"] input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-theme="dark-cosmic"] input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+html[data-theme="dark-cosmic"] input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
+}
+
+/* Labels */
+.label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+/* Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+.pill-good    { background: color-mix(in srgb, var(--good) 12%, transparent); color: var(--good); border-color: color-mix(in srgb, var(--good) 25%, transparent); }
+.pill-warn    { background: color-mix(in srgb, var(--warn) 12%, transparent); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 25%, transparent); }
+.pill-bad     { background: color-mix(in srgb, var(--bad) 12%, transparent);  color: var(--bad);  border-color: color-mix(in srgb, var(--bad) 25%, transparent); }
+.pill-info    { background: color-mix(in srgb, var(--info) 12%, transparent); color: var(--info); border-color: color-mix(in srgb, var(--info) 25%, transparent); }
+.pill-neutral { background: var(--surface-2); color: var(--text-muted); border-color: var(--border-subtle); }
+
+/* Tables */
+table thead tr { border-bottom: 1px solid var(--border-subtle); }
+table tbody tr { border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 50%, transparent); }
+table th {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 8px 0;
+  text-align: left;
+}
+table td { padding: 8px 8px 8px 0; }
+
+/* Scrollbar polish */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--border-soft) 70%, transparent);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* ─── Sidebar nav ────────────────────────────────────────────────────────── */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin: 1px 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  transition: all 120ms ease;
+}
+.sidebar-link:hover { background: var(--surface-2); color: var(--text-body); }
+.sidebar-link.active {
+  background: color-mix(in srgb, var(--brand-primary) 10%, transparent);
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+.sidebar-link .sidebar-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+.sidebar-link.active .sidebar-icon { opacity: 1; }
+
+.sidebar-section-label {
+  padding: 14px 20px 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+
+/* ─── Metric cards (dashboard) ───────────────────────────────────────────── */
+.metric-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+  position: relative;
+  overflow: hidden;
+}
+.metric-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-family: 'Fraunces', serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.metric-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.metric-trail {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--brand-accent));
+  opacity: 0.5;
+}
+
+/* ─── Page hero (breadcrumb-style) ───────────────────────────────────────── */
+.page-hero {
+  padding: 24px 32px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-1);
+}
+.page-hero-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.page-hero-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ─── Mobile tweaks ──────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 220px; }
+  .page-hero { padding: 20px 20px 12px; }
+  .page-hero-title { font-size: 1.375rem; }
+  .card-body { padding: 16px; }
+  .metric-value { font-size: 1.5rem; }
+}
+
+/* ─── Legacy sidebar / utility shims (kept so old pages still render well) */
+.hover\:bg-parchment:hover { background-color: var(--surface-2); }
+.hover\:bg-vedicMaroon\/90:hover { background-color: var(--brand-primary-hover); }
+
+/* ─── Ganesh loader animations ─────────────────────────────────────────── */
+/* Used by <GaneshLoader/>. The boot loader in index.html has its own copies
+   of these keyframes inlined so it animates before this stylesheet loads. */
+.ganesh-loader-halo {
+  animation: ganesh-loader-halo 2.4s ease-in-out infinite;
+}
+.ganesh-loader-disc {
+  animation: ganesh-loader-pulse 3s ease-in-out infinite;
+}
+.ganesh-loader-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--saffron, #E8833A);
+  animation: ganesh-loader-dot 1.2s ease-in-out infinite;
+}
+@keyframes ganesh-loader-halo {
+  0%, 100% { transform: scale(1);   opacity: 0.7; }
+  50%      { transform: scale(1.1); opacity: 1.0; }
+}
+@keyframes ganesh-loader-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+@keyframes ganesh-loader-dot {
+  0%, 80%, 100% { transform: translateY(0);   opacity: 0.4; }
+  40%           { transform: translateY(-8px); opacity: 1;   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ganesh-loader-halo, .ganesh-loader-disc, .ganesh-loader-dot { animation: none; }
+}

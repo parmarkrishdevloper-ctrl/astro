@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "client",
+      "runtimeExecutable": "/opt/homebrew/bin/node",
+      "runtimeArgs": ["/Users/parthsavajadiya/Desktop/astrology-software/node_modules/vite/bin/vite.js", "/Users/parthsavajadiya/Desktop/astrology-software/client", "--port", "5180", "--strictPort"],
+      "port": 5180
+    },
+    {
+      "name": "server",
+      "runtimeExecutable": "/opt/homebrew/opt/node/bin/node",
+      "runtimeArgs": ["/Users/parthsavajadiya/Desktop/astrology-software/node_modules/tsx/dist/cli.mjs", "watch", "/Users/parthsavajadiya/Desktop/astrology-software/server/src/index.ts"],
+      "port": 4000
+    }
+  ]
+}
