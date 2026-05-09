@@ -3,9 +3,7 @@ FROM node:20-alpine AS client-build
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY client/package.json ./client/
-COPY shared/package.json ./shared/
 RUN npm install --workspace=@jyotish/client --include-workspace-root
-COPY shared ./shared
 COPY client ./client
 RUN npm run --workspace=@jyotish/client build
 
@@ -21,11 +19,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY server/package.json ./server/
-COPY shared/package.json ./shared/
 
 RUN npm install --workspace=@jyotish/server --include-workspace-root
 
-COPY shared ./shared
 COPY server ./server
 COPY --from=client-build /app/client/dist ./client/dist
 
