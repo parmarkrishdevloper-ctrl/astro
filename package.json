@@ -14,9 +14,10 @@
     "build": "npm run build -w server && npm run build -w client",
     "build:client": "npm run build -w client",
     "build:server": "npm run build -w server",
-    "start": "npm run start -w server",
-    "start:web": "npm run build && JYOTISH_CLIENT_DIST=$PWD/client/dist NODE_ENV=production node server/dist/index.js"
+    "postinstall": "node server/scripts/download-ephe.js",
+    "start": "JYOTISH_CLIENT_DIST=$PWD/client/dist NODE_ENV=production node server/dist/index.js"
   },
+
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
