@@ -30,9 +30,9 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === 'undefined') return 'hi';
+    if (typeof window === 'undefined') return 'en';
     const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null;
-    return stored && stored in DICTS ? stored : 'hi';
+    return stored && stored in DICTS ? stored : 'en';
   });
 
   useEffect(() => {

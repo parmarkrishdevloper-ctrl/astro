@@ -4,6 +4,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { env } from './config/env';
 import { connectDB } from './config/db';
+import { closeDb } from './db/sqlite';
 import { initEphemeris } from './config/ephemeris';
 import { errorHandler } from './middleware/errorHandler';
 import { localeMiddleware } from './middleware/locale';
@@ -87,9 +88,11 @@ async function main() {
   app.use('/api/quality', qualityRoutes);
   app.use('/api/geo', geoRoutes);
 
-  // ─── Static client (production) ──────────────────────────────────────────
-  // Serve the built React bundle if available. Mount it AFTER the API routes 
-  // so /api/* still wins, and add a SPA fallback for React-Router.
+  // ─── Static client (production / packaged Electron) ──────────────────────
+  // The Electron shell points us at the built React bundle via JYOTISH_CLIENT_DIST,
+  // or we auto-discover `client/dist` relative to common layouts. When found,
+  // mount it AFTER the API routes so /api/* still wins, and add a SPA fallback
+  // so React-Router routes deep-link directly.
   const clientDist = resolveClientDist();
   if (clientDist) {
     console.log(`[client] serving static → ${clientDist}`);
@@ -107,30 +110,35 @@ async function main() {
     console.log(`[server] verify → http://localhost:${env.port}/api/kundali/verify`);
   });
 
-  // Shutdown handler
+  // Persist SQLite to disk on shutdown — important for the Electron build
+  // where the parent process kills us via SIGTERM.
   const shutdown = (sig: string) => {
-    console.log(`[server] ${sig} received — exiting`);
+    console.log(`[server] ${sig} received — flushing SQLite and exiting`);
+    try { closeDb(); } catch { /* noop */ }
     process.exit(0);
   };
   process.on('SIGINT',  () => shutdown('SIGINT'));
   process.on('SIGTERM', () => shutdown('SIGTERM'));
 }
 
-
 /** Locate the built client bundle. Honours JYOTISH_CLIENT_DIST first, then
- *  walks common layouts. Returns null if nothing is found. */
+ *  walks a couple of common layouts: workspace dev (`client/dist`),
+ *  production peer (`../client/dist`), Electron resources (`process.resourcesPath`).
+ *  Returns null if nothing is found — server still serves the API. */
 function resolveClientDist(): string | null {
   const candidates: string[] = [];
   if (process.env.JYOTISH_CLIENT_DIST) candidates.push(process.env.JYOTISH_CLIENT_DIST);
   candidates.push(path.resolve(process.cwd(), 'client', 'dist'));
   candidates.push(path.resolve(process.cwd(), '..', 'client', 'dist'));
-
+  if (process.resourcesPath) {
+    candidates.push(path.join(process.resourcesPath, 'client', 'dist'));
+    candidates.push(path.join(process.resourcesPath, 'app', 'client', 'dist'));
+  }
   for (const c of candidates) {
     if (c && fs.existsSync(path.join(c, 'index.html'))) return c;
   }
   return null;
 }
-
 
 main().catch((err) => {
   console.error('[fatal]', err);

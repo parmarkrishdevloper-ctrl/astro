@@ -11,7 +11,7 @@ import path from 'path';
 import { exportBackup, restoreBackup } from '../services/backup.service';
 import { generateNarrative, ollamaAvailable } from '../services/local-llm.service';
 import { calculateKundali, BirthInput } from '../services/kundali.service';
-import mongoose from 'mongoose';
+import { getDbPath } from '../db/sqlite';
 
 const router = Router();
 
@@ -55,13 +55,18 @@ router.get('/status', async (_req, res) => {
     || path.join(process.cwd(), 'server', 'ephe');
   const hasEphe = fs.existsSync(ephePath)
     && fs.readdirSync(ephePath).some((f) => f.endsWith('.se1'));
-  const dbReady = mongoose.connection.readyState === 1;
+  const dbPath = getDbPath();
+  const dbReady = fs.existsSync(dbPath);
   const ollama = await ollamaAvailable();
   res.json({
     ok: true,
     status: {
+      // Embedded SQLite — no external DB. `db: true` once persistence file
+      // exists. Kept the `mongo` key for backwards-compatibility with any
+      // older client doing a status check.
       db: dbReady,
       mongo: dbReady,
+      dbPath,
       ollama,
       ephemeris: {
         path: ephePath,
@@ -74,6 +79,5 @@ router.get('/status', async (_req, res) => {
     },
   });
 });
-
 
 export default router;

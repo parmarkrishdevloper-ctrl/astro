@@ -14,7 +14,7 @@ export interface NotebookEntryDTO {
   updatedAt: string;
 }
 
-function toDTO(e: any): NotebookEntryDTO {
+function toDTO(e: INotebookEntry): NotebookEntryDTO {
   return {
     id: String(e._id),
     kind: e.kind,

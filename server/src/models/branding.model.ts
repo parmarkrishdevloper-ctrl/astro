@@ -1,6 +1,14 @@
-import mongoose, { Schema, Document } from 'mongoose';
+// Branding singleton — backed by SQLite (offline-first).
+//
+// Stored as one row keyed by `default` in the `branding` table; the entire
+// document is serialised to JSON in the `data` column. Single-doc lookups
+// stay simple and we don't have to widen the schema each time we add a
+// branding field.
+
+import { all, run } from '../db/sqlite';
 
 export interface IBranding {
+  key: string;
   companyName: string;
   tagline?: string;
   logoDataUrl?: string;
@@ -16,29 +24,8 @@ export interface IBranding {
   updatedAt: Date;
 }
 
-export interface IBrandingDoc extends IBranding, Document {}
-
-const BrandingSchema = new Schema<IBrandingDoc>({
-  companyName: { type: String, default: 'Astrologer Hemraj Laddha' },
-  tagline: { type: String, default: 'Authentic Vedic Astrology' },
-  logoDataUrl: String,
-  primaryColor: { type: String, default: '#7c2d12' },
-  accentColor: { type: String, default: '#b45309' },
-  contact: {
-    phone: String,
-    email: String,
-    website: String,
-    address: String,
-  },
-  footerText: { 
-    type: String, 
-    default: 'For entertainment & guidance only — astrological inferences are not a substitute for professional advice.' 
-  },
-}, { timestamps: true });
-
-export const BrandingModel = mongoose.model<IBrandingDoc>('Branding', BrandingSchema);
-
 const DEFAULT_BRANDING: Partial<IBranding> = {
+  key: 'default',
   companyName: 'Astrologer Hemraj Laddha',
   tagline: 'Authentic Vedic Astrology',
   primaryColor: '#7c2d12',
@@ -47,20 +34,36 @@ const DEFAULT_BRANDING: Partial<IBranding> = {
   footerText: 'For entertainment & guidance only — astrological inferences are not a substitute for professional advice.',
 };
 
-export async function getBranding(): Promise<Partial<IBranding>> {
-  let branding = await BrandingModel.findOne();
-  if (!branding) {
-    branding = await BrandingModel.create(DEFAULT_BRANDING);
+function readRow(): Partial<IBranding> | null {
+  const rows = all<any>('SELECT data FROM branding WHERE key = ? LIMIT 1', ['default']);
+  if (!rows.length) return null;
+  try {
+    const parsed = JSON.parse(rows[0].data);
+    return { ...parsed, key: 'default' };
+  } catch {
+    return null;
   }
-  return branding.toObject();
+}
+
+function writeRow(doc: Partial<IBranding>): void {
+  const merged = { ...DEFAULT_BRANDING, ...doc, key: 'default', updatedAt: new Date() };
+  const json = JSON.stringify(merged);
+  // sql.js doesn't have a clean ON CONFLICT helper across versions; emulate.
+  run('DELETE FROM branding WHERE key = ?', ['default']);
+  run('INSERT INTO branding (key, data, updated_at) VALUES (?, ?, ?)',
+    ['default', json, new Date().toISOString()]);
+}
+
+export async function getBranding(): Promise<Partial<IBranding>> {
+  const existing = readRow();
+  if (existing) return existing;
+  writeRow(DEFAULT_BRANDING);
+  return DEFAULT_BRANDING;
 }
 
 export async function setBranding(patch: Partial<IBranding>): Promise<Partial<IBranding>> {
-  let branding = await BrandingModel.findOne();
-  if (!branding) {
-    branding = new BrandingModel(DEFAULT_BRANDING);
-  }
-  Object.assign(branding, patch);
-  await branding.save();
-  return branding.toObject();
+  const current = readRow() ?? DEFAULT_BRANDING;
+  const merged = { ...current, ...patch, key: 'default' };
+  writeRow(merged);
+  return merged;
 }

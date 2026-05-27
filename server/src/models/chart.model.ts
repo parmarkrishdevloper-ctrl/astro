@@ -1,4 +1,17 @@
-import mongoose, { Schema, Document } from 'mongoose';
+// Saved charts (people) — SQLite-backed.
+//
+// One row per chart. The four sub-collections (lifeEvents, predictions,
+// notes, voiceMemos) are stored as JSON columns on the chart row — at our
+// scale (a few thousand events per chart at most) this keeps reads/writes
+// to a single row hit and avoids cross-table joins.
+//
+// To preserve the existing call-site API (mutate fields on `c`, then
+// `await c.save()`), the document returned by `findById` is augmented with
+// a bound `save()` method. Sub-doc `_id`s are generated client-side as
+// UUIDs on push.
+
+import { randomUUID } from 'node:crypto';
+import { Repo } from '../db/repo';
 
 export type RelationshipTag =
   | 'self' | 'spouse' | 'parent' | 'child' | 'sibling' | 'family'
@@ -51,6 +64,7 @@ export interface IVoiceMemo {
 }
 
 export interface IChart {
+  _id: string;
   label: string;
   relationship: RelationshipTag;
   datetime: string;
@@ -65,64 +79,97 @@ export interface IChart {
   voiceMemos: IVoiceMemo[];
   createdAt: Date;
   updatedAt: Date;
+  /** Re-persist this row after mutating its sub-collections in place. */
+  save: () => Promise<IChart>;
 }
 
-export interface IChartDoc extends IChart, Document {}
+// ─── Row <-> doc serialisation ──────────────────────────────────────────────
+function rowToDoc(row: any): IChart {
+  const ensureIds = <T extends { _id?: any }>(arr: T[]): T[] =>
+    (arr ?? []).map((x) => ({ ...x, _id: x._id ?? randomUUID() }));
+  const doc: any = {
+    _id: row._id,
+    label: row.label,
+    relationship: row.relationship as RelationshipTag,
+    datetime: row.datetime,
+    tzOffsetHours: row.tz_offset_hours ?? undefined,
+    lat: row.lat,
+    lng: row.lng,
+    placeName: row.place_name ?? undefined,
+    avatarDataUrl: row.avatar_data_url ?? undefined,
+    lifeEvents:  ensureIds(safeParse(row.life_events,  [])),
+    predictions: ensureIds(safeParse(row.predictions, [])),
+    notes:       ensureIds(safeParse(row.notes,       [])),
+    voiceMemos:  ensureIds(safeParse(row.voice_memos, [])),
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+  doc.save = async () => {
+    await baseRepo.saveDoc(doc);
+    return doc;
+  };
+  return doc as IChart;
+}
 
-const LifeEventSchema = new Schema({
-  date: { type: String, required: true },
-  category: { type: String, required: true },
-  title: { type: String, required: true },
-  notes: String,
-  snapshot: {
-    maha: String,
-    antar: String,
-    pratyantar: String,
-    transitSummary: String,
-  },
-  createdAt: { type: Date, default: Date.now },
+function docToRow(doc: any): Record<string, any> {
+  return {
+    _id:               doc._id,
+    label:             doc.label,
+    relationship:      doc.relationship ?? 'other',
+    datetime:          doc.datetime,
+    tz_offset_hours:   doc.tzOffsetHours ?? null,
+    lat:               doc.lat,
+    lng:               doc.lng,
+    place_name:        doc.placeName ?? null,
+    avatar_data_url:   doc.avatarDataUrl ?? null,
+    life_events:       JSON.stringify(doc.lifeEvents  ?? []),
+    predictions:       JSON.stringify(doc.predictions ?? []),
+    notes:             JSON.stringify(doc.notes       ?? []),
+    voice_memos:       JSON.stringify(doc.voiceMemos  ?? []),
+    created_at:        toIso(doc.createdAt),
+    updated_at:        toIso(doc.updatedAt),
+  };
+}
+
+function safeParse<T>(s: any, fallback: T): T {
+  if (s == null) return fallback;
+  try { return JSON.parse(s) as T; } catch { return fallback; }
+}
+function toIso(d: any): string {
+  if (!d) return new Date().toISOString();
+  if (d instanceof Date) return d.toISOString();
+  return new Date(d).toISOString();
+}
+
+// ─── Repo ─────────────────────────────────────────────────────────────────
+const baseRepo = new Repo<IChart>({
+  table: 'charts',
+  rowToDoc,
+  docToRow,
+  defaults: { relationship: 'other', lifeEvents: [], predictions: [], notes: [], voiceMemos: [] },
 });
 
-const PredictionSchema = new Schema({
-  forDate: String,
-  forDateEnd: String,
-  category: { type: String, required: true },
-  text: { type: String, required: true },
-  outcome: { type: String, enum: ['hit', 'miss', 'partial', 'pending'] },
-  outcomeNotes: String,
-  createdAt: { type: Date, default: Date.now },
-  outcomeAt: Date,
-});
+/** Awaitable that supports `.lean()` no-op (results are already plain). */
+class ChartSingleQuery implements PromiseLike<IChart | null> {
+  constructor(private exec: () => Promise<IChart | null>) {}
+  lean(): Promise<IChart | null> { return this.exec(); }
+  then<R1 = IChart | null, R2 = never>(
+    onF?: ((v: IChart | null) => R1 | PromiseLike<R1>) | null,
+    onR?: ((r: any) => R2 | PromiseLike<R2>) | null,
+  ): PromiseLike<R1 | R2> { return this.exec().then(onF, onR) as PromiseLike<R1 | R2>; }
+}
 
-const NoteSchema = new Schema({
-  scope: { type: String, enum: ['chart', 'planet', 'house'], required: true },
-  target: String,
-  markdown: { type: String, required: true },
-}, { timestamps: true });
+// Public Mongoose-style facade for chart.model.
+export const Chart = {
+  create: (input: Partial<IChart>) => baseRepo.create(input),
+  find:   (filter: Record<string, any> = {}) => baseRepo.find(filter),
 
-const VoiceMemoSchema = new Schema({
-  blobDataUrl: { type: String, required: true },
-  mimeType: { type: String, required: true },
-  durationSec: Number,
-  transcript: String,
-  scope: { type: String, enum: ['chart', 'planet', 'house'], required: true },
-  target: String,
-  createdAt: { type: Date, default: Date.now },
-});
+  findById: (id: string) =>
+    new ChartSingleQuery(() => baseRepo.findById(id).exec()),
 
-const ChartSchema = new Schema<IChartDoc>({
-  label: { type: String, required: true, index: true },
-  relationship: { type: String, index: true, default: 'other' },
-  datetime: { type: String, required: true },
-  tzOffsetHours: Number,
-  lat: { type: Number, required: true },
-  lng: { type: Number, required: true },
-  placeName: String,
-  avatarDataUrl: String,
-  lifeEvents: [LifeEventSchema],
-  predictions: [PredictionSchema],
-  notes: [NoteSchema],
-  voiceMemos: [VoiceMemoSchema],
-}, { timestamps: true });
+  findByIdAndUpdate: (id: string, patch: any, opts?: { new?: boolean }) =>
+    new ChartSingleQuery(() => baseRepo.findByIdAndUpdate(id, patch, opts)),
 
-export const Chart = mongoose.model<IChartDoc>('Chart', ChartSchema);
+  findByIdAndDelete: (id: string) => baseRepo.findByIdAndDelete(id),
+  deleteMany: (filter: Record<string, any> = {}) => baseRepo.deleteMany(filter),
+};

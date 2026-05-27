@@ -14,12 +14,13 @@ import { BirthDetailsForm } from '../components/forms/BirthDetailsForm';
 import { Card, PageShell, ErrorBanner, EmptyState, Pill } from '../components/ui/Card';
 import { api } from '../api/jyotish';
 import { useT } from '../i18n';
+import { translateServerText } from '../i18n/server-text';
 import type { BirthInput } from '../types';
 
 type Scope = 'day' | 'week' | 'month';
 
 export function TimingPage() {
-  const { t, al } = useT();
+  const { t, al, locale } = useT();
   const [birth, setBirth] = useState<BirthInput | null>(null);
   const [scope, setScope] = useState<Scope>('day');
   const [horoscope, setHoroscope] = useState<any>(null);
@@ -93,10 +94,16 @@ export function TimingPage() {
                   ))}
                 </div>
               }>
-              {/* TODO(i18n-server): localize horoscope.headline + horoscope.bullets */}
-              <div className="text-base font-semibold text-vedicMaroon mb-2" lang="en">{horoscope.headline}</div>
+              <div className="text-base font-semibold text-vedicMaroon mb-2"
+                   lang={locale === 'hi' ? 'hi' : 'en'}>
+                {translateServerText(horoscope.headline, 'horoscope-headline', locale)}
+              </div>
               <ul className="space-y-1.5 text-sm text-vedicMaroon/90">
-                {horoscope.bullets.map((b: string, i: number) => <li key={i} lang="en">• {b}</li>)}
+                {horoscope.bullets.map((b: string, i: number) => (
+                  <li key={i} lang={locale === 'hi' ? 'hi' : 'en'}>
+                    • {translateServerText(b, 'horoscope', locale)}
+                  </li>
+                ))}
               </ul>
               <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
                 <Pill tone="neutral">{t('panchang.tithi', 'Tithi')}: <span lang="en">{horoscope.panchang.tithi}</span></Pill>

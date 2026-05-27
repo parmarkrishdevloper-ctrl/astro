@@ -21,21 +21,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 );
 
-// Fade out the Ganesh boot loader once React has painted the first frame.
-// We use a double rAF to wait until React has actually committed; that way
-// the loader stays put until the app is ready, eliminating the white flash.
-//
-// Honour `prefers-reduced-motion` by hiding instantly without the fade.
+// Remove the boot-time HTML splash as soon as React has committed.
+// The React-side <GaneshSplash> component now controls the session-aware
+// splash (shown once per browser tab session, then never again). We just
+// need to clear the static HTML so it doesn't double up with the React one.
 const boot = document.getElementById('ganesh-boot');
 if (boot) {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    if (reduce) {
-      boot.remove();
-      return;
-    }
-    boot.classList.add('is-hiding');
-    // CSS transition is 600ms — give it a hair more before removing from DOM.
-    setTimeout(() => boot.remove(), 700);
+    boot.remove();
   }));
 }

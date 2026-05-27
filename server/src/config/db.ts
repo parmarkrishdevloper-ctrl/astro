@@ -1,17 +1,20 @@
-import mongoose from 'mongoose';
-import { env } from './env';
+// Database bootstrap — embedded SQLite (sql.js) for offline-first operation.
+// MongoDB has been removed; persistence lives in a single file at
+// `JYOTISH_DB_PATH` (defaults to `<cwd>/data/jyotish.sqlite`). The Electron
+// shell injects `app.getPath('userData')/jyotish.sqlite` into that env var
+// for the packaged build.
+
+import { initDb, getDbPath } from '../db/sqlite';
 
 export async function connectDB(): Promise<void> {
-  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/jyotish-pro';
   try {
-    await mongoose.connect(uri);
-    console.log(`[db] mongodb ready → ${uri}`);
+    await initDb();
+    console.log(`[db] sqlite ready → ${getDbPath()}`);
   } catch (err) {
-    console.error(
-      `[db] failed to connect to mongodb at ${uri}. ` +
+    console.warn(
+      `[db] failed to initialise sqlite at ${getDbPath()}. ` +
+      `Server will keep running but persistence will not work. ` +
       `Error: ${(err as Error).message}`,
     );
-    process.exit(1);
   }
 }
-

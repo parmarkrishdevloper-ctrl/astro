@@ -2617,4 +2617,195 @@ export const hi: Record<string, string> = {
   'lalkitab.scope.karza':     'कर्ज़ा',
   'lalkitab.scope.angular':   'केन्द्रस्थ',
   'lalkitab.scope.universal': 'सार्वत्रिक',
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Hindi translations batch — added per UI overhaul request
+  // ───────────────────────────────────────────────────────────────────────
+
+  // Sidebar — was missing
+  'nav.classic':              'क्लासिक दृश्य',
+
+  // App-wide saved-charts dropdown (header)
+  'header.savedCharts':        'सहेजे गए चार्ट',
+
+  // Ayanamsa / house-system dropdown descriptions
+  'ayanamsa.lahiri.note':      'भारत सरकार मानक — वैदिक ज्योतिष में सर्वाधिक प्रचलित',
+  'houseSystem.placidus.note': 'समय-आधारित — पश्चिमी + KP पद्धति में प्रमुख',
+
+  // ─── Classic View page ────────────────────────────────────────────────
+  'classic.title':             'क्लासिक दृश्य — सर्व-एक',
+  'classic.subtitle':          'लग्न · नवमांश · विंशोत्तरी · षड्बल · जैमिनी कारक — एकल स्क्रीन',
+  'classic.lagna':             'जन्म कुंडली (लग्न · D1)',
+  'classic.navamsa':           'नवमांश (D9) — जीवनसाथी / जीवन का दूसरा भाग',
+  'classic.jaimini':           'जैमिनी कारक',
+  'classic.vimshottari':       'विंशोत्तरी दशा',
+  'classic.shadbala':          'षड्बल (रूप)',
+  'classic.planets':           'जन्म कुंडली — ग्रह',
+  'classic.code':              'कोड',
+  'classic.role':              'भूमिका',
+  'classic.planet':            'ग्रह',
+  'classic.meaning':           'अर्थ',
+  'classic.strongest':         'सबसे बलवान:',
+  'classic.weakest':           'सबसे कमज़ोर:',
+  'classic.empty':             'पूर्ण शास्त्रीय लेआउट देखने के लिए दायीं ओर जन्म विवरण भरें।',
+  'classic.computing':         'सभी पैनलों की गणना…',
+
+  // ─── Yoga badge type pills (lowercase forms — uppercase variants already
+  //     defined earlier in the file). ────────────────────────────────────
+  'yogas.type.raja':           'राज',
+  'yogas.type.lunar':          'चंद्र',
+  'yogas.type.dhana':          'धन',
+  'yogas.type.other':          'अन्य',
+
+  // ─── Ishta / Kashta Phala panel ───────────────────────────────────────
+  'ishtaKashta.title':         'इष्ट / कष्ट फल — शुभ बनाम अशुभ प्रभाव',
+  'ishtaKashta.formula':       'इष्ट = √(चेष्टा × उच्च); कष्ट = √((60−चेष्टा) × (60−उच्च))। विरूप, 0–60।',
+  'ishtaKashta.auspicious':    'शुभ',
+  'ishtaKashta.mixed':         'मिश्रित',
+  'ishtaKashta.inauspicious':  'अशुभ',
+  'ishtaKashta.components':    'उच्च / चेष्टा घटक',
+  'ishtaKashta.col.planet':    'ग्रह',
+  'ishtaKashta.col.uchcha':    'उच्च',
+  'ishtaKashta.col.cheshta':   'चेष्टा',
+  'ishtaKashta.col.ishta':     'इष्ट',
+  'ishtaKashta.col.kashta':    'कष्ट',
+  'ishtaKashta.mostAuspicious':'सर्वाधिक शुभ:',
+  'ishtaKashta.mostInauspicious':'सर्वाधिक अशुभ:',
+
+  // ─── Vimsopaka Bala panel ─────────────────────────────────────────────
+  'vimsopaka.title':           'विंशोपक बल',
+  'vimsopaka.scheme.shad':     'षड् वर्ग (6)',
+  'vimsopaka.scheme.sapta':    'सप्त वर्ग (7)',
+  'vimsopaka.scheme.dasha':    'दश वर्ग (10)',
+  'vimsopaka.scheme.shodasha': 'षोडश वर्ग (16)',
+  'vimsopaka.shodashaDesc':    'पूर्ण षोडशवर्ग — 16 वर्ग, उत्कृष्ट पाराशरी योजना',
+  'vimsopaka.cat.Purna':       'पूर्ण',
+  'vimsopaka.cat.Uttama':      'उत्तम',
+  'vimsopaka.cat.Gopura':      'गोपुर',
+  'vimsopaka.cat.Simhasana':   'सिंहासन',
+  'vimsopaka.cat.Paravata':    'पारावत',
+  'vimsopaka.cat.Iravata':     'ऐरावत',
+  'vimsopaka.breakdown':       'प्रति-वर्ग विवरण',
+  'vimsopaka.col.planet':      'ग्रह',
+  'vimsopaka.strongest':       'सबसे बलवान:',
+  'vimsopaka.weakest':         'सबसे कमज़ोर:',
+  'vimsopaka.legend':          'अक्षर: E=उच्च, O=स्वराशि, V=वर्गोत्तम, F=मित्र, N=सम, X=शत्रु, D=नीच। * वर्गोत्तम दर्शाता है।',
+
+  // ─── Upagraha + Sensitive Points extras ───────────────────────────────
+  'upagraha.lotOfFortune':     'भाग्य बिंदु',
+  'upagraha.lotOfSpirit':      'आत्मा बिंदु',
+  'upagraha.arkaLagna':        'अर्क (सूर्य) लग्न',
+  'upagraha.vertex':           'शीर्षबिंदु',
+  'upagraha.bhavaLagna':       'भाव लग्न',
+  'upagraha.horaLagna':        'होरा लग्न',
+  'upagraha.ghatiLagna':       'घटी लग्न',
+  'upagraha.gulika.desc':      'लग्न — शनि के भाग के प्रारंभ पर',
+  'upagraha.mandi.desc':       'लग्न — शनि के भाग के मध्य में',
+  'upagraha.vertex.desc':      'प्लेसिडस भावों से द्वितीयक कोण (नियति-मिलन)',
+  'upagraha.arka.desc':        'सूर्य राशि का 0° — सूर्य से लग्न गणना',
+  'upagraha.indu.desc':        'चंद्र राशि का 0° — चंद्र से लग्न गणना',
+  'upagraha.dhuma.desc':       'चंद्र और राहु का मध्यबिंदु (अग्र चाप)',
+
+  // ─── Jaimini Raja-Yoga checklist text ─────────────────────────────────
+  'jaimini.rajaYoga.akKendra':       'लग्न से केन्द्र में AK',
+  'jaimini.rajaYoga.akTrikona':      'लग्न से त्रिकोण में AK',
+  'jaimini.rajaYoga.amkKendra':      'लग्न से केन्द्र में AmK',
+  'jaimini.rajaYoga.akAmkAspect':    'AK और AmK में परस्पर जैमिनी दृष्टि',
+  'jaimini.rajaYoga.akAmkConjunct':  'AK और AmK युत (एक राशि में)',
+  'jaimini.rajaYoga.arudhaKendra':   'लग्न से केन्द्र में आरूढ़ लग्न (A1)',
+  'jaimini.rajaYoga.akInArudhaSign': 'AK आरूढ़ लग्न की राशि में',
+  'jaimini.noAspect':                'कोई दृष्टि नहीं',
+
+  // ─── Jeevana Kshetra (Life Areas) — server labels mapped client-side ──
+  'lifeAreas.label.medical':   'चिकित्सा / स्वास्थ्य',
+  'lifeAreas.label.career':    'व्यवसाय / पेशा',
+  'lifeAreas.label.progeny':   'संतान',
+  'lifeAreas.label.wealth':    'धन / वित्त',
+  'lifeAreas.summary.medical': 'सामान्यतः स्वस्थ; 6/8/12 दशा काल में सावधान रहें।',
+  'lifeAreas.summary.career':  'प्रयास से मज़बूत व्यावसायिक संभावनाएँ।',
+  'lifeAreas.summary.progeny': 'संतान की संभावना; गुरु दशा जन्म के लिए अनुकूल।',
+  'lifeAreas.summary.wealth':  'प्रबल धन-योग — स्थिर संचय।',
+
+  // ─── Remedies: gemstones (English in brackets) ────────────────────────
+  'remedy.gem.ruby':            'माणिक्य (Ruby)',
+  'remedy.gem.pearl':           'मोती (Pearl)',
+  'remedy.gem.redCoral':        'मूँगा (Red Coral)',
+  'remedy.gem.emerald':         'पन्ना (Emerald)',
+  'remedy.gem.yellowSapphire':  'पुखराज (Yellow Sapphire)',
+  'remedy.gem.diamond':         'हीरा (Diamond)',
+  'remedy.gem.blueSapphire':    'नीलम (Blue Sapphire)',
+  'remedy.gem.hessonite':       'गोमेद (Hessonite)',
+  'remedy.gem.catsEye':         'लहसुनिया (Cat\'s Eye)',
+
+  // ─── Gochara phrase templates (English → Hindi translator) ────────────
+  // (used by client-side post-processor in i18n/server-text.ts)
+  'gocharaPhrase.transitInHouseFromMoon': '{planet} चंद्र से भाव {n} में गोचर',
+  'gocharaPhrase.classicalFavorable':    'शास्त्रीय अनुकूल गोचर',
+  'gocharaPhrase.classicalUnfavorable':  'शास्त्रीय प्रतिकूल गोचर, सावधानी उचित',
+
+  // ─── Dasha Sandhi note templates ──────────────────────────────────────
+  'sandhi.note.routine':       'नियमित {from} → {to} संधि — हल्के प्रभाव अपेक्षित',
+  'sandhi.note.hostile':       'प्रतिकूल {from} → {to} संधि — स्वास्थ्य, मन, निर्णयों में सावधानी',
+  'sandhi.note.maleficToMalefic':'पापग्रह-से-पापग्रह संधि ({from} → {to}) — इस अवधि में बड़े निर्णय टालें',
+
+  // ─── Daily horoscope (Timing page) — phrase templates ─────────────────
+  'horoscope.todayFocus':      'आज: {p1}/{p2} — {topic} पर ध्यान।',
+  'horoscope.runningPeriod':   '{dasha} काल चल रहा है — {desc}',
+  'horoscope.mahaAntar':       'महादशा स्वामी आपके {mN}वें भाव ({mMean}) में; अंतरदशा स्वामी {aN}वें भाव ({aMean}) में।',
+  'horoscope.transitJupiter':  'गुरु आपके {n}वें भाव में गोचर — {topic} पर ध्यान दें।',
+  'horoscope.transitSaturn':   'शनि आपके {n}वें भाव में गोचर — {topic} पर ध्यान दें।',
+  'horoscope.combust':         'अस्त: {planets} — इनके कारकत्व मंद हैं।',
+
+  // ─── Interpret page (classical descriptions) ──────────────────────────
+  'interpret.sunIn10':         'सूर्य दसवें भाव में',
+  'interpret.sunIn10.desc':    'दसवें भाव में सूर्य के साथ जन्मे व्यक्ति को उच्च सरकारी अनुग्रह, उच्च पद और अधिकारियों से सम्मान प्राप्त होता है।',
+  'interpret.moonIn4':         'चंद्र चौथे भाव में',
+  'interpret.moonIn4.desc':    'चौथे भाव में चंद्र सुख, माता का प्रेम, वाहन, संपत्ति और शांतिपूर्ण गृहजीवन प्रदान करता है।',
+  'interpret.ruchaka':         'रूचक महापुरुष योग',
+  'interpret.ruchaka.desc':    'मंगल स्वराशि या उच्च में, केन्द्र में स्थित होने पर रूचक योग बनता है — निर्भीक नेता, धनी और यशस्वी।',
+  'interpret.gajakesari':      'गजकेसरी योग',
+  'interpret.gajakesari.desc': 'जब गुरु चंद्र से केन्द्र में हो, गजकेसरी योग बनता है — जातक राजाओं और विद्वानों द्वारा सम्मानित होता है।',
+  // Interpret tags (chip labels)
+  'interpret.tag.house10':     'भाव10',
+  'interpret.tag.house4':      'भाव4',
+  'interpret.tag.career':      'करियर',
+  'interpret.tag.mahapurusha': 'महापुरुष',
+  'interpret.tag.kendra':      'केन्द्र',
+
+  // ─── Worksheets page — bundle titles (server-provided English) ────────
+  'worksheets.bundle.brief':       'संक्षिप्त कुंडली',
+  'worksheets.bundle.full':        'पूर्ण वैदिक रिपोर्ट',
+  'worksheets.bundle.predictive':  'भविष्यवाणी रिपोर्ट',
+  'worksheets.bundle.varshaphala': 'वर्षफल (वार्षिक)',
+  'worksheets.bundle.jaimini':     'जैमिनी रिपोर्ट',
+  'worksheets.bundle.kp':          'के.पी. रिपोर्ट',
+  'worksheets.bundle.ashtakavarga':'अष्टकवर्ग रिपोर्ट',
+  'worksheets.bundle.shadbala':    'षड्बल रिपोर्ट',
+  // Bundle tag pills
+  'worksheets.tag.brief':       'संक्षिप्त',
+  'worksheets.tag.full':        'पूर्ण',
+  'worksheets.tag.predictive':  'भविष्यवाणी',
+
+  // ─── Kundali page UX additions ────────────────────────────────────────
+  'kundali.empty.friendly':   'कुंडली बनाने के लिए बाईं ओर जन्म विवरण भरें और \'कुंडली बनाएं\' दबाएं।',
+  'kundali.pillnav.rasi':     'राशि चक्र',
+  'kundali.pillnav.planets':  'ग्रह स्थिति',
+  'kundali.pillnav.yogas':    'योग',
+  'kundali.pillnav.shadbala': 'षड्बल',
+  'kundali.pillnav.vimsopaka':'विंशोपक',
+  'kundali.pillnav.dasha':    'दशा',
+  'kundali.pillnav.gochara':  'गोचर',
+  'kundali.pillnav.remedies': 'उपाय',
+
+  // ─── Tooltips for technical terms ─────────────────────────────────────
+  'tooltip.shadbala':   'छः प्रकार के ग्रह बल का माप',
+  'tooltip.vimsopaka':  '20 अंकों पर आधारित वर्ग-बल',
+  'tooltip.ishtaKashta':'शुभ और अशुभ प्रभावों का माप',
+  'tooltip.ayanamsa':   'उष्णकटिबंधीय और नाक्षत्रिक राशिचक्र का अंतर',
+
+  // ─── Common buttons / collapse-toggle labels ──────────────────────────
+  'common.expand':      'विस्तार करें',
+  'common.collapse':    'समेटें',
+  'common.show':        'दिखाएँ',
+  'common.hide':        'छिपाएँ',
 };

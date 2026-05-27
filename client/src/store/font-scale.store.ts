@@ -58,5 +58,10 @@ export const useFontScale = create<FontScaleState>()(
 export function applyFontScale(scale: number) {
   const root = document.documentElement;
   root.style.setProperty('--font-scale', String(scale));
+  // Electron exposes setZoomFactor on webFrame; fall back gracefully when
+  // running in a plain browser.
+  try {
+    const wf = (window as any).require?.('electron')?.webFrame;
+    if (wf?.setZoomFactor) wf.setZoomFactor(scale);
+  } catch { /* not in Electron */ }
 }
-

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BirthDetailsForm } from '../components/forms/BirthDetailsForm';
 import { NorthIndianChart } from '../components/charts/NorthIndianChart';
@@ -9,6 +9,7 @@ import { DashaTimeline } from '../components/results/DashaTimeline';
 import { Card, Pill, ErrorBanner, EmptyState, PageShell } from '../components/ui/Card';
 import { ClipboardPasteButton, SaveViewButton } from '../components/ui/WorkflowAtoms';
 import { useT } from '../i18n';
+import { translateServerText } from '../i18n/server-text';
 import { api } from '../api/jyotish';
 import type {
   BirthInput, KundaliResult, VimshottariResult,
@@ -54,6 +55,9 @@ export function KundaliPage() {
   const [tropical, setTropical] = useState<boolean>(false);
   const [ayanamsaList, setAyanamsaList] = useState<AyanamsaInfo[]>([]);
   const [houseSystemList, setHouseSystemList] = useState<HouseSystemInfo[]>([]);
+
+  // Task 4 — auto-scroll target after kundali generation
+  const resultsRef = useRef<HTMLDivElement | null>(null);
 
   // Phase 20 — rehydrate from saved view via history.state
   const location = useLocation();
@@ -126,6 +130,12 @@ export function KundaliPage() {
       setSandhi(sd.sandhi);
       setAvTransit(avt.ashtakavargaTransit);
       setDoubleTransit(dt.doubleTransit);
+      // Task 4 — smoothly scroll the result section into view once the
+      // panels are populated. requestAnimationFrame guarantees the DOM
+      // has flushed before we measure.
+      requestAnimationFrame(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     } catch (e) {
       setError((e as Error).message);
     } finally { setLoading(false); }
@@ -176,8 +186,22 @@ export function KundaliPage() {
             />
           )}
           {kundali && (
-            <button onClick={downloadPdf} disabled={pdfLoading} className="btn btn-primary">
-              {pdfLoading ? t('kundali.generatingPdf', 'Generating PDF…') : `⬇ ${t('kundali.downloadPdf', 'Download PDF')}`}
+            <button
+              onClick={downloadPdf}
+              disabled={pdfLoading}
+              className="btn btn-primary"
+              title={t('kundali.downloadPdf', 'Download PDF')}
+              aria-label={t('kundali.downloadPdf', 'Download PDF')}
+            >
+              {pdfLoading ? (
+                <span>{t('kundali.generatingPdf', 'Generating PDF…')}</span>
+              ) : (
+                <>
+                  {/* Icon-only on mobile (<640px), icon + text from sm: up. */}
+                  <span className="sm:hidden text-base leading-none">📥</span>
+                  <span className="hidden sm:inline">⬇ {t('kundali.downloadPdf', 'Download PDF')}</span>
+                </>
+              )}
             </button>
           )}
         </div>
@@ -198,16 +222,29 @@ export function KundaliPage() {
         {kundali && <ChartSummary kundali={kundali} />}
       </aside>
 
-      <main className="space-y-6">
+      <main className="space-y-6" ref={resultsRef}>
         {error && <ErrorBanner>{error}</ErrorBanner>}
         {!kundali && !loading && !error && (
-          <EmptyState>{t('kundali.empty', 'Enter birth details on the left and click Generate Kundali.')}</EmptyState>
+          <EmptyState>{t('kundali.empty.friendly', t('kundali.empty', 'Enter birth details on the left and click Generate Kundali.'))}</EmptyState>
         )}
-        {loading && <EmptyState>{t('kundali.computing', 'Computing chart…')}</EmptyState>}
+        {loading && <KundaliSkeleton message={t('kundali.computing', 'Computing chart…')} />}
 
         {kundali && (
           <>
-            <div className="rounded-2xl border border-vedicGold/40 bg-white shadow-sm overflow-hidden">
+            {/* Task 4 — sticky pill-nav: quick jumps to major sections.
+                Each pill is a fragment-link to the matching id= anchor below. */}
+            <nav className="pill-nav -mx-2" aria-label="Kundali sections">
+              <a href="#k-rasi">{t('kundali.pillnav.rasi', 'Rasi Chart')}</a>
+              <a href="#k-planets">{t('kundali.pillnav.planets', 'Planets')}</a>
+              <a href="#k-yogas">{t('kundali.pillnav.yogas', 'Yogas')}</a>
+              <a href="#k-shadbala">{t('kundali.pillnav.shadbala', 'Shadbala')}</a>
+              <a href="#k-vimsopaka">{t('kundali.pillnav.vimsopaka', 'Vimsopaka')}</a>
+              <a href="#k-dasha">{t('kundali.pillnav.dasha', 'Dasha')}</a>
+              <a href="#k-gochara">{t('kundali.pillnav.gochara', 'Gochara')}</a>
+              <a href="#k-remedies">{t('kundali.pillnav.remedies', 'Remedies')}</a>
+            </nav>
+
+            <div id="k-rasi" className="tab-transition rounded-2xl border border-vedicGold/40 bg-white shadow-sm overflow-hidden">
               <div className="px-5 py-3 border-b border-vedicGold/30 bg-parchment flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-vedicMaroon">{t('kundali.rasiChart', 'Rasi Chart (D1)')}</h3>
                 <ChartToggle value={chartStyle} onChange={setChartStyle} />
@@ -219,52 +256,82 @@ export function KundaliPage() {
               </div>
             </div>
 
-            <PlanetTable kundali={kundali} />
+            <div id="k-planets"><PlanetTable kundali={kundali} /></div>
 
-            {yogas && <YogasPanel yogas={yogas} />}
+            {yogas && <div id="k-yogas"><YogasPanel yogas={yogas} /></div>}
             {doshas && <DoshasPanel doshas={doshas} />}
-            {shadbala && <ShadbalaPanel shadbala={shadbala} />}
+            {shadbala && <div id="k-shadbala"><ShadbalaPanel shadbala={shadbala} /></div>}
             {ishtaKashta && <IshtaKashtaPanel ik={ishtaKashta} />}
             {vimsopaka && (
-              <VimsopakaPanel
-                vimsopaka={vimsopaka}
-                scheme={vimsopakaScheme}
-                onChangeScheme={async (s) => {
-                  setVimsopakaScheme(s);
-                  if (!birth) return;
-                  try {
-                    const r = await api.vimsopaka(birth, s);
-                    setVimsopaka(r.vimsopaka);
-                  } catch (e) { setError((e as Error).message); }
-                }}
-              />
+              <div id="k-vimsopaka">
+                <VimsopakaPanel
+                  vimsopaka={vimsopaka}
+                  scheme={vimsopakaScheme}
+                  onChangeScheme={async (s) => {
+                    setVimsopakaScheme(s);
+                    if (!birth) return;
+                    try {
+                      const r = await api.vimsopaka(birth, s);
+                      setVimsopaka(r.vimsopaka);
+                    } catch (e) { setError((e as Error).message); }
+                  }}
+                />
+              </div>
             )}
-            {upagrahas && <UpagrahaPanel u={upagrahas} />}
-            {sensitivePoints && <SensitivePointsPanel sp={sensitivePoints} />}
-            {jaimini && <JaiminiPanel j={jaimini} />}
+            {upagrahas && (
+              <details className="rounded-2xl border border-vedicGold/40 bg-white shadow-sm">
+                <summary className="px-5 py-3 cursor-pointer text-sm font-semibold text-vedicMaroon">
+                  ▾ {t('upagraha.title', 'Upagrahas').replace(/ — .*$/, '')}
+                </summary>
+                <div className="p-1"><UpagrahaPanel u={upagrahas} /></div>
+              </details>
+            )}
+            {sensitivePoints && (
+              <details className="rounded-2xl border border-vedicGold/40 bg-white shadow-sm">
+                <summary className="px-5 py-3 cursor-pointer text-sm font-semibold text-vedicMaroon">
+                  ▾ {t('sensitivePoints.title', 'Sensitive Points').replace(/ — .*$/, '')}
+                </summary>
+                <div className="p-1"><SensitivePointsPanel sp={sensitivePoints} /></div>
+              </details>
+            )}
+            {jaimini && (
+              <details className="rounded-2xl border border-vedicGold/40 bg-white shadow-sm">
+                <summary className="px-5 py-3 cursor-pointer text-sm font-semibold text-vedicMaroon">
+                  ▾ {t('jaiminiPanel.rajaYogas', 'Jaimini')}
+                </summary>
+                <div className="p-1"><JaiminiPanel j={jaimini} /></div>
+              </details>
+            )}
             {kp && <KPPanel kp={kp} />}
             {lifeAreas && <LifeAreasPanel la={lifeAreas} />}
             {chalit && (
-              <ChalitPanel
-                chalit={chalit}
-                method={chalitMethod}
-                houseSystem={kundali.houseSystem}
-                onChangeMethod={async (m) => {
-                  setChalitMethod(m);
-                  if (!birth) return;
-                  try {
-                    const c = await api.chalit(birth, m);
-                    setChalit(c.chalit);
-                  } catch (e) { setError((e as Error).message); }
-                }}
-              />
+              <details className="rounded-2xl border border-vedicGold/40 bg-white shadow-sm">
+                <summary className="px-5 py-3 cursor-pointer text-sm font-semibold text-vedicMaroon">
+                  ▾ {t('chalit.title', 'Bhava Chalit details')}
+                </summary>
+                <div className="p-1">
+                  <ChalitPanel
+                    chalit={chalit}
+                    method={chalitMethod}
+                    houseSystem={kundali.houseSystem}
+                    onChangeMethod={async (m) => {
+                      setChalitMethod(m);
+                      if (!birth) return;
+                      try {
+                        const c = await api.chalit(birth, m);
+                        setChalit(c.chalit);
+                      } catch (e) { setError((e as Error).message); }
+                    }}
+                  />
+                </div>
+              </details>
             )}
-            {remedies && <RemediesPanel r={remedies} />}
-            {gochara && <GocharaPanel g={gochara} />}
+            {remedies && <div id="k-remedies"><RemediesPanel r={remedies} /></div>}
+            {gochara && <div id="k-gochara"><GocharaPanel g={gochara} /></div>}
             {avTransit && <AshtakavargaTransitPanel a={avTransit} />}
             {doubleTransit && <DoubleTransitPanel d={doubleTransit} />}
             {sandhi && <SandhiPanel s={sandhi} />}
-            {vimshottari && <DashaTimeline vimshottari={vimshottari} />}
+            {vimshottari && <div id="k-dasha"><DashaTimeline vimshottari={vimshottari} /></div>}
           </>
         )}
       </main>
@@ -455,8 +522,14 @@ function ShadbalaPanel({ shadbala }: { shadbala: ShadbalaResult }) {
     if (c === 'moderate')    return 'shad.cat.moderate';
     return 'shad.cat.weak';
   };
+  // Tooltip text exposed via the action slot (which accepts ReactNode);
+  // keeps title typed as string so Card doesn't need a signature change.
   return (
-    <Card title={t('kundali.shadbala', 'Shadbala — Planetary Strength')}>
+    <Card
+      title={t('kundali.shadbala', 'Shadbala — Planetary Strength')}
+      action={<span className="text-[10px] text-vedicMaroon/40 cursor-help"
+                    title={t('tooltip.shadbala', 'Measure of six classical sources of planetary strength')}>ⓘ</span>}
+    >
       <div className="space-y-2">
         {shadbala.planets.map((p) => {
           const pct = Math.round((p.totalRupas / Math.max(max, 1)) * 100);
@@ -597,16 +670,24 @@ function RemediesPanel({ r }: { r: RemedyResult }) {
 }
 
 function IshtaKashtaPanel({ ik }: { ik: IshtaKashtaResult }) {
-  const { al } = useT();
+  const { t, al } = useT();
   const netTone: Record<IshtaKashtaResult['rows'][number]['netResult'], string> = {
     Auspicious: 'bg-emerald-600 text-white',
     Mixed: 'bg-amber-500 text-white',
     Inauspicious: 'bg-red-600 text-white',
   };
+  const netLabel = (n: IshtaKashtaResult['rows'][number]['netResult']) =>
+    n === 'Auspicious'   ? t('ishtaKashta.auspicious',   'Auspicious')
+    : n === 'Mixed'      ? t('ishtaKashta.mixed',        'Mixed')
+    : /* Inauspicious */   t('ishtaKashta.inauspicious', 'Inauspicious');
   return (
-    <Card title="Ishta / Kashta Phala — Auspicious vs Inauspicious Effects">
-      <p className="text-[11px] text-vedicMaroon/60 mb-3">
-        Ishta = √(Cheshta × Uchcha); Kashta = √((60−Cheshta) × (60−Uchcha)). Virupas, 0–60.
+    <Card title={t('ishtaKashta.title', 'Ishta / Kashta Phala — Auspicious vs Inauspicious Effects')}>
+      <p
+        className="text-[11px] text-vedicMaroon/60 mb-3"
+        title={t('tooltip.ishtaKashta', 'Measure of auspicious and inauspicious effects')}
+      >
+        {t('ishtaKashta.formula',
+          'Ishta = √(Cheshta × Uchcha); Kashta = √((60−Cheshta) × (60−Uchcha)). Virupas, 0–60.')}
       </p>
       <div className="space-y-1.5">
         {ik.rows.map((r) => {
@@ -622,7 +703,7 @@ function IshtaKashtaPanel({ ik }: { ik: IshtaKashtaResult }) {
               <div className="w-14 text-right tabular-nums text-emerald-700">+{r.ishta.toFixed(1)}</div>
               <div className="w-14 text-right tabular-nums text-red-700">−{r.kashta.toFixed(1)}</div>
               <div className={`w-24 text-center text-[10px] font-semibold rounded px-1.5 py-0.5 ${netTone[r.netResult]}`}>
-                {r.netResult}
+                {netLabel(r.netResult)}
               </div>
             </div>
           );
@@ -631,34 +712,36 @@ function IshtaKashtaPanel({ ik }: { ik: IshtaKashtaResult }) {
 
       <details className="mt-3 text-xs">
         <summary className="cursor-pointer text-vedicMaroon/70 hover:text-vedicMaroon">
-          Uchcha / Cheshta components
+          {t('ishtaKashta.components', 'Uchcha / Cheshta components')}
         </summary>
-        <table className="w-full mt-2 text-[11px] border-collapse">
-          <thead>
-            <tr className="text-vedicMaroon/70">
-              <th className="text-left py-1 pr-2">Planet</th>
-              <th className="text-right py-1 px-2">Uchcha</th>
-              <th className="text-right py-1 px-2">Cheshta</th>
-              <th className="text-right py-1 px-2">Ishta</th>
-              <th className="text-right py-1 px-2">Kashta</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ik.rows.map((r) => (
-              <tr key={r.planet} className="border-t border-vedicMaroon/10">
-                <td className="py-1 pr-2 font-bold text-vedicMaroon">{al.planet(r.planet)}</td>
-                <td className="text-right py-1 px-2 tabular-nums">{r.uchchaBala.toFixed(2)}</td>
-                <td className="text-right py-1 px-2 tabular-nums">{r.cheshtaBala.toFixed(2)}</td>
-                <td className="text-right py-1 px-2 tabular-nums text-emerald-700">{r.ishta.toFixed(2)}</td>
-                <td className="text-right py-1 px-2 tabular-nums text-red-700">{r.kashta.toFixed(2)}</td>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table className="w-full mt-2 text-[11px] border-collapse">
+            <thead>
+              <tr className="text-vedicMaroon/70">
+                <th className="text-left py-1 pr-2">{t('ishtaKashta.col.planet', 'Planet')}</th>
+                <th className="text-right py-1 px-2">{t('ishtaKashta.col.uchcha', 'Uchcha')}</th>
+                <th className="text-right py-1 px-2">{t('ishtaKashta.col.cheshta', 'Cheshta')}</th>
+                <th className="text-right py-1 px-2">{t('ishtaKashta.col.ishta', 'Ishta')}</th>
+                <th className="text-right py-1 px-2">{t('ishtaKashta.col.kashta', 'Kashta')}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {ik.rows.map((r) => (
+                <tr key={r.planet} className="border-t border-vedicMaroon/10">
+                  <td className="py-1 pr-2 font-bold text-vedicMaroon">{al.planet(r.planet)}</td>
+                  <td className="text-right py-1 px-2 tabular-nums">{r.uchchaBala.toFixed(2)}</td>
+                  <td className="text-right py-1 px-2 tabular-nums">{r.cheshtaBala.toFixed(2)}</td>
+                  <td className="text-right py-1 px-2 tabular-nums text-emerald-700">{r.ishta.toFixed(2)}</td>
+                  <td className="text-right py-1 px-2 tabular-nums text-red-700">{r.kashta.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </details>
 
       <p className="mt-3 text-[11px] text-vedicMaroon/60">
-        Most Auspicious: <strong className="text-emerald-700">{al.planet(ik.mostAuspicious)}</strong> · Most Inauspicious: <strong className="text-red-700">{al.planet(ik.mostInauspicious)}</strong>
+        {t('ishtaKashta.mostAuspicious', 'Most Auspicious:')} <strong className="text-emerald-700">{al.planet(ik.mostAuspicious)}</strong> · {t('ishtaKashta.mostInauspicious', 'Most Inauspicious:')} <strong className="text-red-700">{al.planet(ik.mostInauspicious)}</strong>
       </p>
     </Card>
   );
@@ -676,7 +759,7 @@ function VimsopakaPanel({
   scheme: VimsopakaScheme;
   onChangeScheme: (s: VimsopakaScheme) => void;
 }) {
-  const { al } = useT();
+  const { t, al } = useT();
   const catTone: Record<VimsopakaResult['rows'][number]['category'], string> = {
     Purna: 'bg-emerald-600 text-white',
     Uttama: 'bg-emerald-500 text-white',
@@ -685,6 +768,8 @@ function VimsopakaPanel({
     Paravata: 'bg-red-400 text-white',
     Iravata: 'bg-red-600 text-white',
   };
+  const catLabel = (c: VimsopakaResult['rows'][number]['category']): string =>
+    t(`vimsopaka.cat.${c}`, c);
   const barTone = (c: VimsopakaResult['rows'][number]['category']) =>
     c === 'Purna' ? 'bg-emerald-600'
     : c === 'Uttama' ? 'bg-emerald-500'
@@ -703,17 +788,18 @@ function VimsopakaPanel({
   };
   return (
     <Card
-      title={`Vimsopaka Bala — ${vimsopaka.meta.name}`}
+      title={`${t('vimsopaka.title', 'Vimsopaka Bala')} — ${vimsopaka.meta.name}`}
       action={
         <select
           value={scheme}
           onChange={(e) => onChangeScheme(e.target.value as VimsopakaScheme)}
           className="text-xs border border-vedicMaroon/30 rounded px-2 py-1 bg-white"
+          title={t('tooltip.vimsopaka', '20-point weighted varga strength')}
         >
-          <option value="shad">Shad Varga (6)</option>
-          <option value="sapta">Sapta Varga (7)</option>
-          <option value="dasha">Dasha Varga (10)</option>
-          <option value="shodasha">Shodasha Varga (16)</option>
+          <option value="shad">{t('vimsopaka.scheme.shad', 'Shad Varga (6)')}</option>
+          <option value="sapta">{t('vimsopaka.scheme.sapta', 'Sapta Varga (7)')}</option>
+          <option value="dasha">{t('vimsopaka.scheme.dasha', 'Dasha Varga (10)')}</option>
+          <option value="shodasha">{t('vimsopaka.scheme.shodasha', 'Shodasha Varga (16)')}</option>
         </select>
       }
     >
@@ -730,7 +816,7 @@ function VimsopakaPanel({
               </div>
               <div className="w-14 text-right tabular-nums">{r.total.toFixed(2)}/20</div>
               <div className={`w-20 text-center text-[10px] font-semibold rounded px-1.5 py-0.5 ${catTone[r.category]}`}>
-                {r.category}
+                {catLabel(r.category)}
               </div>
             </div>
           );
@@ -739,13 +825,13 @@ function VimsopakaPanel({
 
       <details className="text-xs">
         <summary className="cursor-pointer text-vedicMaroon/70 hover:text-vedicMaroon">
-          Per-varga breakdown
+          {t('vimsopaka.breakdown', 'Per-varga breakdown')}
         </summary>
-        <div className="mt-2 overflow-x-auto">
+        <div className="mt-2" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           <table className="w-full text-[11px] border-collapse">
             <thead>
               <tr className="text-vedicMaroon/70">
-                <th className="text-left py-1 pr-2">Planet</th>
+                <th className="text-left py-1 pr-2">{t('vimsopaka.col.planet', 'Planet')}</th>
                 {vimsopaka.rows[0]?.cells.map((c) => (
                   <th key={c.varga} className="text-center py-1 px-1">
                     {c.varga}<br/>
@@ -773,13 +859,14 @@ function VimsopakaPanel({
             </tbody>
           </table>
           <p className="text-[10px] text-vedicMaroon/60 mt-2">
-            Letters: E=Exalted, O=Own, V=Vargottama, F=Friend, N=Neutral, X=Enemy, D=Debilitated. * marks vargottama.
+            {t('vimsopaka.legend',
+              'Letters: E=Exalted, O=Own, V=Vargottama, F=Friend, N=Neutral, X=Enemy, D=Debilitated. * marks vargottama.')}
           </p>
         </div>
       </details>
 
       <p className="mt-3 text-[11px] text-vedicMaroon/60">
-        Strongest: <strong className="text-emerald-700">{al.planet(vimsopaka.strongest)}</strong> · Weakest: <strong className="text-red-700">{al.planet(vimsopaka.weakest)}</strong>
+        {t('vimsopaka.strongest', 'Strongest:')} <strong className="text-emerald-700">{al.planet(vimsopaka.strongest)}</strong> · {t('vimsopaka.weakest', 'Weakest:')} <strong className="text-red-700">{al.planet(vimsopaka.weakest)}</strong>
       </p>
     </Card>
   );
@@ -847,8 +934,28 @@ function UpagrahaPanel({ u }: { u: UpagrahaData }) {
 }
 
 function LifeAreasPanel({ la }: { la: any }) {
-  const { t } = useT();
+  const { t, locale } = useT();
   const areas = [la.medical, la.career, la.progeny, la.wealth];
+  // Map server-returned area keys to translated labels.
+  const labelForArea = (r: any) => {
+    const k = (r.area ?? '').toLowerCase();
+    if (k === 'medical') return t('lifeAreas.label.medical', r.label ?? 'Medical / Health');
+    if (k === 'career')  return t('lifeAreas.label.career',  r.label ?? 'Career / Profession');
+    if (k === 'progeny') return t('lifeAreas.label.progeny', r.label ?? 'Progeny / Children');
+    if (k === 'wealth')  return t('lifeAreas.label.wealth',  r.label ?? 'Wealth / Finance');
+    return r.label ?? '';
+  };
+  // Translate the summary text when locale === 'hi' for the four known
+  // canned summaries the server returns.
+  const summaryForArea = (r: any) => {
+    if (locale !== 'hi') return r.summary;
+    const k = (r.area ?? '').toLowerCase();
+    if (k === 'medical') return t('lifeAreas.summary.medical', r.summary);
+    if (k === 'career')  return t('lifeAreas.summary.career',  r.summary);
+    if (k === 'progeny') return t('lifeAreas.summary.progeny', r.summary);
+    if (k === 'wealth')  return t('lifeAreas.summary.wealth',  r.summary);
+    return r.summary;
+  };
   return (
     <Card title={t('lifeAreas.title', 'Life Areas — Medical · Career · Progeny · Wealth')}>
       <div className="grid md:grid-cols-2 gap-4">
@@ -861,20 +968,18 @@ function LifeAreasPanel({ la }: { la: any }) {
             <div key={r.area} className={`border rounded-lg p-3 ${tone}`}>
               <div className="flex justify-between items-start">
                 <div>
-                  {/* TODO(i18n-server): localize r.label */}
-                  <div className="text-sm font-bold" lang="en">{r.label}</div>
+                  <div className="text-sm font-bold">{labelForArea(r)}</div>
                   <div className="text-[11px] opacity-70">{t('lifeAreas.houses', 'Houses')}: {r.housesConsidered.join(', ')}</div>
                 </div>
                 <div className="text-2xl font-bold tabular-nums">{r.score}</div>
               </div>
-              {/* TODO(i18n-server): localize r.summary */}
-              <p className="text-xs mt-2 italic" lang="en">{r.summary}</p>
+              <p className="text-xs mt-2 italic" lang={locale === 'hi' ? 'hi' : 'en'}>{summaryForArea(r)}</p>
               <details className="mt-2">
                 <summary className="text-[11px] cursor-pointer opacity-80">{t('lifeAreas.factors', '{n} factors').replace('{n}', String(r.factors.length))}</summary>
                 <ul className="mt-1 text-[11px] space-y-0.5">
                   {r.factors.map((f: any, i: number) => (
                     <li key={i} className={f.kind === 'positive' ? 'text-emerald-800' : 'text-red-800'}>
-                      {/* TODO(i18n-server): localize f.text */}
+                      {/* TODO(i18n-server): localize f.text — factor text is server-side */}
                       {f.kind === 'positive' ? '+' : '−'}{Math.abs(f.weight)} · <span lang="en">{f.text}</span>
                     </li>
                   ))}
@@ -1219,7 +1324,7 @@ function ChalitPanel({
 }
 
 function GocharaPanel({ g }: { g: GocharaResult }) {
-  const { t, al } = useT();
+  const { t, al, locale } = useT();
   const favCount = g.rows.filter((r) => r.netResult === 'favorable').length;
   const cancelledCount = g.rows.filter((r) => r.netResult === 'cancelled').length;
   const unfavCount = g.rows.filter((r) => r.netResult === 'unfavorable').length;
@@ -1265,8 +1370,10 @@ function GocharaPanel({ g }: { g: GocharaResult }) {
                 <td className="text-[11px] text-vedicMaroon/70">
                   {r.vedhaActive ? `${t('gochara.by', 'by')} ${al.planet(r.vedhaBy ?? '')}` : '—'}
                 </td>
-                {/* TODO(i18n-server): localize r.interpretation */}
-                <td className="text-[11px] text-vedicMaroon/80 italic" lang="en">{r.interpretation}</td>
+                <td className="text-[11px] text-vedicMaroon/80 italic"
+                    lang={locale === 'hi' ? 'hi' : 'en'}>
+                  {translateServerText(r.interpretation, 'gochara', locale)}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -1370,7 +1477,7 @@ function DoubleTransitPanel({ d }: { d: DoubleTransitResult }) {
 }
 
 function SandhiPanel({ s }: { s: SandhiResult }) {
-  const { t, al } = useT();
+  const { t, al, locale } = useT();
   const sevTone: Record<SandhiResult['windows'][number]['severity'], string> = {
     high: 'bg-red-600 text-white',
     medium: 'bg-amber-500 text-white',
@@ -1425,8 +1532,10 @@ function SandhiPanel({ s }: { s: SandhiResult }) {
                       {sevLabel(w.severity)}
                     </span>
                   </td>
-                  {/* TODO(i18n-server): localize w.note */}
-                  <td className="text-[11px] text-vedicMaroon/70 italic" lang="en">{w.note}</td>
+                  <td className="text-[11px] text-vedicMaroon/70 italic"
+                      lang={locale === 'hi' ? 'hi' : 'en'}>
+                    {translateServerText(w.note, 'sandhi', locale)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -1434,5 +1543,20 @@ function SandhiPanel({ s }: { s: SandhiResult }) {
         </div>
       )}
     </Card>
+  );
+}
+
+// ─── Skeleton loader (Task 5) — shimmer placeholders during calculation
+function KundaliSkeleton({ message }: { message: string }) {
+  return (
+    <div className="space-y-4" role="status" aria-live="polite" aria-label={message}>
+      <div className="skeleton" style={{ height: 280 }} />
+      <div className="grid md:grid-cols-2 gap-3">
+        <div className="skeleton" style={{ height: 140 }} />
+        <div className="skeleton" style={{ height: 140 }} />
+      </div>
+      <div className="skeleton" style={{ height: 80 }} />
+      <p className="text-center text-xs text-vedicMaroon/60">{message}</p>
+    </div>
   );
 }

@@ -42,6 +42,7 @@ import { AIPage } from './pages/AIPage';
 import { BiometricPage } from './pages/BiometricPage';
 import { SavedViewsPage } from './pages/SavedViewsPage';
 import { CommandPalette } from './components/ui/CommandPalette';
+import { GaneshSplash } from './components/GaneshSplash';
 import { useT, LOCALES } from './i18n';
 import { useTheme, THEMES } from './theme/ThemeProvider';
 import { useActiveChart } from './store/active-chart.store';
@@ -315,7 +316,9 @@ function FontZoomControl() {
   const atMax = scale === FONT_SCALES[FONT_SCALES.length - 1];
   const pct = Math.round(scale * 100);
   return (
-    <div className="hidden sm:flex items-center gap-0.5 px-1 py-1 rounded-lg border"
+    // Mobile: shown but compact (A− and A+ only, no percent label).
+    // sm+ : full three-button widget with percent.
+    <div className="flex items-center gap-0.5 px-1 py-1 rounded-lg border"
       style={{ background: 'var(--surface-1)', borderColor: 'var(--border-subtle)' }}>
       <button
         type="button"
@@ -329,7 +332,7 @@ function FontZoomControl() {
       <button
         type="button"
         onClick={reset}
-        className="px-1.5 py-0.5 rounded text-[10px] font-mono tabular-nums hover:bg-vedicMaroon/10"
+        className="hidden sm:inline-flex px-1.5 py-0.5 rounded text-[10px] font-mono tabular-nums hover:bg-vedicMaroon/10"
         style={{ color: 'var(--text-body)' }}
         title="Reset to 100%  (⌘0)"
         aria-label={`Current zoom ${pct}%, click to reset`}
@@ -403,12 +406,31 @@ function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 }
 
 // ─── Shell ───────────────────────────────────────────────────────────────
+function DocumentTitleSync() {
+  // Keep the browser-tab title in sync with the active locale's brand name.
+  // brand.name + brand.subtitle are already translated for hi/gu/sa.
+  const { t, locale } = useT();
+  useEffect(() => {
+    const name = t('brand.name', 'Astrologer Hemraj Laddha');
+    const sub  = t('brand.subtitle', 'Vedic Astrology Suite');
+    document.title = `${name} — ${sub}`;
+    // Also update <html lang="..."> so screen readers + browser features
+    // (right-click translate, hyphenation, etc.) match the active language.
+    if (typeof document !== 'undefined' && document.documentElement) {
+      document.documentElement.setAttribute('lang', locale);
+    }
+  }, [t, locale]);
+  return null;
+}
+
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <BrowserRouter>
       <GlobalShortcuts />
+      <DocumentTitleSync />
       <CommandPalette />
+      <GaneshSplash />
       <div className="min-h-screen flex">
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="flex-1 flex flex-col min-w-0 md:ml-0">
