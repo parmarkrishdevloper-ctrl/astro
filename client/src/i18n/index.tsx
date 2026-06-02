@@ -30,9 +30,9 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === 'undefined') return 'en';
+    if (typeof window === 'undefined') return 'hi';
     const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null;
-    return stored && stored in DICTS ? stored : 'en';
+    return stored && stored in DICTS ? stored : 'hi';
   });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }
 
   function t(key: string, fallback?: string): string {
-    return DICTS[locale][key] ?? DICTS.en[key] ?? fallback ?? key;
+    return DICTS[locale][key] ?? DICTS.hi[key] ?? fallback ?? key;
   }
 
   const al = useMemo(() => makeAstroTranslator(locale), [locale]);

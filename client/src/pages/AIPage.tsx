@@ -67,7 +67,7 @@ function NarrativeTab({ birth, setError }: {
     { id: 'yoga',          label: t('ai.section.yoga', 'Yogas') },
   ];
 
-  const [locale, setLocale] = useState<AILocale>('en');
+  const [locale, setLocale] = useState<AILocale>('hi');
   const [picked, setPicked] = useState<string[]>(SECTION_OPTIONS.map((s) => s.id));
   const [report, setReport] = useState<NarrativeReport | null>(null);
   const [busy, setBusy] = useState(false);
@@ -172,7 +172,7 @@ function JournalTab({ birth, setError }: {
   setError: (s: string | null) => void;
 }) {
   const { t } = useT();
-  const [locale, setLocale] = useState<AILocale>('en');
+  const [locale, setLocale] = useState<AILocale>('hi');
   const today = new Date().toISOString().slice(0, 10);
   const in7 = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
   const [mode, setMode] = useState<'day' | 'range'>('day');
@@ -295,7 +295,7 @@ function CompareTab({ birth, setError }: {
   setError: (s: string | null) => void;
 }) {
   const { t } = useT();
-  const [locale, setLocale] = useState<AILocale>('en');
+  const [locale, setLocale] = useState<AILocale>('hi');
   // Partner B form fields (use a simple inline form so the user can edit B without losing A)
   const [bName, setBName] = useState(t('ai.partnerDefault', 'Partner'));
   const [bDatetime, setBDatetime] = useState('1992-03-12T14:20');
