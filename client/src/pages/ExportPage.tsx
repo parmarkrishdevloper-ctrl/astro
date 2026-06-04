@@ -123,8 +123,8 @@ function CustomBuilder({ birth, setError }: {
               <button key={s.id} onClick={() => toggleAdd(s.id)}
                 className="w-full text-left px-3 py-2 rounded border border-vedicGold/40 hover:bg-parchment/70 flex items-center gap-2">
                 {/* TODO(i18n-server): localize section label and note */}
-                <span className="text-vedicMaroon font-semibold text-sm flex-1" lang="en">{s.label}</span>
-                <span className="text-[11px] text-vedicMaroon/55 italic truncate max-w-[55%]" lang="en">{s.note}</span>
+                <span className="text-vedicMaroon font-semibold text-sm flex-1" lang="hi">{s.label}</span>
+                <span className="text-[11px] text-vedicMaroon/55 italic truncate max-w-[55%]" lang="hi">{s.note}</span>
                 <span className="text-vedicGold text-lg leading-none">+</span>
               </button>
             ))}
@@ -157,8 +157,8 @@ function CustomBuilder({ birth, setError }: {
                   <span className="text-vedicMaroon/50 font-mono text-xs">⋮⋮</span>
                   <div className="flex-1 min-w-0">
                     {/* TODO(i18n-server): localize section label and note */}
-                    <div className="text-sm font-semibold text-vedicMaroon truncate" lang="en">{meta.label}</div>
-                    <div className="text-[11px] text-vedicMaroon/55 truncate" lang="en">{meta.note}</div>
+                    <div className="text-sm font-semibold text-vedicMaroon truncate" lang="hi">{meta.label}</div>
+                    <div className="text-[11px] text-vedicMaroon/55 truncate" lang="hi">{meta.note}</div>
                   </div>
                   <button onClick={() => toggleRemove(id)}
                     className="text-xs text-vedicMaroon/50 hover:text-red-700 px-2 py-1">✕</button>

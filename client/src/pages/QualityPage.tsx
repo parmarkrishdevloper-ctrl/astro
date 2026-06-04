@@ -82,10 +82,10 @@ export function QualityPage() {
                         : 'bg-white text-vedicMaroon border-vedicGold/30 hover:bg-parchment'
                     }`}>
                     {/* TODO(i18n-server): localize famous.name */}
-                    <div className="font-semibold" lang="en">{c.name}</div>
+                    <div className="font-semibold" lang="hi">{c.name}</div>
                     <div className="text-[11px] opacity-80 flex gap-2">
                       {/* TODO(i18n-server): localize famous.category */}
-                      <span lang="en">{c.category}</span>
+                      <span lang="hi">{c.category}</span>
                       <span>· {new Date(c.datetime).getUTCFullYear()}</span>
                       {c.rodden && <span>· <Pill tone="good">{t('quality.roddenPill', 'Rodden {grade}').replace('{grade}', c.rodden)}</Pill></span>}
                     </div>
@@ -115,11 +115,11 @@ function FamousChartView({ result }: { result: any }) {
         <div className="text-xs text-vedicMaroon/80 flex flex-wrap gap-3">
           <span>{t('quality.born', 'Born:')} <strong className="text-vedicMaroon">{new Date(famous.datetime).toUTCString()}</strong></span>
           {/* TODO(i18n-server): localize famous.category */}
-          <span>{t('quality.category', 'Category:')} <span lang="en">{famous.category}</span></span>
+          <span>{t('quality.category', 'Category:')} <span lang="hi">{famous.category}</span></span>
           {famous.rodden && <span>{t('quality.rodden', 'Rodden:')} <Pill tone="good">{famous.rodden}</Pill></span>}
         </div>
         {/* TODO(i18n-server): localize famous.note */}
-        {famous.note && <p className="mt-2 text-xs italic text-vedicMaroon/70" lang="en">{famous.note}</p>}
+        {famous.note && <p className="mt-2 text-xs italic text-vedicMaroon/70" lang="hi">{famous.note}</p>}
         <div className="mt-3 flex gap-2 text-[11px]">
           <Pill tone="neutral">{t('quality.ayanamsaLabel', 'ayanamsa: {name}').replace('{name}', kundali.ayanamsa.name)}</Pill>
           <Pill tone="neutral">{t('quality.ayanamsaValue', 'ayanamsa value: {deg}°').replace('{deg}', kundali.ayanamsa.valueDeg.toFixed(4))}</Pill>

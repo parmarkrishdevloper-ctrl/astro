@@ -19,16 +19,13 @@ import { useT } from '../i18n';
 import type { BirthInput } from '../types';
 
 type Tab = 'narrative' | 'journal' | 'compare';
-type AILocale = 'en' | 'hi' | 'gu' | 'sa';
+type AILocale = 'hi';
 
 // ─── Locale picker ──────────────────────────────────────────────────────────
 function LocalePicker({ value, onChange }: { value: AILocale; onChange: (l: AILocale) => void }) {
   const { t } = useT();
   const LOCALES: { value: AILocale; label: string; native: string }[] = [
-    { value: 'en', label: t('ai.locale.english.label', 'English'),  native: t('ai.locale.english.native', 'English') },
     { value: 'hi', label: t('ai.locale.hindi.label', 'Hindi'),    native: t('ai.locale.hindi.native', 'हिन्दी') },
-    { value: 'gu', label: t('ai.locale.gujarati.label', 'Gujarati'), native: t('ai.locale.gujarati.native', 'ગુજરાતી') },
-    { value: 'sa', label: t('ai.locale.sanskrit.label', 'Sanskrit'), native: t('ai.locale.sanskrit.native', 'संस्कृतम्') },
   ];
   return (
     <div className="flex flex-wrap gap-1">
@@ -134,12 +131,12 @@ function NarrativeTab({ birth, setError }: {
             <Pill tone="info">{report.locale}</Pill>
             <Pill tone="neutral">{report.sections.length} {sectionWord(report.sections.length)}</Pill>
             {/* TODO(i18n-server): localize report.meta sign names */}
-            {report.meta?.ascendant && <Pill tone="good"><span lang="en">{t('ai.narrative.lagna', 'Lagna')}: {report.meta.ascendant.sign}</span></Pill>}
-            {report.meta?.moonSign && <Pill tone="neutral"><span lang="en">{t('ai.narrative.moon', 'Moon')}: {report.meta.moonSign}</span></Pill>}
-            {report.meta?.sunSign && <Pill tone="neutral"><span lang="en">{t('ai.narrative.sun', 'Sun')}: {report.meta.sunSign}</span></Pill>}
+            {report.meta?.ascendant && <Pill tone="good"><span lang="hi">{t('ai.narrative.lagna', 'Lagna')}: {report.meta.ascendant.sign}</span></Pill>}
+            {report.meta?.moonSign && <Pill tone="neutral"><span lang="hi">{t('ai.narrative.moon', 'Moon')}: {report.meta.moonSign}</span></Pill>}
+            {report.meta?.sunSign && <Pill tone="neutral"><span lang="hi">{t('ai.narrative.sun', 'Sun')}: {report.meta.sunSign}</span></Pill>}
             {report.meta?.dasha?.maha && (
               // TODO(i18n-server): localize dasha planet names
-              <Pill tone="info"><span lang="en">{t('ai.narrative.dasha', 'Dasha')}: {report.meta.dasha.maha}{report.meta.dasha.antar ? ` / ${report.meta.dasha.antar}` : ''}</span></Pill>
+              <Pill tone="info"><span lang="hi">{t('ai.narrative.dasha', 'Dasha')}: {report.meta.dasha.maha}{report.meta.dasha.antar ? ` / ${report.meta.dasha.antar}` : ''}</span></Pill>
             )}
           </div>
 
@@ -254,12 +251,12 @@ function JournalTab({ birth, setError }: {
             <Card key={e.date}>
               <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                 {/* TODO(i18n-server): localize weekday */}
-                <h3 className="text-base font-semibold text-vedicMaroon">{e.date} <span className="text-xs text-vedicMaroon/60 font-normal" lang="en">· {e.weekday}</span></h3>
+                <h3 className="text-base font-semibold text-vedicMaroon">{e.date} <span className="text-xs text-vedicMaroon/60 font-normal" lang="hi">· {e.weekday}</span></h3>
                 <div className="flex gap-1 flex-wrap">
                   {/* TODO(i18n-server): localize signal labels (nakshatra/tithi/dasha planet) */}
-                  <Pill tone="info"><span lang="en">{e.signals.nakshatra}</span></Pill>
-                  <Pill tone="neutral"><span lang="en">{e.signals.tithi}</span></Pill>
-                  {e.signals.dasha && <Pill tone="good"><span lang="en">{e.signals.dasha}</span></Pill>}
+                  <Pill tone="info"><span lang="hi">{e.signals.nakshatra}</span></Pill>
+                  <Pill tone="neutral"><span lang="hi">{e.signals.tithi}</span></Pill>
+                  {e.signals.dasha && <Pill tone="good"><span lang="hi">{e.signals.dasha}</span></Pill>}
                 </div>
               </div>
               <div className="space-y-2 text-sm leading-relaxed text-vedicMaroon/85 mb-3" lang={locale}>
@@ -269,11 +266,11 @@ function JournalTab({ birth, setError }: {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px] text-vedicMaroon/70 pt-2 border-t border-vedicGold/30">
                 {/* TODO(i18n-server): localize signal values (yoga/sign names/Abhijit/RahuKaal) */}
-                <div><span className="font-semibold">{t('ai.journal.yoga', 'Yoga:')}</span> <span lang="en">{e.signals.yoga}</span></div>
-                <div><span className="font-semibold">{t('ai.journal.sun', 'Sun:')}</span> <span lang="en">{e.signals.sunSign}</span></div>
-                <div><span className="font-semibold">{t('ai.journal.moon', 'Moon:')}</span> <span lang="en">{e.signals.moonSign}</span></div>
-                {e.signals.abhijit && <div><span className="font-semibold">{t('ai.journal.abhijit', 'Abhijit:')}</span> <span lang="en">{e.signals.abhijit}</span></div>}
-                {e.signals.rahuKaal && <div><span className="font-semibold">{t('ai.journal.rahuKaal', 'Rāhu kāl:')}</span> <span lang="en">{e.signals.rahuKaal}</span></div>}
+                <div><span className="font-semibold">{t('ai.journal.yoga', 'Yoga:')}</span> <span lang="hi">{e.signals.yoga}</span></div>
+                <div><span className="font-semibold">{t('ai.journal.sun', 'Sun:')}</span> <span lang="hi">{e.signals.sunSign}</span></div>
+                <div><span className="font-semibold">{t('ai.journal.moon', 'Moon:')}</span> <span lang="hi">{e.signals.moonSign}</span></div>
+                {e.signals.abhijit && <div><span className="font-semibold">{t('ai.journal.abhijit', 'Abhijit:')}</span> <span lang="hi">{e.signals.abhijit}</span></div>}
+                {e.signals.rahuKaal && <div><span className="font-semibold">{t('ai.journal.rahuKaal', 'Rāhu kāl:')}</span> <span lang="hi">{e.signals.rahuKaal}</span></div>}
               </div>
             </Card>
           ))}
@@ -408,7 +405,7 @@ function CompareTab({ birth, setError }: {
                   {compare.overlays.aOnB.map((o, i) => (
                     <li key={i} className="flex items-start gap-2">
                       {/* TODO(i18n-server): localize planet name */}
-                      <span className="font-mono text-vedicMaroon/60 shrink-0 w-20 truncate" lang="en">{o.planet} → {o.house}H</span>
+                      <span className="font-mono text-vedicMaroon/60 shrink-0 w-20 truncate" lang="hi">{o.planet} → {o.house}H</span>
                       {/* TODO(i18n-server): localize overlay meaning prose */}
                       <span className="text-vedicMaroon/85" lang={compare.locale}>{o.meaning}</span>
                     </li>
@@ -425,7 +422,7 @@ function CompareTab({ birth, setError }: {
                   {compare.overlays.bOnA.map((o, i) => (
                     <li key={i} className="flex items-start gap-2">
                       {/* TODO(i18n-server): localize planet name */}
-                      <span className="font-mono text-vedicMaroon/60 shrink-0 w-20 truncate" lang="en">{o.planet} → {o.house}H</span>
+                      <span className="font-mono text-vedicMaroon/60 shrink-0 w-20 truncate" lang="hi">{o.planet} → {o.house}H</span>
                       {/* TODO(i18n-server): localize overlay meaning prose */}
                       <span className="text-vedicMaroon/85" lang={compare.locale}>{o.meaning}</span>
                     </li>
@@ -439,8 +436,8 @@ function CompareTab({ birth, setError }: {
             <h3 className="text-sm font-semibold text-vedicMaroon mb-2">{t('ai.compare.bhakoot', 'Bhakoot moon axis')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               {/* TODO(i18n-server): localize moon-sign names */}
-              <div><span className="font-semibold text-vedicMaroon/80">{t('ai.compare.aMoon', "A's Moon:")}</span> <span lang="en">{compare.moonAxis.aMoonSign}</span></div>
-              <div><span className="font-semibold text-vedicMaroon/80">{t('ai.compare.bMoon', "B's Moon:")}</span> <span lang="en">{compare.moonAxis.bMoonSign}</span></div>
+              <div><span className="font-semibold text-vedicMaroon/80">{t('ai.compare.aMoon', "A's Moon:")}</span> <span lang="hi">{compare.moonAxis.aMoonSign}</span></div>
+              <div><span className="font-semibold text-vedicMaroon/80">{t('ai.compare.bMoon', "B's Moon:")}</span> <span lang="hi">{compare.moonAxis.bMoonSign}</span></div>
               <div><span className="font-semibold text-vedicMaroon/80">{t('ai.compare.bFromA', 'B from A:')}</span> {compare.moonAxis.relativeHouse}H</div>
               {/* TODO(i18n-server): localize bhakoot note */}
               <div className="md:col-span-3 text-vedicMaroon/85" lang={compare.locale}>{compare.moonAxis.note}</div>

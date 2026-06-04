@@ -241,7 +241,7 @@ export function CalendarPage() {
               note={t('calendar.newMoonRange', 'new moon → new moon ({pct}%)').replace('{pct}', (live.progress.masa * 100).toFixed(1))}/>
             <div className="mt-3 pt-3 border-t border-vedicGold/30 text-[11px] text-vedicMaroon/70">
               <div>{t('calendar.samvat', 'Samvat: Vikram {vikram} · Shaka {shaka} · Kali {kali}').replace('{vikram}', String(live.samvat.vikram)).replace('{shaka}', String(live.samvat.shaka)).replace('{kali}', String(live.samvat.kali))}</div>
-              <div lang="en">{t('calendar.masaLine', 'Masa: Amanta {amanta} / Purnimanta {purnimanta}').replace('{amanta}', live.masa.amanta).replace('{purnimanta}', live.masa.purnimanta)}</div>
+              <div lang="hi">{t('calendar.masaLine', 'Masa: Amanta {amanta} / Purnimanta {purnimanta}').replace('{amanta}', live.masa.amanta).replace('{purnimanta}', live.masa.purnimanta)}</div>
             </div>
           </Card>
 
@@ -280,7 +280,7 @@ export function CalendarPage() {
             <div className="mt-2 text-[11px] text-vedicMaroon/70">
               {/* TODO(i18n-server): localize disha shool direction */}
               <span>{t('calendar.dishaShool', 'Disha Shool: {dir}').replace('{dir}', '')}</span>
-              <span className="font-semibold" lang="en">{live.vara.dishaShool}</span>
+              <span className="font-semibold" lang="hi">{live.vara.dishaShool}</span>
             </div>
           </Card>
         </div>
@@ -393,7 +393,7 @@ function ProgressRow({ label, value, fraction, note }: {
       <div className="flex justify-between text-xs">
         <span className="uppercase tracking-wider text-vedicMaroon/70">{label}</span>
         {/* TODO(i18n-server): localize value (server prose) */}
-        <span className="font-semibold text-vedicMaroon" lang="en">{value}</span>
+        <span className="font-semibold text-vedicMaroon" lang="hi">{value}</span>
       </div>
       <div className="mt-1 h-2 bg-vedicGold/15 rounded overflow-hidden relative">
         <div className="absolute inset-y-0 left-0 bg-vedicMaroon transition-all"
@@ -459,7 +459,7 @@ function MonthCard({ monthKey, days }: { monthKey: string; days: any[] }) {
       <div className="flex items-baseline justify-between mb-2">
         <div className="text-sm font-semibold text-vedicMaroon">{t(`calendar.month.${monthKey}`, monthKey)}</div>
         {/* TODO(i18n-server): localize masa/ritu name strings */}
-        <div className="text-[10px] text-vedicMaroon/60" lang="en">
+        <div className="text-[10px] text-vedicMaroon/60" lang="hi">
           {days[0].masa} · {days[0].ritu}
         </div>
       </div>
@@ -560,7 +560,7 @@ function SegmentBars({ year, segments }: { year: number; segments: any[] }) {
             <div key={i} title={`${s.label} — ${s.start} to ${s.end}`}
               className={`absolute inset-y-0 flex items-center justify-center px-1 text-[10px] font-semibold border-r border-white/40 ${tone(kind, s.label)}`}
               style={{ left: `${left}%`, width: `${width}%` }}
-              lang="en">
+              lang="hi">
               {width > 3 ? s.label : ''}
             </div>
           );

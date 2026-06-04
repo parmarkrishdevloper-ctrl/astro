@@ -89,10 +89,10 @@ function SectionBlocks({ sections }: {
     <div className="space-y-4">
       {sections.map((s) => (
         // Section heading is now server-localized; inner paragraphs may
-        // still contain English deep-content (deferred — flagged via lang="en")
+        // still contain English deep-content (deferred — flagged via lang="hi")
         <Card key={s.id} title={s.heading}>
           <div className="space-y-2 text-sm text-vedicMaroon/90 leading-relaxed">
-            {s.paragraphs.map((p, i) => <p key={i} lang="en">{p}</p>)}
+            {s.paragraphs.map((p, i) => <p key={i} lang="hi">{p}</p>)}
           </div>
         </Card>
       ))}
@@ -246,7 +246,7 @@ function PalmistryTab() {
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {/* highlight strings are short flags — kept English for readability */}
                   {reading.highlights.map((h: string, i: number) => (
-                    <Pill key={i} tone="info"><span lang="en">{h}</span></Pill>
+                    <Pill key={i} tone="info"><span lang="hi">{h}</span></Pill>
                   ))}
                 </div>
               )}
@@ -347,16 +347,16 @@ function SamudrikaTab() {
             <Card className="mb-4">
               <div className="text-xs uppercase tracking-wider text-vedicMaroon/60">{t('biometric.sam.constitution', 'Constitution')}</div>
               {/* bodyType is composed from English flags + locale-agnostic build/complexion strings */}
-              <div className="text-base font-semibold text-vedicMaroon mb-2" lang="en">{reading.bodyType}</div>
+              <div className="text-base font-semibold text-vedicMaroon mb-2" lang="hi">{reading.bodyType}</div>
               <p className="text-sm text-vedicMaroon/90 italic leading-relaxed">{reading.summary}</p>
               {(reading.auspicious?.length > 0 || reading.inauspicious?.length > 0) && (
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {/* auspicious/inauspicious flags use functional English keys (key:value pairs) */}
                   {reading.auspicious?.map((x: string, i: number) => (
-                    <Pill key={`a${i}`} tone="good"><span lang="en">✓ {x}</span></Pill>
+                    <Pill key={`a${i}`} tone="good"><span lang="hi">✓ {x}</span></Pill>
                   ))}
                   {reading.inauspicious?.map((x: string, i: number) => (
-                    <Pill key={`n${i}`} tone="warn"><span lang="en">! {x}</span></Pill>
+                    <Pill key={`n${i}`} tone="warn"><span lang="hi">! {x}</span></Pill>
                   ))}
                 </div>
               )}
@@ -462,7 +462,7 @@ function GraphologyTab() {
               {reading.flags?.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {/* flag prose deferred — short personality summaries from Big-Five thresholds */}
-                  {reading.flags.map((f: string, i: number) => <Pill key={i} tone="info"><span lang="en">{f}</span></Pill>)}
+                  {reading.flags.map((f: string, i: number) => <Pill key={i} tone="info"><span lang="hi">{f}</span></Pill>)}
                 </div>
               )}
             </Card>
@@ -536,11 +536,11 @@ function NumerologyTab() {
               <div className="flex justify-between">
                 <span className="text-vedicMaroon/60">{t('biometric.num.chaldean', 'Chaldean')}</span>
                 {/* TODO(i18n-server): localize quality string */}
-                <span className="font-medium" lang="en">{cmp.chaldean.a} · {cmp.chaldean.b} — {cmp.chaldean.quality}</span>
+                <span className="font-medium" lang="hi">{cmp.chaldean.a} · {cmp.chaldean.b} — {cmp.chaldean.quality}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-vedicMaroon/60">{t('biometric.num.pythagorean', 'Pythagorean')}</span>
-                <span className="font-medium" lang="en">{cmp.pythagorean.a} · {cmp.pythagorean.b} — {cmp.pythagorean.quality}</span>
+                <span className="font-medium" lang="hi">{cmp.pythagorean.a} · {cmp.pythagorean.b} — {cmp.pythagorean.quality}</span>
               </div>
             </div>
           )}
@@ -587,11 +587,11 @@ function NumerologyTab() {
                       {p.ends === 999 ? t('biometric.num.endsInf', 'ends ∞') : t('biometric.num.endsAge', 'ends age {n}').replace('{n}', String(p.ends))}
                     </div>
                     {/* TODO(i18n-server): localize p.meaning prose */}
-                    <div className="text-[11px] leading-snug" lang="en">{p.meaning}</div>
+                    <div className="text-[11px] leading-snug" lang="hi">{p.meaning}</div>
                     <div className="mt-2 pt-2 border-t border-vedicGold/20 text-[10px]">
                       <span className="text-vedicMaroon/60">{t('biometric.num.challenge', 'Challenge:')} </span>
                       {/* TODO(i18n-server): localize challenge meaning prose */}
-                      <span className="text-vedicMaroon/80" lang="en">{result.challenges[i].meaning}</span>
+                      <span className="text-vedicMaroon/80" lang="hi">{result.challenges[i].meaning}</span>
                     </div>
                   </div>
                 ))}
@@ -613,7 +613,7 @@ function NumerologyTab() {
                     <div className="text-[11px] uppercase tracking-wider text-vedicMaroon/60 mb-1">{t('biometric.num.masterNumbers', 'Master numbers')}</div>
                     <div className="flex flex-wrap gap-1.5">
                       {/* TODO(i18n-server): localize master strings */}
-                      {result.masters.map((m: string, i: number) => <Pill key={i} tone="good"><span lang="en">{m}</span></Pill>)}
+                      {result.masters.map((m: string, i: number) => <Pill key={i} tone="good"><span lang="hi">{m}</span></Pill>)}
                     </div>
                   </div>
                 )}
@@ -622,7 +622,7 @@ function NumerologyTab() {
                     <div className="text-[11px] uppercase tracking-wider text-vedicMaroon/60 mb-1">{t('biometric.num.karmicDebts', 'Karmic debts')}</div>
                     <ul className="list-disc pl-5 text-xs space-y-1 text-vedicMaroon/80">
                       {/* TODO(i18n-server): localize karmic debt strings */}
-                      {result.karmicDebt.map((k: string, i: number) => <li key={i} lang="en">{k}</li>)}
+                      {result.karmicDebt.map((k: string, i: number) => <li key={i} lang="hi">{k}</li>)}
                     </ul>
                   </div>
                 )}
@@ -647,7 +647,7 @@ function NumBadge({ title, num, master, meaning }: { title: string; num: number;
         </div>
       </div>
       {/* TODO(i18n-server): localize meaning prose */}
-      <p className="text-xs text-vedicMaroon/80 italic leading-relaxed" lang="en">{meaning}</p>
+      <p className="text-xs text-vedicMaroon/80 italic leading-relaxed" lang="hi">{meaning}</p>
     </Card>
   );
 }
@@ -663,8 +663,8 @@ function SystemCol({ sys, chaldean, pythagorean, cM, pM }: { sys: string; chalde
       </div>
       <div className="text-[11px] space-y-1">
         {/* TODO(i18n-server): localize meaning strings cM/pM */}
-        <div><span className="text-vedicMaroon/50">{t('biometric.num.cLabel', 'C: ')}</span><span lang="en">{cM}</span></div>
-        <div><span className="text-vedicMaroon/50">{t('biometric.num.pLabel', 'P: ')}</span><span lang="en">{pM}</span></div>
+        <div><span className="text-vedicMaroon/50">{t('biometric.num.cLabel', 'C: ')}</span><span lang="hi">{cM}</span></div>
+        <div><span className="text-vedicMaroon/50">{t('biometric.num.pLabel', 'P: ')}</span><span lang="hi">{pM}</span></div>
       </div>
     </div>
   );
@@ -775,7 +775,7 @@ function TarotTab() {
               <div className="text-xs uppercase tracking-wider text-vedicMaroon/60">{t('biometric.tarot.seed', 'Seed')}</div>
               <div className="font-mono text-xs text-vedicMaroon/80 truncate mb-2">{result.seed}</div>
               {/* TODO(i18n-server): localize result.summary prose */}
-              <p className="text-sm italic text-vedicMaroon/90 leading-relaxed" lang="en">{result.summary}</p>
+              <p className="text-sm italic text-vedicMaroon/90 leading-relaxed" lang="hi">{result.summary}</p>
             </Card>
             <div className={`grid gap-3 ${result.spread === 'chart-overlay' ? 'md:grid-cols-3 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
               {result.draws.map((d: any, i: number) => <TarotCard key={i} draw={d} />)}
@@ -800,21 +800,21 @@ function TarotCard({ draw }: { draw: any }) {
     <div className={`rounded-xl border border-vedicGold/30 p-3 bg-white ${draw.reversed ? 'ring-1 ring-red-400/40' : ''}`}>
       <div className="flex items-center justify-between mb-2">
         {/* TODO(i18n-server): localize position string */}
-        <span className="text-[10px] uppercase tracking-wider text-vedicMaroon/60" lang="en">{draw.position}</span>
-        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${suitColor[draw.card.suit] || 'bg-gray-300'}`} lang="en">
+        <span className="text-[10px] uppercase tracking-wider text-vedicMaroon/60" lang="hi">{draw.position}</span>
+        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${suitColor[draw.card.suit] || 'bg-gray-300'}`} lang="hi">
           {draw.card.suit}
         </span>
       </div>
       {/* TODO(i18n-server): localize card name */}
-      <div className="font-display text-base font-bold text-vedicMaroon mb-1" lang="en">
+      <div className="font-display text-base font-bold text-vedicMaroon mb-1" lang="hi">
         {draw.card.name}
       </div>
       <div className="text-[10px] text-vedicMaroon/60 mb-2">
         {draw.reversed ? t('biometric.tarot.reversed', '⤓ reversed') : t('biometric.tarot.upright', '⤒ upright')}
-        {draw.card.element && <> · <span lang="en">{draw.card.element}</span></>}
+        {draw.card.element && <> · <span lang="hi">{draw.card.element}</span></>}
       </div>
       {/* TODO(i18n-server): localize card upright/reversed text */}
-      <p className="text-xs text-vedicMaroon/90 leading-relaxed" lang="en">
+      <p className="text-xs text-vedicMaroon/90 leading-relaxed" lang="hi">
         {draw.reversed ? draw.card.reversed : draw.card.upright}
       </p>
     </div>

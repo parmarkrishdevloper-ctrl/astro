@@ -105,7 +105,7 @@ export function DivisionalsPage() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 {/* TODO(i18n-server): localize VargaMeta.purpose */}
-                <p className="text-sm text-vedicMaroon/80" lang="en">{meta.purpose}</p>
+                <p className="text-sm text-vedicMaroon/80" lang="hi">{meta.purpose}</p>
                 <p className="text-[11px] text-vedicMaroon/60 mt-1">
                   {t('divisionals.headerSegments', '{seg} segments × {deg}°').replace('{seg}', String(meta.segments)).replace('{deg}', meta.segmentDeg.toFixed(3))}
                 </p>

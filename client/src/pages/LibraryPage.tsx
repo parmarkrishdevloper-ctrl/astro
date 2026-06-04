@@ -236,10 +236,10 @@ function EventsTab({ chart, onChange }: { chart: any; onChange: () => void }) {
                 {e.snapshot && (
                   <div className="text-[11px] text-vedicMaroon/70 mt-1">
                     {/* TODO(i18n-server): localize snapshot maha/antar/pratyantar/transitSummary strings */}
-                    {e.snapshot.maha && <>{t('library.maha', 'Maha')} <strong lang="en">{e.snapshot.maha}</strong></>}
-                    {e.snapshot.antar && <> · {t('library.antar', 'Antar')} <strong lang="en">{e.snapshot.antar}</strong></>}
-                    {e.snapshot.pratyantar && <> · {t('library.pratyantar', 'Pratyantar')} <strong lang="en">{e.snapshot.pratyantar}</strong></>}
-                    {e.snapshot.transitSummary && <> · <span lang="en">{e.snapshot.transitSummary}</span></>}
+                    {e.snapshot.maha && <>{t('library.maha', 'Maha')} <strong lang="hi">{e.snapshot.maha}</strong></>}
+                    {e.snapshot.antar && <> · {t('library.antar', 'Antar')} <strong lang="hi">{e.snapshot.antar}</strong></>}
+                    {e.snapshot.pratyantar && <> · {t('library.pratyantar', 'Pratyantar')} <strong lang="hi">{e.snapshot.pratyantar}</strong></>}
+                    {e.snapshot.transitSummary && <> · <span lang="hi">{e.snapshot.transitSummary}</span></>}
                   </div>
                 )}
                 {e.notes && <div className="text-xs text-vedicMaroon/80 mt-1">{e.notes}</div>}

@@ -102,7 +102,7 @@ function PatternTab() {
               {presets.map((p) => (
                 <button key={p.id} onClick={() => setQuery(p.query)}
                   className="text-[11px] px-2 py-1 rounded-md border border-vedicGold/30 bg-white/60 hover:bg-vedicMaroon/5"
-                  lang="en">
+                  lang="hi">
                   {p.label}
                 </button>
               ))}
@@ -137,7 +137,7 @@ function PatternTab() {
               <div className="text-xs text-vedicMaroon/70 mb-2">
                 {/* TODO(i18n-server): localize parse error messages */}
                 <span>{t('research.pattern.parseWarn', 'Parse warnings: {list}').replace('{list}', '')}</span>
-                <span lang="en">{result.parseErrors.join(' · ')}</span>
+                <span lang="hi">{result.parseErrors.join(' · ')}</span>
               </div>
             )}
             <ul className="text-xs space-y-1">
@@ -208,7 +208,7 @@ function TimelineTab() {
             {events.map((e, i) => (
               <div key={i} className="text-xs flex items-center justify-between p-1 rounded bg-vedicCream/40">
                 {/* TODO(i18n-server): localize event title and category labels */}
-                <span lang="en">{e.date} · <b>{e.title}</b> <span className="text-vedicMaroon/50">{e.category}</span></span>
+                <span lang="hi">{e.date} · <b>{e.title}</b> <span className="text-vedicMaroon/50">{e.category}</span></span>
                 <button onClick={() => setEvents(events.filter((_, j) => j !== i))} className="text-rose-600">×</button>
               </div>
             ))}
@@ -269,7 +269,7 @@ function TimelineRender({ overlay }: { overlay: any }) {
                         left: `${left}%`, width: `${w}%`,
                         background: lane === 'maha' ? '#801336' : '#b0436b',
                       }}
-                      lang="en">
+                      lang="hi">
                       {b.label}
                     </div>
                   );
@@ -286,7 +286,7 @@ function TimelineRender({ overlay }: { overlay: any }) {
                       }}>
                       <div className="absolute top-0 -translate-x-1/2 text-[9px] whitespace-nowrap"
                            style={{ color: lane === 'transit' ? '#0369a1' : '#047857' }}
-                           lang="en">
+                           lang="hi">
                         {p.label.length > 28 ? p.label.slice(0, 28) + '…' : p.label}
                       </div>
                     </div>
@@ -371,7 +371,7 @@ function StatsTab() {
                   setSelected(nxt);
                 }} />
                 {/* TODO(i18n-server): localize famous name and profession */}
-                <span lang="en">{f.name} <span className="text-vedicMaroon/50">· {f.profession}</span></span>
+                <span lang="hi">{f.name} <span className="text-vedicMaroon/50">· {f.profession}</span></span>
               </label>
             ))}
           </div>
@@ -410,14 +410,14 @@ function StatsTab() {
                 <div className="font-semibold text-emerald-700 mb-1">{t('research.stats.hits', 'Hits')}</div>
                 {/* TODO(i18n-server): localize famous label/tag */}
                 {result.hits.map((h: any, i: number) => (
-                  <div key={i} lang="en">{h.label} <span className="text-vedicMaroon/50">· {h.tag}</span></div>
+                  <div key={i} lang="hi">{h.label} <span className="text-vedicMaroon/50">· {h.tag}</span></div>
                 ))}
                 {!result.hits.length && <div className="text-vedicMaroon/50">—</div>}
               </div>
               <div>
                 <div className="font-semibold text-rose-700 mb-1">{t('research.stats.misses', 'Misses')}</div>
                 {result.misses.map((h: any, i: number) => (
-                  <div key={i} lang="en">{h.label} <span className="text-vedicMaroon/50">· {h.tag}</span></div>
+                  <div key={i} lang="hi">{h.label} <span className="text-vedicMaroon/50">· {h.tag}</span></div>
                 ))}
                 {!result.misses.length && <div className="text-vedicMaroon/50">—</div>}
               </div>
@@ -436,7 +436,7 @@ function StatsTab() {
                     {result.byTag.map((b: any) => (
                       <tr key={b.tag}>
                         {/* TODO(i18n-server): localize tag string */}
-                        <td lang="en">{b.tag}</td><td>{b.n}</td><td>{b.matchCount}</td><td>{b.matchPct}%</td>
+                        <td lang="hi">{b.tag}</td><td>{b.n}</td><td>{b.matchCount}</td><td>{b.matchPct}%</td>
                       </tr>
                     ))}
                   </tbody>
@@ -452,7 +452,7 @@ function StatsTab() {
               {dist.slices.map((s: any) => (
                 <div key={s.key} className="flex items-center gap-2">
                   {/* TODO(i18n-server): localize slice key (sign/lord) */}
-                  <div className="w-28 text-vedicMaroon/80" lang="en">{s.key}</div>
+                  <div className="w-28 text-vedicMaroon/80" lang="hi">{s.key}</div>
                   <div className="flex-1 h-3 bg-vedicCream/40 rounded">
                     <div className="h-3 rounded bg-vedicMaroon" style={{ width: `${s.pct}%` }} />
                   </div>
@@ -505,8 +505,8 @@ function FamousTab() {
                   <div className="flex items-center justify-between">
                     <div>
                       {/* TODO(i18n-server): localize famous name and profession */}
-                      <div className="font-semibold" lang="en">{m.name}</div>
-                      <div className="text-[11px] text-vedicMaroon/70" lang="en">{m.profession}</div>
+                      <div className="font-semibold" lang="hi">{m.name}</div>
+                      <div className="text-[11px] text-vedicMaroon/70" lang="hi">{m.profession}</div>
                     </div>
                     <Pill tone={m.score >= 50 ? 'good' : m.score >= 25 ? 'info' : 'neutral'}>
                       {m.score} / 100
@@ -515,11 +515,11 @@ function FamousTab() {
                   {m.reasons?.length > 0 && (
                     <ul className="mt-1 text-[11px] text-vedicMaroon/80 list-disc pl-4">
                       {/* TODO(i18n-server): localize reason prose */}
-                      {m.reasons.map((r: string, i: number) => <li key={i} lang="en">{r}</li>)}
+                      {m.reasons.map((r: string, i: number) => <li key={i} lang="hi">{r}</li>)}
                     </ul>
                   )}
                   {/* TODO(i18n-server): localize notes prose */}
-                  {m.notes && <div className="mt-1 text-[11px] italic text-vedicMaroon/60" lang="en">{m.notes}</div>}
+                  {m.notes && <div className="mt-1 text-[11px] italic text-vedicMaroon/60" lang="hi">{m.notes}</div>}
                 </div>
               ))}
             </div>
@@ -637,14 +637,14 @@ function RectifyDeepTab() {
                 {Object.entries(result.bestMatch.scores).map(([k, v]) => (
                   <div key={k} className="p-1 rounded bg-vedicCream/40">
                     {/* TODO(i18n-server): localize score key labels */}
-                    <div className="text-vedicMaroon/60 uppercase" lang="en">{k}</div>
+                    <div className="text-vedicMaroon/60 uppercase" lang="hi">{k}</div>
                     <div className="font-semibold">{String(v)}</div>
                   </div>
                 ))}
               </div>
               <ul className="text-xs list-disc pl-4">
                 {/* TODO(i18n-server): localize commentary prose */}
-                {result.commentary.map((c: string, i: number) => <li key={i} lang="en">{c}</li>)}
+                {result.commentary.map((c: string, i: number) => <li key={i} lang="hi">{c}</li>)}
               </ul>
             </Card>
             <Card title={t('research.rectify.top10', 'Top 10 candidates')}>
@@ -788,12 +788,12 @@ function NotebookTab() {
             </div>
             {n.body && (
               // TODO(i18n-server): localize note body prose
-              <pre className="whitespace-pre-wrap text-xs text-vedicMaroon/80" lang="en">{n.body}</pre>
+              <pre className="whitespace-pre-wrap text-xs text-vedicMaroon/80" lang="hi">{n.body}</pre>
             )}
             {n.tags?.length > 0 && (
               <div className="mt-1 flex flex-wrap gap-1 text-[10px]">
                 {/* TODO(i18n-server): localize tag strings */}
-                {n.tags.map((tg: string) => <Pill key={tg} tone="info"><span lang="en">{tg}</span></Pill>)}
+                {n.tags.map((tg: string) => <Pill key={tg} tone="info"><span lang="hi">{tg}</span></Pill>)}
               </div>
             )}
             <div className="mt-2 flex items-center gap-2 text-[11px] text-vedicMaroon/60">

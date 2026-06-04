@@ -106,10 +106,10 @@ export function TimingPage() {
                 ))}
               </ul>
               <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
-                <Pill tone="neutral">{t('panchang.tithi', 'Tithi')}: <span lang="en">{horoscope.panchang.tithi}</span></Pill>
-                <Pill tone="neutral"><span lang="en">{horoscope.panchang.nakshatra}</span></Pill>
-                <Pill tone="neutral"><span lang="en">{horoscope.panchang.vara}</span></Pill>
-                <Pill tone="neutral">{t('panchang.yoga', 'Yoga')}: <span lang="en">{horoscope.panchang.yoga}</span></Pill>
+                <Pill tone="neutral">{t('panchang.tithi', 'Tithi')}: <span lang="hi">{horoscope.panchang.tithi}</span></Pill>
+                <Pill tone="neutral"><span lang="hi">{horoscope.panchang.nakshatra}</span></Pill>
+                <Pill tone="neutral"><span lang="hi">{horoscope.panchang.vara}</span></Pill>
+                <Pill tone="neutral">{t('panchang.yoga', 'Yoga')}: <span lang="hi">{horoscope.panchang.yoga}</span></Pill>
                 {horoscope.retrograde.length > 0 && <Pill tone="warn">{t('timing.rx', 'Rx')}: {horoscope.retrograde.map((p: string) => al.planet(p)).join(', ')}</Pill>}
                 {horoscope.combust.length > 0 && <Pill tone="warn">{t('timing.combust', 'Combust')}: {horoscope.combust.map((p: string) => al.planet(p)).join(', ')}</Pill>}
               </div>
@@ -138,7 +138,7 @@ export function TimingPage() {
                       <div className="font-bold text-vedicMaroon">
                         {new Date(a.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                         {/* TODO(i18n-server): localize alert.topic */}
-                        <span className="ml-2 text-vedicMaroon/60 font-normal">{t('timing.house', 'House')} {a.dominantHouse} — <span lang="en">{a.topic}</span></span>
+                        <span className="ml-2 text-vedicMaroon/60 font-normal">{t('timing.house', 'House')} {a.dominantHouse} — <span lang="hi">{a.topic}</span></span>
                       </div>
                       <div className="text-[11px] text-vedicMaroon/60 mt-1">
                         {t('timing.maha', 'Maha')} {al.planet(a.factors.mahaLord)} ({t('common.houseShort', 'H')}{a.factors.mahaHouse})
@@ -168,7 +168,7 @@ export function TimingPage() {
                         <td className="py-1 tabular-nums">{new Date(e.utc).toLocaleDateString()}</td>
                         <td className="font-bold text-vedicMaroon">{al.planet(e.planet)}</td>
                         {/* TODO(i18n-server): localize rx event.kind */}
-                        <td lang="en" className={
+                        <td lang="hi" className={
                           e.kind.startsWith('retrograde') ? 'text-amber-700'
                           : e.kind.startsWith('combust') ? 'text-red-700'
                           : 'text-vedicMaroon/80'
@@ -197,7 +197,7 @@ export function TimingPage() {
                       {journal.eclipses.map((e, i) => (
                         <tr key={i} className="border-b border-vedicGold/10">
                           {/* TODO(i18n-server): localize eclipse.type */}
-                          <td className="py-1 font-bold text-vedicMaroon" lang="en">{e.type}</td>
+                          <td className="py-1 font-bold text-vedicMaroon" lang="hi">{e.type}</td>
                           <td>{new Date(e.utc).toLocaleString()}</td>
                           <td>{al.rashiByName(e.rashiSunName)}</td>
                           <td>{al.rashiByName(e.rashiMoonName)}</td>

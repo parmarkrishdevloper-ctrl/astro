@@ -267,10 +267,10 @@ function EventsTimeline({
                     </span>
                   </td>
                   {/* TODO(i18n-server): localize dasha string */}
-                  <td className="font-mono text-vedicMaroon" lang="en">{e.dasha}</td>
+                  <td className="font-mono text-vedicMaroon" lang="hi">{e.dasha}</td>
                   <td><Pill tone={PROB_TONE[e.probability]}>{probLabel}</Pill></td>
                   {/* TODO(i18n-server): localize reason */}
-                  <td className="text-vedicMaroon/70 text-[11px]" lang="en">{e.reason}</td>
+                  <td className="text-vedicMaroon/70 text-[11px]" lang="hi">{e.reason}</td>
                 </tr>
               );
             })}

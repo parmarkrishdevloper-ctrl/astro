@@ -231,7 +231,7 @@ function TajikaView({ data }: { data: any }) {
         <div className="flex items-center gap-3 mb-3">
           <Pill tone={tone as any}>{t('prashnaPro.scorePill', 'Score {n}').replace('{n}', String(data.score))}</Pill>
           {/* TODO(i18n-server): localize reasoning */}
-          <span className="text-xs text-vedicMaroon/70" lang="en">{data.reasoning}</span>
+          <span className="text-xs text-vedicMaroon/70" lang="hi">{data.reasoning}</span>
         </div>
         <div className="text-xs text-vedicMaroon/70">
           <strong>{t('prashnaPro.lagnaLord', 'Lagna lord:')}</strong> {al.planetByName(data.lagnaLord)} · <strong>{t('prashnaPro.quesitedLord', 'Quesited lord:')}</strong> {al.planetByName(data.quesitedLord)}
@@ -251,14 +251,14 @@ function TajikaView({ data }: { data: any }) {
               {pairs.map((s: any, i: number) => (
                 <tr key={i} className="border-t border-vedicGold/10">
                   {/* TODO(i18n-server): localize between */}
-                  <td className="py-1" lang="en">{s.between}</td>
+                  <td className="py-1" lang="hi">{s.between}</td>
                   <td className={
                     s.relation === 'Itthasala' ? 'text-green-700 font-semibold' :
                     s.relation === 'Ishraaf' ? 'text-red-700 font-semibold' :
                     'text-vedicMaroon/80'
                   }>{s.relation}</td>
                   {/* TODO(i18n-server): localize aspect */}
-                  <td className="capitalize" lang="en">{s.aspect}</td>
+                  <td className="capitalize" lang="hi">{s.aspect}</td>
                   <td className="font-mono">{s.orb?.toFixed(2)}° / {s.allowed?.toFixed(2)}°</td>
                   <td>{s.applying ? t('prashnaPro.applyingYes', 'Yes') : t('prashnaPro.applyingNo', 'No')}</td>
                 </tr>
@@ -281,7 +281,7 @@ function NarchintamaniView({ data }: { data: any }) {
       <Card title={t('prashnaPro.narchHeader', 'Narchintamani — {v}').replace('{v}', String(overall).toUpperCase())}>
         <div className="flex flex-wrap gap-2 mb-3">
           {/* TODO(i18n-server): localize overall */}
-          <Pill tone={tone as any}><span lang="en">{overall}</span></Pill>
+          <Pill tone={tone as any}><span lang="hi">{overall}</span></Pill>
           <Pill tone="info">{t('prashnaPro.lagnaPill', 'Lagna: {s}').replace('{s}', String(data.lagnaStrength))}</Pill>
           <Pill tone="info">{t('prashnaPro.moonPill', 'Moon: {s}').replace('{s}', String(data.moonStrength))}</Pill>
           {/* TODO(i18n-server): localize tithiGroup */}
@@ -290,7 +290,7 @@ function NarchintamaniView({ data }: { data: any }) {
         {Array.isArray(data.notes) && data.notes.length > 0 && (
           <ul className="text-xs text-vedicMaroon/70 space-y-1 list-disc pl-5">
             {/* TODO(i18n-server): localize notes */}
-            {data.notes.map((n: string, i: number) => <li key={i} lang="en">{n}</li>)}
+            {data.notes.map((n: string, i: number) => <li key={i} lang="hi">{n}</li>)}
           </ul>
         )}
       </Card>
@@ -347,7 +347,7 @@ function ShatpanchasikaView({ data }: { data: any }) {
                   'bg-gray-100 text-gray-700'
                 }`}>#{s.id}</span>
                 {/* TODO(i18n-server): localize sutra text */}
-                <span className="text-vedicMaroon/80" lang="en">{s.text}</span>
+                <span className="text-vedicMaroon/80" lang="hi">{s.text}</span>
               </li>
             ))}
           </ul>
@@ -403,7 +403,7 @@ function SwaraView({ data }: { data: any }) {
         {Array.isArray(data.notes) && data.notes.length > 0 && (
           <ul className="text-xs text-vedicMaroon/70 space-y-1 list-disc pl-5">
             {/* TODO(i18n-server): localize notes */}
-            {data.notes.map((n: string, i: number) => <li key={i} lang="en">{n}</li>)}
+            {data.notes.map((n: string, i: number) => <li key={i} lang="hi">{n}</li>)}
           </ul>
         )}
       </Card>
@@ -446,7 +446,7 @@ function ArudhaView({ data }: { data: any }) {
         {Array.isArray(data.notes) && data.notes.length > 0 && (
           <ul className="mt-3 text-xs text-vedicMaroon/70 space-y-1 list-disc pl-5">
             {/* TODO(i18n-server): localize notes */}
-            {data.notes.map((n: string, i: number) => <li key={i} lang="en">{n}</li>)}
+            {data.notes.map((n: string, i: number) => <li key={i} lang="hi">{n}</li>)}
           </ul>
         )}
       </Card>

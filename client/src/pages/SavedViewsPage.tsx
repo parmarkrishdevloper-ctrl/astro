@@ -200,7 +200,7 @@ function ViewRow({
           />
         ) : (
           /* TODO(i18n-server): localize view.name (user-supplied) */
-          <div className="text-sm font-semibold text-vedicMaroon truncate" lang="en">{view.name}</div>
+          <div className="text-sm font-semibold text-vedicMaroon truncate" lang="hi">{view.name}</div>
         )}
         <div className="flex items-center gap-2 text-[11px] text-vedicMaroon/60 mt-0.5 truncate">
           <span className="font-mono">{view.route}</span>
@@ -211,7 +211,7 @@ function ViewRow({
           <div className="flex flex-wrap gap-1 mt-1.5">
             {view.tags.map((tag) => (
               /* TODO(i18n-server): localize view.tags (user-supplied) */
-              <span key={tag} lang="en" className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-vedicGold/15 text-vedicMaroon/70">
+              <span key={tag} lang="hi" className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-vedicGold/15 text-vedicMaroon/70">
                 {tag}
               </span>
             ))}

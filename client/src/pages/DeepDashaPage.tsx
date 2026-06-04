@@ -284,7 +284,7 @@ export function DeepDashaPage() {
                     style={isActive ? { background: 'var(--vedic-maroon, #7c2d12)' } : {}}
                   >
                     {/* TODO(i18n-server): localize DashaSystemMeta.name */}
-                    <div className="text-sm" lang="en">{s.name}</div>
+                    <div className="text-sm" lang="hi">{s.name}</div>
                     <div className="text-[10px] opacity-80 font-normal">
                       {t('dasha.yearsShort', '{n}y').replace('{n}', String(s.totalYears))} · {t('dasha.lordsCount', '{n} lords').replace('{n}', String(s.order.length))}
                     </div>
@@ -295,9 +295,9 @@ export function DeepDashaPage() {
             {activeMeta && (
               <div className="text-[11px] text-vedicMaroon/70 space-y-1">
                 {/* TODO(i18n-server): localize DashaSystemMeta.purpose / condition / note */}
-                <p><span className="font-semibold" lang="en">{activeMeta.name} ({activeMeta.nameHi}):</span> <span lang="en">{activeMeta.purpose}</span></p>
+                <p><span className="font-semibold" lang="hi">{activeMeta.name} ({activeMeta.nameHi}):</span> <span lang="hi">{activeMeta.purpose}</span></p>
                 {activeMeta.condition && (
-                  <p className="text-vedicMaroon/50"><em>{t('dasha.applicability', 'Applicability')}:</em> <span lang="en">{activeMeta.condition}</span></p>
+                  <p className="text-vedicMaroon/50"><em>{t('dasha.applicability', 'Applicability')}:</em> <span lang="hi">{activeMeta.condition}</span></p>
                 )}
                 {startInfo && (
                   <p className="pt-1">
@@ -310,7 +310,7 @@ export function DeepDashaPage() {
                       {t('dasha.balanceYrs', '{n} yrs').replace('{n}', startInfo.balanceYears.toFixed(2))}
                     </span>{' '}
                     {t('dasha.elapsedNote', '({pct}% of that lord\'s period had elapsed before birth)').replace('{pct}', (startInfo.elapsedFraction * 100).toFixed(1))}
-                    {startInfo.note && <span className="text-vedicMaroon/50" lang="en"> — {startInfo.note}</span>}
+                    {startInfo.note && <span className="text-vedicMaroon/50" lang="hi"> — {startInfo.note}</span>}
                   </p>
                 )}
               </div>

@@ -234,7 +234,7 @@ function Snap({ label, v }: { label: string; v: string }) {
     <div className="rounded bg-white/70 border border-vedicGold/20 px-2 py-1">
       <span className="text-vedicMaroon/50 mr-1">{label}:</span>
       {/* TODO(i18n-server): localize panchang snapshot strings (tithi, nakshatra, vara, yoga) */}
-      <span className="font-semibold text-vedicMaroon" lang="en">{v}</span>
+      <span className="font-semibold text-vedicMaroon" lang="hi">{v}</span>
     </div>
   );
 }

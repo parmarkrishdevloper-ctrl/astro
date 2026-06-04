@@ -154,7 +154,7 @@ function VastuView({ report }: { report: any }) {
         </div>
         <div className="mt-3 text-[11px] text-vedicMaroon/70 space-y-0.5">
           {/* TODO(i18n-server): localize report.notes (server prose) */}
-          {report.notes.map((n: string, i: number) => <div key={i} lang="en">• {n}</div>)}
+          {report.notes.map((n: string, i: number) => <div key={i} lang="hi">• {n}</div>)}
         </div>
       </Card>
 
@@ -165,9 +165,9 @@ function VastuView({ report }: { report: any }) {
               <div className="flex gap-2 items-center">
                 <Pill tone={severityTone(d.severity)}>{localizeSeverity(t, d.severity)}</Pill>
                 {/* TODO(i18n-server): localize d.dosha and d.remedy */}
-                <span className="font-semibold text-vedicMaroon" lang="en">{d.dosha}</span>
+                <span className="font-semibold text-vedicMaroon" lang="hi">{d.dosha}</span>
               </div>
-              <div className="text-vedicMaroon/70 text-[11px] pl-1" lang="en">↳ {d.remedy}</div>
+              <div className="text-vedicMaroon/70 text-[11px] pl-1" lang="hi">↳ {d.remedy}</div>
             </li>
           ))}
         </ul>
@@ -189,10 +189,10 @@ function VastuView({ report }: { report: any }) {
               <tr key={d.key} className="border-t border-vedicGold/10 align-top">
                 <td className="py-1 font-mono font-semibold">{localizeDirection(t, d.key)}</td>
                 {/* TODO(i18n-server): localize d.deity, d.tattva, d.favoredRooms */}
-                <td lang="en">{d.deity}</td>
+                <td lang="hi">{d.deity}</td>
                 <td>{al.planet(d.planet)}</td>
-                <td lang="en">{d.tattva}</td>
-                <td className="text-[11px] text-vedicMaroon/70" lang="en">{d.favoredRooms.slice(0, 2).join(' · ')}</td>
+                <td lang="hi">{d.tattva}</td>
+                <td className="text-[11px] text-vedicMaroon/70" lang="hi">{d.favoredRooms.slice(0, 2).join(' · ')}</td>
               </tr>
             ))}
           </tbody>
@@ -212,7 +212,7 @@ function VastuView({ report }: { report: any }) {
             {Object.entries(report.roomAdvice as Record<string, any>).map(([room, a]) => (
               <tr key={room} className="border-t border-vedicGold/10">
                 {/* TODO(i18n-server): localize room name */}
-                <td className="py-1 font-semibold" lang="en">{room}</td>
+                <td className="py-1 font-semibold" lang="hi">{room}</td>
                 <td className="text-green-700">{a.best.map((d: string) => localizeDirection(t, d)).join(', ') || t('specialty.value.dash', '—')}</td>
                 <td className="text-red-700">{a.avoid.map((d: string) => localizeDirection(t, d)).join(', ') || t('specialty.value.dash', '—')}</td>
               </tr>
@@ -269,7 +269,7 @@ function MedicalView({ report }: { report: any }) {
               <tr key={b.houseNum} className="border-t border-vedicGold/10 align-top">
                 <td className="py-1 font-mono">{b.houseNum}</td>
                 {/* TODO(i18n-server): localize b.part */}
-                <td className="font-semibold" lang="en">{b.part}</td>
+                <td className="font-semibold" lang="hi">{b.part}</td>
                 <td><Pill tone={severityTone(b.risk)}>{localizeSeverity(t, b.risk)}</Pill></td>
                 <td className="text-[11px] text-vedicMaroon/70">
                   {b.occupants.length ? t('specialty.medical.in', 'In: {planets}').replace('{planets}', b.occupants.map((p: string) => al.planet(p)).join(', ')) : ''}
@@ -301,8 +301,8 @@ function MedicalView({ report }: { report: any }) {
                   </Pill>
                 </td>
                 {/* TODO(i18n-server): localize h.bodySystems and h.diseasesToWatch */}
-                <td className="text-[11px] text-vedicMaroon/70" lang="en">{h.bodySystems.slice(0, 3).join(', ')}</td>
-                <td className="text-[11px] text-vedicMaroon/70" lang="en">{h.diseasesToWatch.slice(0, 3).join(', ') || t('specialty.value.dash', '—')}</td>
+                <td className="text-[11px] text-vedicMaroon/70" lang="hi">{h.bodySystems.slice(0, 3).join(', ')}</td>
+                <td className="text-[11px] text-vedicMaroon/70" lang="hi">{h.diseasesToWatch.slice(0, 3).join(', ') || t('specialty.value.dash', '—')}</td>
               </tr>
             ))}
           </tbody>
@@ -312,7 +312,7 @@ function MedicalView({ report }: { report: any }) {
       <Card title={t('specialty.medical.recommend', 'Recommendations')}>
         <ul className="space-y-1 text-xs list-disc pl-5 text-vedicMaroon/80">
           {/* TODO(i18n-server): localize report.recommendations prose */}
-          {report.recommendations.map((r: string, i: number) => <li key={i} lang="en">{r}</li>)}
+          {report.recommendations.map((r: string, i: number) => <li key={i} lang="hi">{r}</li>)}
         </ul>
       </Card>
     </>
@@ -363,7 +363,7 @@ function MaritalView({ report }: { report: any }) {
           <div className="text-xs space-y-1">
             <div>{t('specialty.marital.lordIs', 'Lord: {planet} ({state})').replace('{planet}', al.planet(report.seventhHouse.lord)).replace('{state}', localizeLordState(t, report.seventhHouse.lordState))}</div>
             {/* TODO(i18n-server): localize report.seventhHouse.sign.element/quality */}
-            <div lang="en">{t('specialty.marital.signIs', 'Sign: {name} ({element} · {quality})').replace('{name}', al.rashiByName(report.seventhHouse.sign.name)).replace('{element}', report.seventhHouse.sign.element).replace('{quality}', report.seventhHouse.sign.quality)}</div>
+            <div lang="hi">{t('specialty.marital.signIs', 'Sign: {name} ({element} · {quality})').replace('{name}', al.rashiByName(report.seventhHouse.sign.name)).replace('{element}', report.seventhHouse.sign.element).replace('{quality}', report.seventhHouse.sign.quality)}</div>
             <div>{t('specialty.marital.occupants', 'Occupants: {planets}').replace('{planets}', report.seventhHouse.occupants.map((p: string) => al.planet(p)).join(', ') || dash)}</div>
             <div>{t('specialty.marital.aspects', 'Aspects: {planets}').replace('{planets}', report.seventhHouse.aspects.map((p: string) => al.planet(p)).join(', ') || dash)}</div>
             {report.seventhHouse.benefics.length > 0 && <div className="text-green-700">{t('specialty.marital.beneficsIn', 'Benefics in: {planets}').replace('{planets}', report.seventhHouse.benefics.map((p: string) => al.planet(p)).join(', '))}</div>}
@@ -398,7 +398,7 @@ function MaritalView({ report }: { report: any }) {
             {report.mangalDosha.notes?.length > 0 && (
               <ul className="text-[11px] text-vedicMaroon/70 pl-3 list-disc">
                 {/* TODO(i18n-server): localize mangal dosha notes */}
-                {report.mangalDosha.notes.map((n: string, i: number) => <li key={i} lang="en">{n}</li>)}
+                {report.mangalDosha.notes.map((n: string, i: number) => <li key={i} lang="hi">{n}</li>)}
               </ul>
             )}
           </div>
@@ -408,9 +408,9 @@ function MaritalView({ report }: { report: any }) {
       <Card title={t('specialty.marital.spouseInd', 'Spouse indicators')}>
         {/* TODO(i18n-server): localize spouse nature/appearance/origin prose */}
         <div className="text-xs space-y-1">
-          <div lang="en">{t('specialty.marital.nature', 'Nature: {value}').replace('{value}', Array.isArray(report.spouse.nature) ? report.spouse.nature.join(' · ') : report.spouse.nature)}</div>
-          <div lang="en">{t('specialty.marital.appearance', 'Appearance: {value}').replace('{value}', Array.isArray(report.spouse.appearance) ? report.spouse.appearance.join(' · ') : report.spouse.appearance)}</div>
-          <div lang="en">{t('specialty.marital.origin', 'Origin: {value}').replace('{value}', report.spouse.origin)}</div>
+          <div lang="hi">{t('specialty.marital.nature', 'Nature: {value}').replace('{value}', Array.isArray(report.spouse.nature) ? report.spouse.nature.join(' · ') : report.spouse.nature)}</div>
+          <div lang="hi">{t('specialty.marital.appearance', 'Appearance: {value}').replace('{value}', Array.isArray(report.spouse.appearance) ? report.spouse.appearance.join(' · ') : report.spouse.appearance)}</div>
+          <div lang="hi">{t('specialty.marital.origin', 'Origin: {value}').replace('{value}', report.spouse.origin)}</div>
         </div>
       </Card>
 
@@ -421,8 +421,8 @@ function MaritalView({ report }: { report: any }) {
             <li key={i} className="border-t border-vedicGold/10 pt-1.5 flex justify-between gap-3">
               <div>
                 {/* TODO(i18n-server): localize tm.mahadasha and tm.why */}
-                <div className="font-semibold" lang="en">{tm.mahadasha} ({al.planet(tm.lord)})</div>
-                <div className="text-[11px] text-vedicMaroon/70" lang="en">{tm.why}</div>
+                <div className="font-semibold" lang="hi">{tm.mahadasha} ({al.planet(tm.lord)})</div>
+                <div className="text-[11px] text-vedicMaroon/70" lang="hi">{tm.why}</div>
               </div>
               <div className="font-mono text-[11px] text-vedicMaroon/70 text-right whitespace-nowrap">
                 {tm.startISO} → {tm.endISO}
@@ -509,7 +509,7 @@ function CareerView({ report }: { report: any }) {
         <div className="flex flex-wrap gap-1.5">
           {/* TODO(i18n-server): localize career field names */}
           {report.careerFields.map((f: string) => (
-            <span key={f} className="px-2 py-0.5 rounded bg-parchment border border-vedicGold/30 text-[11px] text-vedicMaroon/80" lang="en">{f}</span>
+            <span key={f} className="px-2 py-0.5 rounded bg-parchment border border-vedicGold/30 text-[11px] text-vedicMaroon/80" lang="hi">{f}</span>
           ))}
         </div>
       </Card>
@@ -521,8 +521,8 @@ function CareerView({ report }: { report: any }) {
             <li key={i} className="border-t border-vedicGold/10 pt-1.5 flex justify-between gap-3">
               <div>
                 {/* TODO(i18n-server): localize tm.mahadasha and tm.why */}
-                <div className="font-semibold" lang="en">{tm.mahadasha} ({al.planet(tm.lord)})</div>
-                <div className="text-[11px] text-vedicMaroon/70" lang="en">{tm.why}</div>
+                <div className="font-semibold" lang="hi">{tm.mahadasha} ({al.planet(tm.lord)})</div>
+                <div className="text-[11px] text-vedicMaroon/70" lang="hi">{tm.why}</div>
               </div>
               <div className="font-mono text-[11px] text-vedicMaroon/70 text-right whitespace-nowrap">
                 {tm.startISO} → {tm.endISO}
@@ -551,7 +551,7 @@ function FinancialView({ report }: { report: any }) {
           <Pill tone={scoreTone(report.score)}>{localizeScore(t, report.scoreLabel)}</Pill>
         </div>
         {/* TODO(i18n-server): localize report.liquidityNote prose */}
-        <div className="mt-3 text-xs text-vedicMaroon/70" lang="en">{report.liquidityNote}</div>
+        <div className="mt-3 text-xs text-vedicMaroon/70" lang="hi">{report.liquidityNote}</div>
       </Card>
 
       <Card title={t('specialty.financial.wealth', 'Wealth houses (2/11/9/5)')}>
@@ -600,7 +600,7 @@ function FinancialView({ report }: { report: any }) {
                   <span className="font-semibold">{al.yoga(y.yoga)}</span>
                 </div>
                 {/* TODO(i18n-server): localize y.explanation prose */}
-                <div className="text-[11px] text-vedicMaroon/70" lang="en">{y.explanation}</div>
+                <div className="text-[11px] text-vedicMaroon/70" lang="hi">{y.explanation}</div>
               </div>
             </li>
           ))}
@@ -610,7 +610,7 @@ function FinancialView({ report }: { report: any }) {
       <Card title={t('specialty.financial.income', 'Likely income sources')}>
         <ul className="list-disc pl-5 space-y-1 text-xs text-vedicMaroon/80">
           {/* TODO(i18n-server): localize income source phrases */}
-          {report.incomeSources.map((s: string, i: number) => <li key={i} lang="en">{s}</li>)}
+          {report.incomeSources.map((s: string, i: number) => <li key={i} lang="hi">{s}</li>)}
         </ul>
       </Card>
 
@@ -621,8 +621,8 @@ function FinancialView({ report }: { report: any }) {
             {report.dhanaTimings.map((tm: any, i: number) => (
               <li key={i} className="border-t border-vedicGold/10 pt-1.5">
                 {/* TODO(i18n-server): localize tm.mahadasha and tm.why */}
-                <div className="font-semibold" lang="en">{tm.mahadasha} <span className="text-vedicMaroon/60 text-[11px]">({al.planet(tm.lord)})</span></div>
-                <div className="text-[11px] text-vedicMaroon/70" lang="en">{tm.why}</div>
+                <div className="font-semibold" lang="hi">{tm.mahadasha} <span className="text-vedicMaroon/60 text-[11px]">({al.planet(tm.lord)})</span></div>
+                <div className="text-[11px] text-vedicMaroon/70" lang="hi">{tm.why}</div>
                 <div className="font-mono text-[11px] text-vedicMaroon/60">{tm.startISO} → {tm.endISO}</div>
               </li>
             ))}
@@ -634,8 +634,8 @@ function FinancialView({ report }: { report: any }) {
             {report.marakaTimings.map((tm: any, i: number) => (
               <li key={i} className="border-t border-vedicGold/10 pt-1.5">
                 {/* TODO(i18n-server): localize tm.mahadasha and tm.why */}
-                <div className="font-semibold" lang="en">{tm.mahadasha} <span className="text-vedicMaroon/60 text-[11px]">({al.planet(tm.lord)})</span></div>
-                <div className="text-[11px] text-vedicMaroon/70" lang="en">{tm.why}</div>
+                <div className="font-semibold" lang="hi">{tm.mahadasha} <span className="text-vedicMaroon/60 text-[11px]">({al.planet(tm.lord)})</span></div>
+                <div className="text-[11px] text-vedicMaroon/70" lang="hi">{tm.why}</div>
                 <div className="font-mono text-[11px] text-vedicMaroon/60">{tm.startISO} → {tm.endISO}</div>
               </li>
             ))}
@@ -664,7 +664,7 @@ function FactorsCard({ factors }: { factors: any[] }) {
             <li key={i}>
               <span className="font-mono text-green-700 mr-1">+{f.weight}</span>
               {/* TODO(i18n-server): localize factor f.text prose */}
-              <span lang="en">{f.text}</span>
+              <span lang="hi">{f.text}</span>
             </li>
           ))}
           {pos.length === 0 && <li className="text-vedicMaroon/50">{t('specialty.value.dash', '—')}</li>}
@@ -676,7 +676,7 @@ function FactorsCard({ factors }: { factors: any[] }) {
             <li key={i}>
               <span className="font-mono text-red-700 mr-1">{f.weight}</span>
               {/* TODO(i18n-server): localize factor f.text prose */}
-              <span lang="en">{f.text}</span>
+              <span lang="hi">{f.text}</span>
             </li>
           ))}
           {neg.length === 0 && <li className="text-vedicMaroon/50">{t('specialty.value.dash', '—')}</li>}

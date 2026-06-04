@@ -118,7 +118,7 @@ function YantrasTab() {
               <div>
                 <div className="text-[10px] uppercase tracking-wider text-vedicMaroon/50">{t('remedies.yantras.bija', 'Bija Mantra')}</div>
                 <div className="font-semibold text-vedicMaroon" style={{ fontSize: '14px' }}>{yantra.bija}</div>
-                <div className="text-[10px] text-vedicMaroon/60 italic" lang="en">{yantra.bijaTranslit}</div>
+                <div className="text-[10px] text-vedicMaroon/60 italic" lang="hi">{yantra.bijaTranslit}</div>
               </div>
               {yantra.gayatri && (
                 <div>

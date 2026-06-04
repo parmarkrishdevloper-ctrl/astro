@@ -91,7 +91,7 @@ export function ClassicalTextsPage() {
                 <div key={tx.source} className="flex items-start justify-between gap-2 text-[11px]">
                   <div className="min-w-0">
                     {/* source name kept English — it's a proper-noun book title */}
-                    <div className="font-semibold text-vedicMaroon truncate" lang="en">{tx.source}</div>
+                    <div className="font-semibold text-vedicMaroon truncate" lang="hi">{tx.source}</div>
                     <div className="text-vedicMaroon/60">{tx.author} · {tx.era}</div>
                   </div>
                   <span className="text-[10px] px-1.5 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon font-mono shrink-0">
@@ -198,7 +198,7 @@ function QuotesTab({
                   : 'bg-parchment text-vedicMaroon/70 border-vedicGold/30 hover:bg-vedicMaroon/5'
               }`}>
               {/* source = proper-noun book title (Saravali / Phaladeepika / etc.) — kept English */}
-              <span lang="en">{s}</span>
+              <span lang="hi">{s}</span>
             </button>
           ))}
           <button onClick={onApply}
@@ -234,13 +234,13 @@ function QuotesTab({
               <div key={q.id} className="rounded-md border border-vedicGold/30 bg-parchment/30 p-3">
                 <div className="flex items-start justify-between gap-2 mb-1">
                   {/* source + chapter — proper-noun book title and chapter ref kept English */}
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/60" lang="en">
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/60" lang="hi">
                     {q.source}{q.chapter ? ` · ${q.chapter}` : ''}
                   </span>
                   <div className="flex gap-1 flex-wrap justify-end">
                     {q.tags.slice(0, 3).map((tg: string) => (
                       // tags are functional codes (e.g. 'sun', 'house-1') kept English
-                      <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="en">{tg}</span>
+                      <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="hi">{tg}</span>
                     ))}
                   </div>
                 </div>
@@ -262,7 +262,7 @@ function QuotesTab({
               <div key={source}>
                 <h4 className="text-[11px] font-bold uppercase tracking-wider text-vedicMaroon/70 mb-2 pb-1 border-b border-vedicGold/20">
                   {/* source name = proper-noun book title kept English */}
-                  <span lang="en">{source}</span> <span className="font-mono text-vedicMaroon/50">({items.length})</span>
+                  <span lang="hi">{source}</span> <span className="font-mono text-vedicMaroon/50">({items.length})</span>
                 </h4>
                 <div className="space-y-2">
                   {items.map((l) => (
@@ -270,7 +270,7 @@ function QuotesTab({
                       className="rounded-md border border-vedicGold/30 bg-parchment/30 p-3">
                       <div className="flex items-start justify-between gap-2 mb-1.5">
                         {/* chapter / source — proper-noun reference kept English */}
-                        <span className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/60" lang="en">
+                        <span className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/60" lang="hi">
                           {l.quote.chapter ?? source}
                         </span>
                         <div className="flex items-center gap-1">
@@ -283,7 +283,7 @@ function QuotesTab({
                         {l.matchedOn.map((m: string, i: number) => (
                           // matched-on labels are short functional codes (e.g. "Sun in 10H") — kept English
                           <span key={i}
-                            className="text-[9px] px-1.5 py-0.5 rounded bg-vedicMaroon/10 text-vedicMaroon font-mono" lang="en">
+                            className="text-[9px] px-1.5 py-0.5 rounded bg-vedicMaroon/10 text-vedicMaroon font-mono" lang="hi">
                             {m}
                           </span>
                         ))}
@@ -291,7 +291,7 @@ function QuotesTab({
                           <span className="ml-auto flex gap-1">
                             {l.quote.tags.slice(0, 3).map((tg: string) => (
                               // tags = functional codes kept English
-                              <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="en">
+                              <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="hi">
                                 {tg}
                               </span>
                             ))}
@@ -337,11 +337,11 @@ function AvasthasTab({ entries }: { entries: any[] }) {
               {entries.map((e) => (
                 <tr key={e.planet} className="border-t border-vedicGold/20 align-top">
                   {/* TODO(i18n-server): localize planet name */}
-                  <td className="py-1.5 pr-2 font-mono font-bold text-vedicMaroon" lang="en">{e.planet}</td>
+                  <td className="py-1.5 pr-2 font-mono font-bold text-vedicMaroon" lang="hi">{e.planet}</td>
                   {/* TODO(i18n-server): localize baladi/jagradadi/deeptadi state names */}
-                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="en">{e.baladi}</td>
-                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="en">{e.jagradadi}</td>
-                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="en">{e.deeptadi}</td>
+                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="hi">{e.baladi}</td>
+                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="hi">{e.jagradadi}</td>
+                  <td className="py-1.5 pr-2 text-vedicMaroon/80" lang="hi">{e.deeptadi}</td>
                   <td className="py-1.5 pr-2">
                     {e.shad.active.length === 0 ? (
                       <span className="text-vedicMaroon/40 italic">—</span>
@@ -352,7 +352,7 @@ function AvasthasTab({ entries }: { entries: any[] }) {
                           <span key={s}
                             className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${
                               shadTone(s)
-                            }`} lang="en">
+                            }`} lang="hi">
                             {s}
                           </span>
                         ))}
@@ -387,22 +387,22 @@ function AvasthasTab({ entries }: { entries: any[] }) {
               }`}>
               <div className="flex items-center gap-3 mb-1">
                 {/* TODO(i18n-server): localize planet name */}
-                <span className="font-mono font-bold text-vedicMaroon" lang="en">{e.planet}</span>
+                <span className="font-mono font-bold text-vedicMaroon" lang="hi">{e.planet}</span>
                 <Pill tone={verdictTone(e.verdict)}>{t(`classicalTexts.verdict.${e.verdict}`, e.verdict)}</Pill>
                 {/* TODO(i18n-server): localize avastha state names */}
-                <span className="text-[10px] font-mono text-vedicMaroon/50" lang="en">
+                <span className="text-[10px] font-mono text-vedicMaroon/50" lang="hi">
                   {e.baladi} · {e.jagradadi} · {e.deeptadi}
                 </span>
               </div>
               {/* TODO(i18n-server): localize avastha reading prose */}
-              <p className="text-xs text-vedicMaroon/90 leading-relaxed" lang="en">{e.reading}</p>
+              <p className="text-xs text-vedicMaroon/90 leading-relaxed" lang="hi">{e.reading}</p>
               {e.shad.reasons.length > 0 && (
                 <ul className="mt-2 space-y-0.5">
                   {e.shad.reasons.map((r: any) => (
                     <li key={r.state} className="text-[11px] text-vedicMaroon/70">
                       {/* TODO(i18n-server): localize shad state names + reasons */}
-                      <span className={`inline-block w-16 font-semibold ${shadTextTone(r.state)}`} lang="en">{r.state}</span>
-                      <span lang="en">→ {r.reason}</span>
+                      <span className={`inline-block w-16 font-semibold ${shadTextTone(r.state)}`} lang="hi">{r.state}</span>
+                      <span lang="hi">→ {r.reason}</span>
                     </li>
                   ))}
                 </ul>

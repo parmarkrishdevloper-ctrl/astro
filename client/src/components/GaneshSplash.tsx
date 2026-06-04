@@ -169,14 +169,14 @@ export function GaneshSplash() {
           letterSpacing: '0.5px',
           margin: '0 0 4px 0',
         }}
-      >Astrologer Hemraj Laddha · Vedic Astrology Suite</p>
+      >ज्योतिषी हेमराज लड्ढा · वैदिक ज्योतिष सूट</p>
       <p
         style={{
           fontSize: 11,
           color: 'rgba(123,30,30,0.45)',
           margin: '8px 0 0 0',
         }}
-      >Click anywhere or press Esc to dismiss</p>
+      >हटाने के लिए कहीं भी क्लिक करें या Esc दबाएँ</p>
     </div>
   );
 }

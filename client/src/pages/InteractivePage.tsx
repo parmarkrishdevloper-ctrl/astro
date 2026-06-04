@@ -119,11 +119,11 @@ function PlanetDrawerView({ birth, kundali }: { birth: BirthInput; kundali: Kund
                 detail.dignity.exalted ? 'good'
                 : detail.dignity.debilitated ? 'bad'
                 : detail.dignity.ownSign ? 'good' : 'neutral'
-              }><span lang="en">{detail.dignity.label}</span></Pill>
+              }><span lang="hi">{detail.dignity.label}</span></Pill>
               {detail.currentDasha.maha && <Pill tone="good">{t('interactive.mahaLordNow', 'Maha lord now')}</Pill>}
               {detail.currentDasha.antar && <Pill tone="good">{t('interactive.antarLordNow', 'Antar lord now')}</Pill>}
             </div>
-            <p className="text-xs text-vedicMaroon/70 italic mt-1" lang="en">{detail.enc?.oneliner}</p>
+            <p className="text-xs text-vedicMaroon/70 italic mt-1" lang="hi">{detail.enc?.oneliner}</p>
 
             <div className="grid md:grid-cols-2 gap-3 mt-4 text-xs">
               <InfoBlock label={t('interactive.position', 'Position')}>
@@ -147,7 +147,7 @@ function PlanetDrawerView({ birth, kundali }: { birth: BirthInput; kundali: Kund
                 {detail.aspectsReceived.length === 0 && <p className="italic text-vedicMaroon/60">{t('interactive.none', 'none')}</p>}
                 <ul className="space-y-1">
                   {detail.aspectsReceived.map((e: any, i: number) => (
-                    <li key={i}>{al.planet(e.from)} → {al.planet(e.to)} ({e.houseDiff}, <span lang="en">{e.kind}</span>)</li>
+                    <li key={i}>{al.planet(e.from)} → {al.planet(e.to)} ({e.houseDiff}, <span lang="hi">{e.kind}</span>)</li>
                   ))}
                 </ul>
               </div>
@@ -156,7 +156,7 @@ function PlanetDrawerView({ birth, kundali }: { birth: BirthInput; kundali: Kund
                 {detail.aspectsGiven.length === 0 && <p className="italic text-vedicMaroon/60">{t('interactive.none', 'none')}</p>}
                 <ul className="space-y-1">
                   {detail.aspectsGiven.map((e: any, i: number) => (
-                    <li key={i}>{al.planet(e.from)} → {al.planet(e.to)} ({e.houseDiff}, <span lang="en">{e.kind}</span>)</li>
+                    <li key={i}>{al.planet(e.from)} → {al.planet(e.to)} ({e.houseDiff}, <span lang="hi">{e.kind}</span>)</li>
                   ))}
                 </ul>
               </div>
@@ -368,7 +368,7 @@ function CompareView({ selfBirth }: { selfBirth: BirthInput }) {
                   <div key={i} className="border border-vedicGold/20 rounded p-2 bg-parchment/40">
                     <span className="font-bold text-vedicMaroon">{al.planet(h.aPlanet)}</span>
                     {/* TODO(i18n-server): localize synastry.relation */}
-                    <span className="text-vedicMaroon/60" lang="en"> {h.relation} </span>
+                    <span className="text-vedicMaroon/60" lang="hi"> {h.relation} </span>
                     <span className="font-bold text-vedicMaroon">{al.planet(h.bPlanet)}</span>
                     <div className="text-[11px] text-vedicMaroon/50">({h.houseDiff})</div>
                   </div>

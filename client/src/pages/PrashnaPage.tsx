@@ -252,7 +252,7 @@ function VerdictPanel({ v }: { v: PrashnaVerdictResult }) {
       </div>
       <p className="text-[11px] text-vedicMaroon/70 mt-3 leading-relaxed">
         {/* TODO(i18n-server): localize reasoning */}
-        <span lang="en">{v.reasoning}</span>
+        <span lang="hi">{v.reasoning}</span>
       </p>
       {v.rulingPlanets.length > 0 && (
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -312,7 +312,7 @@ function AnalysisPanel({ v }: { v: PrashnaVerdictResult }) {
             {v.analysis.map((row, i) => (
               <tr key={i} className="border-b border-vedicGold/10">
                 {/* TODO(i18n-server): localize source */}
-                <td className="py-1 font-semibold text-vedicMaroon"><span lang="en">{row.source}</span></td>
+                <td className="py-1 font-semibold text-vedicMaroon"><span lang="hi">{row.source}</span></td>
                 <td className="font-bold text-vedicMaroon">{al.planetByName(row.sublord)}</td>
                 <td className="tabular-nums text-vedicMaroon/80">
                   {row.signifiesHouses.length > 0 ? row.signifiesHouses.join(', ') : '—'}

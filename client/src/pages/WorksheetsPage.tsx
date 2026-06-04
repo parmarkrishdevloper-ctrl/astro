@@ -215,7 +215,7 @@ function BundleGrid({
             <div className="flex items-start justify-between gap-2">
               <div>
                 {/* TODO(i18n-server): localize bundle.title */}
-                <h4 className="font-semibold text-vedicMaroon" lang="en">{b.title}</h4>
+                <h4 className="font-semibold text-vedicMaroon" lang="hi">{b.title}</h4>
                 <code className="text-[10px] text-vedicMaroon/50 font-mono">{b.id}</code>
               </div>
               <Pill tone="neutral">{t('worksheets.sectionCount', '{n} §').replace('{n}', String(b.sections.length))}</Pill>

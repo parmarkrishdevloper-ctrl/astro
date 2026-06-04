@@ -2,19 +2,13 @@
 // `t()` function. Locale is persisted to localStorage.
 
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
-import { en } from './en';
 import { hi } from './hi';
-import { gu } from './gu';
-import { sa } from './sa';
 import { makeAstroTranslator, AstroTranslator } from './astro-labels';
 
-export type Locale = 'en' | 'hi' | 'gu' | 'sa';
-const DICTS: Record<Locale, Record<string, string>> = { en, hi, gu, sa };
+export type Locale = 'hi';
+const DICTS: Record<Locale, Record<string, string>> = { hi };
 export const LOCALES: { code: Locale; label: string; native: string }[] = [
-  { code: 'en', label: 'English',   native: 'EN' },
   { code: 'hi', label: 'Hindi',     native: 'हि' },
-  { code: 'gu', label: 'Gujarati',  native: 'ગુ' },
-  { code: 'sa', label: 'Sanskrit',  native: 'सं' },
 ];
 const STORAGE_KEY = 'jyotishpro.locale';
 

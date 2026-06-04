@@ -241,7 +241,7 @@ function NarrativePanel({ t }: { t: T }) {
                 </Pill>
               </div>
               {/* TODO(i18n-server): localize narrative output (LLM/rule-based, server-rendered) */}
-              <div className="text-sm text-vedicMaroon/90 whitespace-pre-wrap leading-relaxed" lang="en">{result.narrative}</div>
+              <div className="text-sm text-vedicMaroon/90 whitespace-pre-wrap leading-relaxed" lang="hi">{result.narrative}</div>
             </div>
           )}
         </div>

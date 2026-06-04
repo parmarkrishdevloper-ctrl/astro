@@ -242,7 +242,7 @@ function NadiView({ data, t, al }: {
                 <td className="py-1 pr-2 text-vedicMaroon/70">{al.rashiByName(p.signName)}</td>
                 <td className="py-1 pr-2 text-right text-vedicMaroon/70 tabular-nums">{p.amsa.signIdx}</td>
                 {/* TODO(i18n-server): localize nadi name */}
-                <td className="py-1 pr-2 text-vedicMaroon" lang="en">{p.amsa.nadiName}</td>
+                <td className="py-1 pr-2 text-vedicMaroon" lang="hi">{p.amsa.nadiName}</td>
                 <td className={`py-1 font-semibold ${
                   p.amsa.nature === 'Shukla' ? 'text-green-700' :
                   p.amsa.nature === 'Krishna' ? 'text-vedicMaroon' : 'text-amber-700'
@@ -276,7 +276,7 @@ function NadiView({ data, t, al }: {
               <span className="font-semibold text-vedicMaroon w-20">{al.rashiByName(p.signName)}</span>
               <span className="text-[10px] font-mono text-vedicMaroon/50 w-8">{al.planetShort(p.lord)}</span>
               {/* TODO(i18n-server): localize phala reading */}
-              <span className="flex-1 text-vedicMaroon/80" lang="en">{p.reading}</span>
+              <span className="flex-1 text-vedicMaroon/80" lang="hi">{p.reading}</span>
             </div>
           ))}
         </div>
@@ -310,7 +310,7 @@ function SphutaView({ data, t, al }: {
             {data.sphutas.map((s: any) => (
               <tr key={s.id} className="border-t border-vedicGold/20 align-top">
                 {/* TODO(i18n-server): localize sphuta name */}
-                <td className="py-1.5 pr-2 font-semibold text-vedicMaroon" lang="en">{s.name}</td>
+                <td className="py-1.5 pr-2 font-semibold text-vedicMaroon" lang="hi">{s.name}</td>
                 <td className="py-1.5 pr-2 text-[10px] font-mono text-vedicMaroon/70">{s.formula}</td>
                 <td className="py-1.5 pr-2 text-vedicMaroon/70 tabular-nums">
                   {al.rashiByName(s.signName)} <span className="text-[10px] text-vedicMaroon/50">{s.degInRashi.toFixed(2)}°</span>
@@ -318,7 +318,7 @@ function SphutaView({ data, t, al }: {
                 <td className="py-1.5 pr-2 text-vedicMaroon/70">{al.nakshatra(s.nakshatraNum) ?? s.nakshatraName} <span className="text-[10px] text-vedicMaroon/50">{t('classical.padaPrefix', 'pada')} {s.nakshatraPada}</span></td>
                 <td className="py-1.5 pr-2 text-right text-vedicMaroon font-semibold">{s.house}</td>
                 {/* TODO(i18n-server): localize sphuta purpose */}
-                <td className="py-1.5 text-[11px] text-vedicMaroon/70" lang="en">{s.purpose}</td>
+                <td className="py-1.5 text-[11px] text-vedicMaroon/70" lang="hi">{s.purpose}</td>
               </tr>
             ))}
           </tbody>

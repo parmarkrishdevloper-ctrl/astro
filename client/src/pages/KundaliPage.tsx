@@ -980,7 +980,7 @@ function LifeAreasPanel({ la }: { la: any }) {
                   {r.factors.map((f: any, i: number) => (
                     <li key={i} className={f.kind === 'positive' ? 'text-emerald-800' : 'text-red-800'}>
                       {/* TODO(i18n-server): localize f.text — factor text is server-side */}
-                      {f.kind === 'positive' ? '+' : '−'}{Math.abs(f.weight)} · <span lang="en">{f.text}</span>
+                      {f.kind === 'positive' ? '+' : '−'}{Math.abs(f.weight)} · <span lang="hi">{f.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -1138,7 +1138,7 @@ function JaiminiPanel({ j }: { j: any }) {
               <div>
                 <div className="font-semibold text-vedicMaroon">{al.yoga(y.name)}</div>
                 {/* TODO(i18n-server): localize y.details */}
-                <div className="text-vedicMaroon/60 text-[11px]" lang="en">{y.details}</div>
+                <div className="text-vedicMaroon/60 text-[11px]" lang="hi">{y.details}</div>
               </div>
             </div>
           ))}
@@ -1155,10 +1155,10 @@ function JaiminiPanel({ j }: { j: any }) {
             {(j.longevity?.pairs ?? []).map((p: any) => (
               <tr key={p.id} className="border-b border-vedicGold/10">
                 {/* TODO(i18n-server): localize p.label */}
-                <td className="py-1" lang="en">{p.label}</td>
+                <td className="py-1" lang="hi">{p.label}</td>
                 <td className="tabular-nums">{p.signA} / {p.signB}</td>
                 {/* TODO(i18n-server): localize p.span */}
-                <td className="text-vedicMaroon" lang="en">{p.span}</td>
+                <td className="text-vedicMaroon" lang="hi">{p.span}</td>
               </tr>
             ))}
           </tbody>
@@ -1193,7 +1193,7 @@ function SensitivePointsPanel({ sp }: { sp: SPData }) {
                 <td>{al.nakshatra(p.nakshatra.num)} {t('common.pada', 'pada')} {p.nakshatra.pada}</td>
                 <td className="tabular-nums font-semibold">{p.house}</td>
                 {/* TODO(i18n-server): localize p.description */}
-                <td className="text-vedicMaroon/60 italic" lang="en">{p.description}</td>
+                <td className="text-vedicMaroon/60 italic" lang="hi">{p.description}</td>
               </tr>
             ))}
           </tbody>
@@ -1429,7 +1429,7 @@ function AshtakavargaTransitPanel({ a }: { a: AshtakavargaTransitResult }) {
         <summary className="cursor-pointer text-vedicMaroon/70 hover:text-vedicMaroon">{t('avTransit.readings', 'Readings')}</summary>
         <ul className="mt-2 list-disc list-inside space-y-0.5 text-vedicMaroon/80 text-[11px]">
           {/* TODO(i18n-server): localize r.interpretation */}
-          {a.rows.map((r) => <li key={r.planet} lang="en">{r.interpretation}</li>)}
+          {a.rows.map((r) => <li key={r.planet} lang="hi">{r.interpretation}</li>)}
         </ul>
       </details>
     </Card>
@@ -1465,7 +1465,7 @@ function DoubleTransitPanel({ d }: { d: DoubleTransitResult }) {
               <div className="px-3 pb-3 pt-1 border-t border-vedicMaroon/10">
                 <ul className="list-disc list-inside space-y-0.5 text-vedicMaroon/80">
                   {/* TODO(i18n-server): localize ev.activatedTopics items */}
-                  {ev.activatedTopics.map((tp, j) => <li key={j} lang="en">{tp}</li>)}
+                  {ev.activatedTopics.map((tp, j) => <li key={j} lang="hi">{tp}</li>)}
                 </ul>
               </div>
             </details>

@@ -171,7 +171,7 @@ function DayView({ data, t, al, ut }: { data: any; t: T; al: AstroTranslator; ut
             {data.panchangYogas.map((y: any, i: number) => (
               <Pill key={i} tone={y.strength === 'strong' ? 'good' : 'info'}>
                 {/* TODO(i18n-server): localize y.name (yoga name string) */}
-                <span lang="en">{y.name}</span> · {al.strength(y.strength)}
+                <span lang="hi">{y.name}</span> · {al.strength(y.strength)}
               </Pill>
             ))}
           </div>
@@ -202,7 +202,7 @@ function DayView({ data, t, al, ut }: { data: any; t: T; al: AstroTranslator; ut
           {(data.chaughadia || []).map((c: any, i: number) => (
             <div key={i} className={`p-1.5 rounded text-center ${qualityColor(c.quality)}`}>
               {/* TODO(i18n-server): localize c.label (chaughadia segment name) */}
-              <div className="font-bold" lang="en">{c.label}</div>
+              <div className="font-bold" lang="hi">{c.label}</div>
               <div className="font-mono text-[9px] opacity-70">{fmt(c.start, ut)}</div>
               <div className="opacity-50 text-[9px]">{c.isDay ? t('muhurtaPro.day', 'Day') : t('muhurtaPro.night', 'Night')}</div>
             </div>
@@ -252,7 +252,7 @@ function WeekView({ days, t, al }: { days: any[]; t: T; al: AstroTranslator }) {
                 <div className="flex flex-wrap gap-1">
                   {(d.panchangYogas || []).map((y: any, j: number) => (
                     // TODO(i18n-server): localize y.name (yoga name string)
-                    <span key={j} className="text-[9px] px-1.5 py-0.5 rounded bg-vedicMaroon/10 text-vedicMaroon font-semibold" lang="en">
+                    <span key={j} className="text-[9px] px-1.5 py-0.5 rounded bg-vedicMaroon/10 text-vedicMaroon font-semibold" lang="hi">
                       {y.name}
                     </span>
                   ))}
@@ -280,15 +280,15 @@ function PresetsView({ presets, t }: { presets: any[]; t: T }) {
         {Object.entries(grouped).map(([cat, list]) => (
           <div key={cat} className="mb-4">
             {/* TODO(i18n-server): localize category names */}
-            <div className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/50 mb-1.5" lang="en">
+            <div className="text-[10px] uppercase tracking-wider font-semibold text-vedicMaroon/50 mb-1.5" lang="hi">
               {t('muhurtaPro.presetCount', '{cat} · {n}').replace('{cat}', cat).replace('{n}', String(list.length))}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {list.map((p) => (
                 <div key={p.key} className="p-2 rounded border border-vedicGold/20 bg-parchment/40">
                   {/* TODO(i18n-server): localize preset.label and preset.note */}
-                  <div className="font-semibold text-vedicMaroon text-sm" lang="en">{p.label}</div>
-                  <div className="text-[11px] text-vedicMaroon/60 mt-0.5" lang="en">{p.note}</div>
+                  <div className="font-semibold text-vedicMaroon text-sm" lang="hi">{p.label}</div>
+                  <div className="text-[11px] text-vedicMaroon/60 mt-0.5" lang="hi">{p.note}</div>
                 </div>
               ))}
             </div>
@@ -319,7 +319,7 @@ function VarjyamView({ data, t, al: _al, ut }: { data: any[]; t: T; al: AstroTra
             <tr key={i} className="border-t border-vedicGold/10">
               <td className="py-1 font-mono">{d.date}</td>
               {/* TODO(i18n-server): nakshatra is a string here; would prefer an ID for al.nakshatra */}
-              <td lang="en">{d.nakshatra}</td>
+              <td lang="hi">{d.nakshatra}</td>
               <td className="font-mono text-[11px] text-red-700">
                 {d.varjyam ? `${fmt(d.varjyam.start, ut)} → ${fmt(d.varjyam.end, ut)}` : '—'}
               </td>
@@ -406,11 +406,11 @@ function YogasView({ t }: { t: T }) {
             <div key={i} className="mb-2 p-2 rounded border border-vedicGold/20 bg-parchment/40">
               <div className="flex items-center gap-2 mb-1">
                 {/* TODO(i18n-server): localize y.name (yoga name string) */}
-                <Pill tone={y.strength === 'strong' ? 'good' : 'info'}><span lang="en">{y.name}</span></Pill>
+                <Pill tone={y.strength === 'strong' ? 'good' : 'info'}><span lang="hi">{y.name}</span></Pill>
                 <span className="text-[10px] uppercase text-vedicMaroon/50">{al.strength(y.strength)}</span>
               </div>
               {/* TODO(i18n-server): localize y.reason prose */}
-              <div className="text-xs text-vedicMaroon/70" lang="en">{y.reason}</div>
+              <div className="text-xs text-vedicMaroon/70" lang="hi">{y.reason}</div>
             </div>
           ))}
         </div>

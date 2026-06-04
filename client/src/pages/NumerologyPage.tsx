@@ -72,11 +72,11 @@ function ProfileCard({ title, subtitle, profile }: { title: string; subtitle: st
         <div>
           <div className="text-xs text-vedicMaroon/60">{t('numerology.planet', 'Ruling Planet')}</div>
           {/* TODO(i18n-server): localize NumerologyProfile.rulingPlanet */}
-          <div className="text-base font-semibold text-vedicMaroon" lang="en">{profile.rulingPlanet}</div>
+          <div className="text-base font-semibold text-vedicMaroon" lang="hi">{profile.rulingPlanet}</div>
         </div>
       </div>
       {/* TODO(i18n-server): localize NumerologyProfile.personality */}
-      <p className="text-xs text-vedicMaroon/80 mb-4 italic" lang="en">{profile.personality}</p>
+      <p className="text-xs text-vedicMaroon/80 mb-4 italic" lang="hi">{profile.personality}</p>
       <dl className="text-xs space-y-1.5">
         <KV label={t('numerology.colors', 'Lucky Colors')} value={profile.luckyColors.join(', ')} />
         <KV label={t('numerology.days', 'Lucky Days')}   value={profile.luckyDays.join(', ')} />

@@ -112,7 +112,7 @@ function SarvatoView({ data, t, al }: { data: any; t: T; al: AstroTranslator }) 
             return (
               <div key={d.dir} className="p-2 rounded border border-vedicGold/20 bg-parchment/40 text-center">
                 {/* d.dir is a 2-char compass code (E/SE/S/etc.) — kept English */}
-                <div className="text-[10px] uppercase text-vedicMaroon/50" lang="en">{d.dir}</div>
+                <div className="text-[10px] uppercase text-vedicMaroon/50" lang="hi">{d.dir}</div>
                 <div className="mt-1 flex items-center justify-center gap-1">
                   <Pill tone={tone as any}>+{d.benefics} / -{d.malefics}</Pill>
                 </div>
@@ -140,7 +140,7 @@ function SarvatoView({ data, t, al }: { data: any; t: T; al: AstroTranslator }) 
                           <>
                             {/* nakshatraName now server-localized; direction is a compass code kept English */}
                             <div className="text-[9px] text-vedicMaroon/70 truncate px-1">{n.nakshatraName}</div>
-                            <div className="text-[8px] text-vedicMaroon/50" lang="en">{n.direction}</div>
+                            <div className="text-[8px] text-vedicMaroon/50" lang="hi">{n.direction}</div>
                             {n.occupants?.length > 0 && (
                               <div className="text-[9px] font-bold text-vedicMaroon">{n.occupants.map((p: string) => al.planet(p)).join(' ')}</div>
                             )}
@@ -246,7 +246,7 @@ function ShoolaView({ data, t, al }: { data: any; t: T; al: AstroTranslator }) {
               <tr key={i} className="border-t border-vedicGold/10">
                 <td className="py-1 font-semibold">{al.vara(r.weekday)}</td>
                 {/* dishaShool = compass-name kept English for consistency with weekly grid */}
-                <td lang="en">{r.dishaShool}</td>
+                <td lang="hi">{r.dishaShool}</td>
                 <td>{r.thornNakshatras.map((tn: any) => `${tn.num}. ${al.nakshatra(tn.num)}`).join(', ')}</td>
               </tr>
             ))}

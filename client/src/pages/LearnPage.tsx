@@ -81,7 +81,7 @@ function SearchResults({ r }: { r: any }) {
               <li key={e.id} className="border border-vedicGold/20 rounded p-2 bg-white/60">
                 {/* name + oneliner are now server-localized; kind is a functional code */}
                 <div className="font-bold text-vedicMaroon">{e.name}</div>
-                <Pill tone="neutral"><span lang="en">{e.kind}</span></Pill>
+                <Pill tone="neutral"><span lang="hi">{e.kind}</span></Pill>
                 <div className="text-[11px] text-vedicMaroon/70 mt-1">{e.oneliner}</div>
               </li>
             ))}
@@ -94,8 +94,8 @@ function SearchResults({ r }: { r: any }) {
             {r.slokas.map((s: any) => (
               <li key={s.id} className="border border-vedicGold/20 rounded p-2 bg-white/60">
                 {/* TODO(i18n-server): localize sloka english/source */}
-                <div className="text-vedicMaroon/90" lang="en">{s.english}</div>
-                <div className="text-[11px] text-vedicMaroon/50 mt-1" lang="en">{s.source}</div>
+                <div className="text-vedicMaroon/90" lang="hi">{s.english}</div>
+                <div className="text-[11px] text-vedicMaroon/50 mt-1" lang="hi">{s.source}</div>
               </li>
             ))}
             {r.slokas.length === 0 && <li className="text-vedicMaroon/50 italic">{noMatch}</li>}
@@ -107,8 +107,8 @@ function SearchResults({ r }: { r: any }) {
             {r.yogas.map((y: any) => (
               <li key={y.id} className="border border-vedicGold/20 rounded p-2 bg-white/60">
                 {/* TODO(i18n-server): localize yoga name/effect */}
-                <div className="font-bold text-vedicMaroon" lang="en">{y.name}</div>
-                <div className="text-[11px] text-vedicMaroon/70 mt-1" lang="en">{y.effect}</div>
+                <div className="font-bold text-vedicMaroon" lang="hi">{y.name}</div>
+                <div className="text-[11px] text-vedicMaroon/70 mt-1" lang="hi">{y.effect}</div>
               </li>
             ))}
             {r.yogas.length === 0 && <li className="text-vedicMaroon/50 italic">{noMatch}</li>}
@@ -166,23 +166,23 @@ function EncyclopediaView() {
                    meta / source are deferred (deeper prose & functional refs) */}
               <h3 className="text-xl font-bold text-vedicMaroon">{selected.name}</h3>
               {selected.sanskrit && <span className="text-vedicMaroon/60 text-sm font-devanagari">{selected.sanskrit}</span>}
-              <Pill tone="neutral"><span lang="en">{selected.kind}</span></Pill>
+              <Pill tone="neutral"><span lang="hi">{selected.kind}</span></Pill>
             </div>
             <p className="text-sm text-vedicMaroon/90 italic">{selected.oneliner}</p>
-            <p className="text-sm text-vedicMaroon/80 mt-3" lang="en">{selected.description}</p>
+            <p className="text-sm text-vedicMaroon/80 mt-3" lang="hi">{selected.description}</p>
             {selected.meta && Object.keys(selected.meta).length > 0 && (
               <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                 {Object.entries(selected.meta).map(([k, v]) => (
                   <div key={k} className="rounded bg-parchment/60 px-2 py-1 border border-vedicGold/30">
-                    <span className="text-vedicMaroon/50" lang="en">{k}:</span> <strong className="text-vedicMaroon" lang="en">{String(v)}</strong>
+                    <span className="text-vedicMaroon/50" lang="hi">{k}:</span> <strong className="text-vedicMaroon" lang="hi">{String(v)}</strong>
                   </div>
                 ))}
               </div>
             )}
             <div className="mt-3 flex flex-wrap gap-1">
-              {selected.keywords.map((k: string) => <Pill key={k} tone="neutral"><span lang="en">{k}</span></Pill>)}
+              {selected.keywords.map((k: string) => <Pill key={k} tone="neutral"><span lang="hi">{k}</span></Pill>)}
             </div>
-            {selected.source && <p className="mt-3 text-[11px] text-vedicMaroon/50 italic" lang="en">{selected.source}</p>}
+            {selected.source && <p className="mt-3 text-[11px] text-vedicMaroon/50 italic" lang="hi">{selected.source}</p>}
           </div>
         )}
       </Card>
@@ -221,8 +221,8 @@ function TextsView() {
             <div className="font-devanagari text-base text-vedicMaroon">{s.text}</div>
             {s.translit && <div className="text-xs italic text-vedicMaroon/60 mt-1">{s.translit}</div>}
             {/* TODO(i18n-server): localize sloka english/source */}
-            <div className="text-sm text-vedicMaroon/90 mt-2" lang="en">{s.english}</div>
-            <div className="text-[11px] text-vedicMaroon/50 mt-1" lang="en">{s.source}</div>
+            <div className="text-sm text-vedicMaroon/90 mt-2" lang="hi">{s.english}</div>
+            <div className="text-[11px] text-vedicMaroon/50 mt-1" lang="hi">{s.source}</div>
           </li>
         ))}
       </ul>
@@ -263,8 +263,8 @@ function TutorView() {
               </div>
             </div>
             {/* TODO(i18n-server): localize tutor lesson heading/narrative */}
-            <h3 className="text-xl font-bold text-vedicMaroon mb-2" lang="en">{lessons[step].heading}</h3>
-            <p className="text-sm text-vedicMaroon/90 leading-relaxed whitespace-pre-wrap" lang="en">{lessons[step].narrative}</p>
+            <h3 className="text-xl font-bold text-vedicMaroon mb-2" lang="hi">{lessons[step].heading}</h3>
+            <p className="text-sm text-vedicMaroon/90 leading-relaxed whitespace-pre-wrap" lang="hi">{lessons[step].narrative}</p>
             {lessons[step].highlight && (
               <div className="mt-3 text-[11px]">
                 <Pill tone="neutral">{t('learn.tutorFocus', 'focus')} · {lessons[step].highlight.kind} · {lessons[step].highlight.id}</Pill>
@@ -312,12 +312,12 @@ function FlashcardsView() {
           <div>
             <div className="text-[11px] uppercase tracking-wider text-vedicMaroon/50 mb-2">{t('learn.flashcardTap', 'Tap to reveal')}</div>
             {/* TODO(i18n-server): localize flashcard front/back content */}
-            <div className="text-xl font-semibold text-vedicMaroon" lang="en">{card.front}</div>
+            <div className="text-xl font-semibold text-vedicMaroon" lang="hi">{card.front}</div>
           </div>
         ) : (
           <div>
             <div className="text-[11px] uppercase tracking-wider text-emerald-700 mb-2">{t('learn.flashcardAnswer', 'Answer')}</div>
-            <div className="text-sm text-vedicMaroon/90" lang="en">{card.back}</div>
+            <div className="text-sm text-vedicMaroon/90" lang="hi">{card.back}</div>
           </div>
         )}
       </div>

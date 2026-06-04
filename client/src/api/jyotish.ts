@@ -814,7 +814,7 @@ export const api = {
   // ── Phase 18 — AI / Narrative (rule-based local NLG, no LLM) ─────────────
   narrative: (
     birth: BirthInput,
-    locale: 'en' | 'hi' | 'gu' | 'sa' = 'hi',
+    locale: 'hi' = 'hi',
     sections?: string[],
   ) =>
     post<{ ok: true; report: {
@@ -831,7 +831,7 @@ export const api = {
   narrativeSection: (
     birth: BirthInput,
     section: string,
-    locale: 'en' | 'hi' | 'gu' | 'sa' = 'hi',
+    locale: 'hi' = 'hi',
   ) =>
     post<{ ok: true; locale: string; section: { id: string; heading: string; paragraphs: string[] } }>(
       '/api/narrative/section', { birth, section, locale }),
@@ -841,7 +841,7 @@ export const api = {
     date: string,
     lat: number,
     lng: number,
-    locale: 'en' | 'hi' | 'gu' | 'sa' = 'hi',
+    locale: 'hi' = 'hi',
   ) =>
     post<{ ok: true; locale: string; entry: {
       date: string;
@@ -860,7 +860,7 @@ export const api = {
     to: string,
     lat: number,
     lng: number,
-    locale: 'en' | 'hi' | 'gu' | 'sa' = 'hi',
+    locale: 'hi' = 'hi',
   ) =>
     post<{ ok: true; locale: string; from: string; to: string; entries: Array<{
       date: string;
@@ -876,7 +876,7 @@ export const api = {
   compareNarrative: (
     a: BirthInput,
     b: BirthInput,
-    locale: 'en' | 'hi' | 'gu' | 'sa' = 'hi',
+    locale: 'hi' = 'hi',
   ) =>
     post<{ ok: true; compare: {
       locale: string;

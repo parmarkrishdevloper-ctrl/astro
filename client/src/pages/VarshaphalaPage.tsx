@@ -240,7 +240,7 @@ function SahamsPanel({ sahams }: { sahams: VarshaphalaResult['sahams'] }) {
             {filtered.map((s) => (
               <tr key={s.key} className="border-b border-vedicGold/10">
                 {/* TODO(i18n-server): localize saham name */}
-                <td className="py-1 font-semibold text-vedicMaroon"><span lang="en">{s.name}</span></td>
+                <td className="py-1 font-semibold text-vedicMaroon"><span lang="hi">{s.name}</span></td>
                 <td className="tabular-nums text-vedicMaroon/80">{fmtDeg(s.longitude, al.rashiShort)}</td>
                 <td>{al.rashiByName(s.signName)}</td>
               </tr>
@@ -360,7 +360,7 @@ function TajikaPanel({ tajika }: { tajika: TajikaResult }) {
                 <tr key={`${x.a}-${x.b}-${i}`} className="border-b border-vedicGold/10">
                   <td className="py-1 pr-2 font-mono font-semibold text-vedicMaroon">{x.a}–{x.b}</td>
                   {/* TODO(i18n-server): localize aspect */}
-                  <td className="py-1 pr-2 capitalize"><span lang="en">{x.aspect}</span></td>
+                  <td className="py-1 pr-2 capitalize"><span lang="hi">{x.aspect}</span></td>
                   <td className={`py-1 pr-2 font-semibold ${
                     x.relation === 'Itthasala' ? 'text-emerald-700'
                     : x.relation === 'Ishraaf' ? 'text-amber-700'

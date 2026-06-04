@@ -257,7 +257,7 @@ function ReturnsView({ data, t, al }: { data: PredictiveBundle['returns']; t: T;
                     <td className="py-1 pr-2 text-right tabular-nums text-vedicMaroon/60">{r.degInSign.toFixed(2)}°</td>
                     <td className="py-1 text-vedicMaroon/70">
                       {/* TODO(i18n-server): localize nakshatraName by ID */}
-                      <span lang="en">{r.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {r.nakshatraPada}</span>
+                      <span lang="hi">{r.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {r.nakshatraPada}</span>
                     </td>
                   </tr>
                 ))}
@@ -304,7 +304,7 @@ function ProgressionsView({ data, t, al }: { data: PredictiveBundle['progression
                 <td className="py-1 pr-2 text-right tabular-nums text-vedicMaroon/60">{p.degInSign.toFixed(2)}°</td>
                 <td className="py-1 pr-2 text-vedicMaroon/70">
                   {/* TODO(i18n-server): localize nakshatraName by ID */}
-                  <span lang="en">{p.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {p.nakshatraPada}</span>
+                  <span lang="hi">{p.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {p.nakshatraPada}</span>
                 </td>
                 <td className="py-1 pr-2 text-right font-semibold text-vedicMaroon">{p.natalHouseNow}</td>
                 <td className="py-1 text-right tabular-nums text-vedicMaroon/60">{p.delta >= 0 ? '+' : ''}{p.delta.toFixed(1)}°</td>
@@ -393,7 +393,7 @@ function WarRow({ e, t, al }: { e: GrahaYuddhaEvent; t: T; al: AstroTranslator }
         </span>
       </div>
       {/* TODO(i18n-server): localize verdict */}
-      <p className="text-[11px] text-vedicMaroon/60 mt-1 italic" lang="en">{e.verdict}</p>
+      <p className="text-[11px] text-vedicMaroon/60 mt-1 italic" lang="hi">{e.verdict}</p>
     </div>
   );
 }

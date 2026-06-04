@@ -383,12 +383,7 @@ function TopBar({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         <div className="hidden sm:flex items-center gap-1 px-1.5 py-1 rounded-lg border"
           style={{ background: 'var(--surface-1)', borderColor: 'var(--border-subtle)' }}>
           <IconGlobe width={14} height={14} stroke="var(--text-muted)" />
-          <select value={locale} onChange={(e) => setLocale(e.target.value as any)}
-            className="bg-transparent text-xs font-medium pr-1 focus:outline-none cursor-pointer"
-            style={{ color: 'var(--text-body)' }}
-            aria-label="Language">
-            {LOCALES.map((l) => <option key={l.code} value={l.code}>{l.native} {l.label}</option>)}
-          </select>
+          <span className="text-xs font-medium pr-1" style={{ color: 'var(--text-body)' }}>हिन्दी</span>
         </div>
         <div className="flex items-center gap-1 px-1.5 py-1 rounded-lg border"
           style={{ background: 'var(--surface-1)', borderColor: 'var(--border-subtle)' }}>
