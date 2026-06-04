@@ -261,7 +261,7 @@ export const api = {
 
   classicalRefs: async (tags?: string[]) => {
     const qs = tags && tags.length ? `?tags=${encodeURIComponent(tags.join(','))}` : '';
-    const r = await fetch(`/api/refs${qs}`);
+    const r = await fetch(`/api/refs${qs}`, { headers: langHeaders() });
     if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
     return r.json() as Promise<{ ok: true; refs: ClassicalRef[] }>;
   },

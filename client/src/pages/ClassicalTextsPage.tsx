@@ -19,12 +19,47 @@ import type { BirthInput } from '../types';
 
 type Tab = 'quotes' | 'avasthas';
 
+type T = (key: string, fallback?: string) => string;
+
+function localizeTag(tag: string, t: T, al: any): string {
+  const p = al.planetByName(tag);
+  if (p !== tag) return p;
+
+  const houseMatch = tag.match(/^house(\d+)$/);
+  if (houseMatch) return t('classical.tag.house', '{n} भाव').replace('{n}', houseMatch[1]);
+
+  const lordMatch = tag.match(/^l(\d+)$/);
+  if (lordMatch) return t('classical.tag.lord', '{n} स्वामी').replace('{n}', lordMatch[1]);
+
+  return t(`classical.tag.${tag}`, tag);
+}
+
+function localizeMatchedOn(m: string, t: T, al: any): string {
+  // simple best-effort replacements for match strings
+  let out = m;
+  for (const pid of ['SU', 'MO', 'MA', 'ME', 'JU', 'VE', 'SA', 'RA', 'KE']) {
+    out = out.replace(new RegExp(pid, 'g'), al.planetByName(pid));
+  }
+  out = out.replace(/(\d+)H/g, (match, n) => t('classical.match.house', '{n} भाव').replace('{n}', n));
+  out = out.replace(/(\d+)L/g, (match, n) => t('classical.match.lord', '{n} स्वामी').replace('{n}', n));
+  out = out.replace(/lagna/ig, t('classical.match.lagna', 'लग्न'));
+  out = out.replace(/exalted/ig, t('classical.match.exalted', 'उच्च'));
+  out = out.replace(/debilitated/ig, t('classical.match.debilitated', 'नीच'));
+  out = out.replace(/own sign/ig, t('classical.match.ownSign', 'स्वराशि'));
+  out = out.replace(/retrograde/ig, t('classical.match.retrograde', 'वक्री'));
+  out = out.replace(/combust/ig, t('classical.match.combust', 'अस्त'));
+  out = out.replace(/conjunction in/ig, t('classical.match.conjunction', 'युति में'));
+  out = out.replace(/Moon in nakshatra/ig, t('classical.match.nakshatra', 'चंद्र नक्षत्र में'));
+  out = out.replace(/applies universally/ig, t('classical.match.universal', 'सार्वभौमिक रूप से लागू'));
+  return out;
+}
+
 const SOURCES = [
   'Saravali', 'Jataka Parijata', 'Phaladeepika', 'Uttara Kalamrita', 'Jataka Bharanam',
 ];
 
 export function ClassicalTextsPage() {
-  const { t } = useT();
+  const { t, al } = useT();
   const [tab, setTab] = useState<Tab>('quotes');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -128,6 +163,8 @@ export function ClassicalTextsPage() {
 
               {tab === 'quotes' && linked && (
                 <QuotesTab
+                  t={t}
+                  al={al}
                   linked={linked}
                   activeSources={activeSources}
                   toggleSource={(s) => {
@@ -155,9 +192,11 @@ export function ClassicalTextsPage() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function QuotesTab({
-  linked, activeSources, toggleSource, onApply,
+  t, al, linked, activeSources, toggleSource, onApply,
   searchQ, setSearchQ, onSearch, searchHits, clearSearch,
 }: {
+  t: T;
+  al: any;
   linked: any[];
   activeSources: Set<string>;
   toggleSource: (s: string) => void;
@@ -168,7 +207,6 @@ function QuotesTab({
   searchHits: any[] | null;
   clearSearch: () => void;
 }) {
-  const { t } = useT();
   const grouped = useMemo(() => {
     const g = new Map<string, any[]>();
     for (const l of linked) {
@@ -239,8 +277,7 @@ function QuotesTab({
                   </span>
                   <div className="flex gap-1 flex-wrap justify-end">
                     {q.tags.slice(0, 3).map((tg: string) => (
-                      // tags are functional codes (e.g. 'sun', 'house-1') kept English
-                      <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="hi">{tg}</span>
+                      <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="hi">{localizeTag(tg, t, al)}</span>
                     ))}
                   </div>
                 </div>
@@ -281,18 +318,16 @@ function QuotesTab({
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-[9px] font-semibold text-vedicMaroon/60">{t('classicalTexts.matchedOn', 'matched on:')}</span>
                         {l.matchedOn.map((m: string, i: number) => (
-                          // matched-on labels are short functional codes (e.g. "Sun in 10H") — kept English
                           <span key={i}
                             className="text-[9px] px-1.5 py-0.5 rounded bg-vedicMaroon/10 text-vedicMaroon font-mono" lang="hi">
-                            {m}
+                            {localizeMatchedOn(m, t, al)}
                           </span>
                         ))}
                         {l.quote.tags.length > 0 && (
                           <span className="ml-auto flex gap-1">
                             {l.quote.tags.slice(0, 3).map((tg: string) => (
-                              // tags = functional codes kept English
                               <span key={tg} className="text-[9px] px-1 py-0.5 rounded bg-vedicGold/20 text-vedicMaroon/70" lang="hi">
-                                {tg}
+                                {localizeTag(tg, t, al)}
                               </span>
                             ))}
                           </span>

@@ -243,6 +243,9 @@ export const sa: Record<string, string> = {
   'prashna.analysis.colPositive':'सकारात्मकः',
   'prashna.analysis.colDestroyer':'विनाशकः',
   'prashna.analysis.hit':        'सिद्धम्',
+  'prashna.source.ascendant':    'लग्नम्',
+  'prashna.source.moon':         'चन्द्रः',
+  'prashna.source.primary':      'मुख्यभावः',
 
   // — Prashna Pro —
   'prashnaPro.title':            'प्रश्न-प्रो',

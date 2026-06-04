@@ -20,6 +20,19 @@ import type {
 
 type T = (key: string, fallback?: string) => string;
 
+function localizeTag(tag: string, t: T, al: any): string {
+  const p = al.planetByName(tag);
+  if (p !== tag) return p;
+
+  const houseMatch = tag.match(/^house(\d+)$/);
+  if (houseMatch) return t('classical.tag.house', '{n} भाव').replace('{n}', houseMatch[1]);
+
+  const lordMatch = tag.match(/^l(\d+)$/);
+  if (lordMatch) return t('classical.tag.lord', '{n} स्वामी').replace('{n}', lordMatch[1]);
+
+  return t(`classical.tag.${tag}`, tag);
+}
+
 type Tab = 'ascendant' | 'houses' | 'signs' | 'lords';
 
 const TAB_KEYS: Tab[] = ['ascendant', 'houses', 'signs', 'lords'];
@@ -34,7 +47,7 @@ const SOURCE_COLORS: Record<ClassicalSource, string> = {
 };
 
 export function InterpretationPage() {
-  const { t } = useT();
+  const { t, al } = useT();
   const [birth, setBirth] = useState<BirthInput | null>(null);
   const [interp, setInterp] = useState<FullInterpretation | null>(null);
   const [refs, setRefs] = useState<ClassicalRef[]>([]);
@@ -108,6 +121,7 @@ export function InterpretationPage() {
               />
               <InterpretationList
                 t={t}
+                al={al}
                 lines={lines}
                 onRefClick={(id) => setFocusRefId(id)}
                 focusRefId={focusRefId}
@@ -117,6 +131,7 @@ export function InterpretationPage() {
 
           <RefsLibrary
             t={t}
+            al={al}
             refs={visibleRefs}
             total={refs.length}
             sources={sources}
@@ -156,9 +171,10 @@ function InterpretationTabs({
 }
 
 function InterpretationList({
-  t, lines, onRefClick, focusRefId,
+  t, al, lines, onRefClick, focusRefId,
 }: {
   t: T;
+  al: any;
   lines: InterpretationLine[];
   onRefClick: (id: string) => void;
   focusRefId: string | null;
@@ -195,9 +211,10 @@ function InterpretationList({
 }
 
 function RefsLibrary({
-  t, refs, total, sources, filter, onFilter, focusRefId, onClear,
+  t, al, refs, total, sources, filter, onFilter, focusRefId, onClear,
 }: {
   t: T;
+  al: any;
   refs: ClassicalRef[];
   total: number;
   sources: ClassicalSource[];
@@ -246,7 +263,7 @@ function RefsLibrary({
             <p className="text-sm text-vedicMaroon/80 leading-relaxed">{r.text}</p>
             <div className="mt-1 flex flex-wrap gap-1">
               {r.tags.map((tag) => (
-                <Pill key={tag} tone="neutral">{tag}</Pill>
+                <Pill key={tag} tone="neutral">{localizeTag(tag, t, al)}</Pill>
               ))}
             </div>
           </div>

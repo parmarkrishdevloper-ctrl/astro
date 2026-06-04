@@ -242,6 +242,9 @@ export const en: Record<string, string> = {
   'prashna.analysis.colPositive':'Positive',
   'prashna.analysis.colDestroyer':'Destroyer',
   'prashna.analysis.hit':        'hit',
+  'prashna.source.ascendant':    'Ascendant',
+  'prashna.source.moon':         'Moon',
+  'prashna.source.primary':      'Primary house',
 
   // — Prashna Pro —
   'prashnaPro.title':            'Prashna Pro',

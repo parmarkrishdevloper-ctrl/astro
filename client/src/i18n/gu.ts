@@ -181,7 +181,7 @@ export const gu: Record<string, string> = {
   'varsha.tajika.separating':    '↘ અલગ',
   'varsha.tajika.transferTitle': 'પ્રકાશ-સ્થાનાંતર (નક્ત · યમય)',
   'varsha.tajika.via':           'દ્વારા {v}',
-  'varsha.tajika.empty':         'આ વર્ષે કોઈ તાજિક સંબંધ નથી — બધી શાસ્ત્રીય દૃષ્ટિઓ માટે ગ્રહો દીપ્તાંશ ઑર્બની બહાર છે.',
+
   'varsha.mudda.title':          'મુદ્દા દશા — 1 વર્ષ સંક્ષિપ્ત વિંશોત્તરી · {n} ઉપ-કાળ',
   'varsha.mudda.intro':          'માનક વિંશોત્તરીના ગુણોત્તર એવી રીતે ગોઠવાય છે કે પૂર્ણ ચક્ર વર્ષમાં બેસે. વર્ષ-ચંદ્રના નક્ષત્ર-સ્વામીથી શરૂ.',
   'varsha.mudda.days':           '{d} દિન',
@@ -239,6 +239,9 @@ export const gu: Record<string, string> = {
   'prashna.analysis.colPositive':'હકારાત્મક',
   'prashna.analysis.colDestroyer':'વિનાશક',
   'prashna.analysis.hit':        'સિદ્ધ',
+  'prashna.source.ascendant':    'લગ્ન',
+  'prashna.source.moon':         'ચંદ્ર',
+  'prashna.source.primary':      'મુખ્ય ભાવ',
 
   // — Prashna Pro —
   'prashnaPro.title':            'પ્રશ્ન પ્રો',

@@ -311,8 +311,13 @@ function AnalysisPanel({ v }: { v: PrashnaVerdictResult }) {
           <tbody>
             {v.analysis.map((row, i) => (
               <tr key={i} className="border-b border-vedicGold/10">
-                {/* TODO(i18n-server): localize source */}
-                <td className="py-1 font-semibold text-vedicMaroon"><span lang="hi">{row.source}</span></td>
+                <td className="py-1 font-semibold text-vedicMaroon">
+                  <span lang="hi">
+                    {row.source === 'Ascendant' ? t('prashna.source.ascendant', 'Ascendant') :
+                     row.source === 'Moon' ? t('prashna.source.moon', 'Moon') :
+                     t('prashna.source.primary', 'Primary house')}
+                  </span>
+                </td>
                 <td className="font-bold text-vedicMaroon">{al.planetByName(row.sublord)}</td>
                 <td className="tabular-nums text-vedicMaroon/80">
                   {row.signifiesHouses.length > 0 ? row.signifiesHouses.join(', ') : '—'}

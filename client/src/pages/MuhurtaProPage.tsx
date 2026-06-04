@@ -103,7 +103,7 @@ export function MuhurtaProPage() {
               <div className="text-xs">
                 <div className="text-vedicMaroon/70 mb-1">{t('muhurtaPro.place', 'Place')}</div>
                 <CityAutocomplete value={placeName} onChange={setPlaceName}
-                  onSelect={(c) => { setPlaceName(c.name); setLat(c.lat); setLng(c.lng); }} />
+                  onCitySelect={(c) => { setPlaceName(c.name); setLat(c.lat); setLng(c.lng); }} />
                 <div className="flex gap-2 mt-1 text-[10px] text-vedicMaroon/50 font-mono">
                   <span>{lat.toFixed(4)}°</span><span>·</span><span>{lng.toFixed(4)}°</span>
                 </div>
