@@ -94,7 +94,7 @@ export const NAKSHATRAS: Nakshatra[] = [
   { num: 25, name: 'Purva Bhadrapada', nameHi: 'पूर्वभाद्रपद',  lord: 'JU' },
   { num: 26, name: 'Uttara Bhadrapada',nameHi: 'उत्तरभाद्रपद',  lord: 'SA' },
   { num: 27, name: 'Revati',           nameHi: 'रेवती',         lord: 'ME' },
-].map((n, i) => ({ ...n, startDeg: i * NAK_SPAN }));
+].map((n, i) => ({ ...n, startDeg: i * NAK_SPAN })) as Nakshatra[];
 
 // ─── VIMSHOTTARI DASHA ──────────────────────────────────────────────────────
 

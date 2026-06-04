@@ -2461,9 +2461,9 @@ export const hi: Record<string, string> = {
   'classical.padaPrefix':       'पाद',
   'classical.specialLagnasTitle': 'विशेष लग्न',
   'classical.indulagna':        'इन्दु लग्न',
-  'classical.induSubtitle':     'चन्द्र से "धन लग्न"',
+  'classical.induSubtitle':     'चन्द्रमा से "धन लग्न"',
   'classical.varnada':          'वर्णदा लग्न',
-  'classical.varnadaSubtitle':  '"वर्ण/सामाजिक लग्न"',
+  'classical.varnadaSubtitle':  '"जाति/सामाजिक लग्न"',
 
   // Dignity tags (planet status)
   'dignity.exalt':      'उच्च',
