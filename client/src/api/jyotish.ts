@@ -24,10 +24,6 @@ import type {
 } from '../types';
 
 function currentLang(): string {
-  try {
-    const s = localStorage.getItem('jyotishpro.locale');
-    if (s === 'en' || s === 'hi' || s === 'gu' || s === 'sa') return s;
-  } catch { /* SSR / private mode */ }
   return 'hi';
 }
 
