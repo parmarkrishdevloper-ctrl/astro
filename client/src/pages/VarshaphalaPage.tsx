@@ -359,8 +359,7 @@ function TajikaPanel({ tajika }: { tajika: TajikaResult }) {
               {tajika.sambandhas.map((x, i) => (
                 <tr key={`${x.a}-${x.b}-${i}`} className="border-b border-vedicGold/10">
                   <td className="py-1 pr-2 font-mono font-semibold text-vedicMaroon">{x.a}–{x.b}</td>
-                  {/* TODO(i18n-server): localize aspect */}
-                  <td className="py-1 pr-2 capitalize"><span lang="hi">{x.aspect}</span></td>
+                  <td className="py-1 pr-2 capitalize"><span lang="hi">{t(`varsha.tajika.aspect.${x.aspect}` as any, x.aspect)}</span></td>
                   <td className={`py-1 pr-2 font-semibold ${
                     x.relation === 'Itthasala' ? 'text-emerald-700'
                     : x.relation === 'Ishraaf' ? 'text-amber-700'

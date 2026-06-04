@@ -132,7 +132,7 @@ export function PrashnaProPage() {
                 <CityAutocomplete
                   value={placeName}
                   onChange={(v) => setPlaceName(v)}
-                  onSelect={(c) => { setPlaceName(c.name); setLat(c.lat); setLng(c.lng); }}
+                  onCitySelect={(c) => { setPlaceName(c.name); setLat(c.lat); setLng(c.lng); }}
                 />
                 <div className="flex gap-2 mt-1 text-[10px] text-vedicMaroon/50 font-mono">
                   <span>{lat.toFixed(4)}°</span><span>·</span><span>{lng.toFixed(4)}°</span>
@@ -257,8 +257,7 @@ function TajikaView({ data }: { data: any }) {
                     s.relation === 'Ishraaf' ? 'text-red-700 font-semibold' :
                     'text-vedicMaroon/80'
                   }>{s.relation}</td>
-                  {/* TODO(i18n-server): localize aspect */}
-                  <td className="capitalize" lang="hi">{s.aspect}</td>
+                  <td className="capitalize" lang="hi">{t(`varsha.tajika.aspect.${s.aspect}` as any, s.aspect)}</td>
                   <td className="font-mono">{s.orb?.toFixed(2)}° / {s.allowed?.toFixed(2)}°</td>
                   <td>{s.applying ? t('prashnaPro.applyingYes', 'Yes') : t('prashnaPro.applyingNo', 'No')}</td>
                 </tr>
