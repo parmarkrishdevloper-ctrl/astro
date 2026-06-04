@@ -505,7 +505,7 @@ export function calculatePadakramaDasha(k: KundaliResult): CharaDashaPeriod[] {
 // All three start at the Sun's longitude at sunrise. The birth-moment value
 // is that starting longitude + (hoursSinceSunrise × rate).
 
-import swisseph from 'swisseph';
+import { swisseph } from '../config/ephemeris';
 import { normDeg, rashiOf, nakshatraOf, houseOf } from '../utils/astro-constants';
 import { dateToJD, toUTC } from '../utils/julian';
 import { computeAllGrahas } from './ephemeris.service';

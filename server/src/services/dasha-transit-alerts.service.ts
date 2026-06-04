@@ -19,7 +19,7 @@ import { PlanetId, normDeg, RASHIS } from '../utils/astro-constants';
 import { currentDasha } from './dasha.service';
 import { computeBody } from './ephemeris.service';
 import { dateToJD } from '../utils/julian';
-import swisseph from 'swisseph';
+import { swisseph } from '../config/ephemeris';
 
 const { SE_JUPITER, SE_SATURN } = swisseph;
 

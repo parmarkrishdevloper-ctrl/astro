@@ -9,7 +9,7 @@
 //
 // Output is a chronological list of events the user can scan through.
 
-import swisseph from 'swisseph';
+import { swisseph } from '../config/ephemeris';
 import { VEDIC_PLANETS, PlanetId, COMBUSTION_DEG, normDeg } from '../utils/astro-constants';
 import { dateToJD, jdToDate } from '../utils/julian';
 import { computeBody, computeAllGrahas } from './ephemeris.service';
