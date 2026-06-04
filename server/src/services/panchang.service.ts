@@ -8,22 +8,22 @@ import {
 
 // ─── TITHI, YOGA, KARANA names ──────────────────────────────────────────────
 const TITHI_NAMES = [
-  'Pratipada', 'Dvitiya', 'Tritiya', 'Chaturthi', 'Panchami',
-  'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
-  'Ekadashi', 'Dvadashi', 'Trayodashi', 'Chaturdashi', 'Purnima',
-  'Pratipada', 'Dvitiya', 'Tritiya', 'Chaturthi', 'Panchami',
-  'Shashthi', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
-  'Ekadashi', 'Dvadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya',
+  'प्रतिपदा', 'द्वितीया', 'तृतीया', 'चतुर्थी', 'पंचमी',
+  'षष्ठी', 'सप्तमी', 'अष्टमी', 'नवमी', 'दशमी',
+  'एकादशी', 'द्वादशी', 'त्रयोदशी', 'चतुर्दशी', 'पूर्णिमा',
+  'प्रतिपदा', 'द्वितीया', 'तृतीया', 'चतुर्थी', 'पंचमी',
+  'षष्ठी', 'सप्तमी', 'अष्टमी', 'नवमी', 'दशमी',
+  'एकादशी', 'द्वादशी', 'त्रयोदशी', 'चतुर्दशी', 'अमावस्या',
 ];
 const YOGA_NAMES = [
-  'Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda','Sukarma','Dhriti',
-  'Shoola','Ganda','Vriddhi','Dhruva','Vyaghata','Harshana','Vajra','Siddhi','Vyatipata',
-  'Variyan','Parigha','Shiva','Siddha','Sadhya','Shubha','Shukla','Brahma','Indra','Vaidhriti',
+  'विष्कम्भ','प्रीति','आयुष्मान','सौभाग्य','शोभन','अतिगण्ड','सुकर्मा','धृति',
+  'शूल','गण्ड','वृद्धि','ध्रुव','व्याघात','हर्षण','वज्र','सिद्धि','व्यतीपात',
+  'वरीयान','परिघ','शिव','सिद्ध','साध्य','शुभ','शुक्ल','ब्रह्म','इन्द्र','वैधृति',
 ];
-const KARANA_NAMES_MOVABLE = ['Bava','Balava','Kaulava','Taitila','Garaja','Vanija','Vishti'];
-const KARANA_NAMES_FIXED   = ['Shakuni','Chatushpada','Naga','Kimstughna'];
+const KARANA_NAMES_MOVABLE = ['बव','बालव','कौलव','तैतिल','गरज','वणिज','विष्टि'];
+const KARANA_NAMES_FIXED   = ['शकुनि','चतुष्पद','नाग','किंस्तुघ्न'];
 
-const VARA_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const VARA_NAMES = ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
 const VARA_LORDS = ['SU','MO','MA','ME','JU','VE','SA'] as const;
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
@@ -249,7 +249,7 @@ export function calculatePanchang(dateInput: Date, lat: number, lng: number): Pa
   const tithi = {
     num: tIdx + 1,
     name: TITHI_NAMES[tIdx],
-    paksha: tIdx < 15 ? 'Shukla' : 'Krishna',
+    paksha: tIdx < 15 ? 'शुक्ल' : 'कृष्ण',
     elapsedFraction: (diff % 12) / 12,
     endsAt: tEnd ? jdToDate(tEnd).toISOString() : null,
     nextName: TITHI_NAMES[(tIdx + 1) % 30],

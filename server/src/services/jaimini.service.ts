@@ -27,13 +27,13 @@ export interface KarakaAssignment {
 }
 
 const ORDER: { key: KarakaKey; full: string; meaning: string }[] = [
-  { key: 'AK',  full: 'Atmakaraka',   meaning: 'Soul / self' },
-  { key: 'AmK', full: 'Amatyakaraka', meaning: 'Career / minister' },
-  { key: 'BK',  full: 'Bhratrikaraka', meaning: 'Siblings / co-borns' },
-  { key: 'MK',  full: 'Matrikaraka',  meaning: 'Mother' },
-  { key: 'PK',  full: 'Putrakaraka',  meaning: 'Children' },
-  { key: 'GK',  full: 'Gnatikaraka',  meaning: 'Relatives / enemies' },
-  { key: 'DK',  full: 'Darakaraka',   meaning: 'Spouse' },
+  { key: 'AK',  full: 'Atmakaraka',   meaning: 'आत्मा / स्वयं' },
+  { key: 'AmK', full: 'Amatyakaraka', meaning: 'करियर / मंत्री' },
+  { key: 'BK',  full: 'Bhratrikaraka', meaning: 'भाई-बहन' },
+  { key: 'MK',  full: 'Matrikaraka',  meaning: 'माता' },
+  { key: 'PK',  full: 'Putrakaraka',  meaning: 'संतान' },
+  { key: 'GK',  full: 'Gnatikaraka',  meaning: 'रिश्तेदार / शत्रु' },
+  { key: 'DK',  full: 'Darakaraka',   meaning: 'जीवनसाथी' },
 ];
 
 /**

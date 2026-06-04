@@ -37,30 +37,30 @@ export interface HoroscopeReport {
 }
 
 const HOUSE_FOCUS: Record<number, string> = {
-  1:  'self-presentation and vitality',
-  2:  'money, speech, and family dynamics',
-  3:  'siblings, initiative, short trips',
-  4:  'home, mother, emotional base',
-  5:  'creativity, romance, study',
-  6:  'work routines, health, dispute resolution',
-  7:  'partnerships, business deals, spouse',
-  8:  'transformation, hidden topics, shared resources',
-  9:  'higher learning, mentors, long journeys',
- 10:  'career visibility, authority figures',
- 11:  'gains, friend circles, big goals',
- 12:  'retreat, solitude, foreign matters',
+  1:  'स्वयं की प्रस्तुति और जीवन शक्ति',
+  2:  'धन, वाणी और पारिवारिक गतिशीलता',
+  3:  'भाई-बहन, पहल, छोटी यात्राएं',
+  4:  'घर, माता, भावनात्मक आधार',
+  5:  'रचनात्मकता, रोमांस, अध्ययन',
+  6:  'कार्य दिनचर्या, स्वास्थ्य, विवाद समाधान',
+  7:  'साझेदारी, व्यापारिक सौदे, जीवनसाथी',
+  8:  'परिवर्तन, छिपे हुए विषय, साझा संसाधन',
+  9:  'उच्च शिक्षा, गुरु, लंबी यात्राएं',
+ 10:  'करियर दृश्यता, अधिकारी',
+ 11:  'लाभ, मित्र मंडल, बड़े लक्ष्य',
+ 12:  'एकांतवास, एकांत, विदेशी मामले',
 };
 
 const PLANET_TONE: Record<PlanetId, string> = {
-  SU: 'authoritative, ego-focused',
-  MO: 'emotional, public-facing',
-  MA: 'driven, possibly confrontational',
-  ME: 'intellectual, communicative',
-  JU: 'expansive, teaching, generous',
-  VE: 'relational, artistic, indulgent',
-  SA: 'disciplined, slow, karmic',
-  RA: 'unconventional, ambitious, foreign',
-  KE: 'detached, introspective, mystical',
+  SU: 'अधिकारपूर्ण, अहंकार-केंद्रित',
+  MO: 'भावनात्मक, सार्वजनिक-सामना',
+  MA: 'प्रेरित, संभवतः टकरावपूर्ण',
+  ME: 'बौद्धिक, संवादात्मक',
+  JU: 'विस्तृत, शिक्षाप्रद, उदार',
+  VE: 'संबंधात्मक, कलात्मक, कृपालु',
+  SA: 'अनुशासित, धीमा, कर्मिक',
+  RA: 'अपरंपरागत, महत्वाकांक्षी, विदेशी',
+  KE: 'विरक्त, आत्मनिरीक्षण, रहस्यमय',
 };
 
 export function buildHoroscope(natal: KundaliResult, scope: HoroscopeScope, whenISO?: string): HoroscopeReport {
@@ -87,26 +87,26 @@ export function buildHoroscope(natal: KundaliResult, scope: HoroscopeScope, when
   if (mahaLord && antarLord && dasha?.maha && dasha?.antar) {
     const mahaHouse = natal.planets.find((pl) => pl.id === mahaLord)!.house;
     const antarHouse = natal.planets.find((pl) => pl.id === antarLord)!.house;
-    bullets.push(`Running ${mahaLord}/${antarLord} period — ${PLANET_TONE[mahaLord]} backdrop with ${PLANET_TONE[antarLord]} foreground.`);
-    bullets.push(`Maha lord sits in your ${mahaHouse}th (${HOUSE_FOCUS[mahaHouse]}); antar lord in your ${antarHouse}th (${HOUSE_FOCUS[antarHouse]}).`);
+    bullets.push(`${mahaLord}/${antarLord} काल चल रहा है — ${PLANET_TONE[mahaLord]} पृष्ठभूमि के साथ ${PLANET_TONE[antarLord]} मुख्यभूमि।`);
+    bullets.push(`महादशा स्वामी आपके ${mahaHouse}वें भाव (${HOUSE_FOCUS[mahaHouse]}) में स्थित है; अंतरदशा स्वामी आपके ${antarHouse}वें भाव (${HOUSE_FOCUS[antarHouse]}) में स्थित है।`);
   }
   focus.forEach((f) => {
-    bullets.push(`${f.planet} transits your ${f.natalHouse}th — watch ${HOUSE_FOCUS[f.natalHouse]}.`);
+    bullets.push(`${f.planet} आपके ${f.natalHouse}वें भाव में गोचर कर रहा है — ${HOUSE_FOCUS[f.natalHouse]} पर ध्यान दें।`);
   });
   if (rx.retrograde.length > 0) {
-    bullets.push(`Retrograde now: ${rx.retrograde.join(', ')} — review before initiating.`);
+    bullets.push(`अभी वक्री: ${rx.retrograde.join(', ')} — कोई नई शुरुआत करने से पहले समीक्षा करें।`);
   }
   if (rx.combust.length > 0) {
-    bullets.push(`Combust: ${rx.combust.join(', ')} — these significations are muffled.`);
+    bullets.push(`अस्त: ${rx.combust.join(', ')} — इनसे जुड़े फल दब सकते हैं।`);
   }
   if (t.sadesati?.active) {
-    bullets.push(`Sade Sati — ${t.sadesati.phase} phase. Slow, disciplined effort pays off.`);
+    bullets.push(`साढ़ेसाती — ${t.sadesati.phase} चरण। धीमा, अनुशासित प्रयास फल देगा।`);
   }
 
   const headline = (() => {
-    if (!mahaLord || !antarLord) return `${scope} snapshot: neutral period, steady progress expected.`;
+    if (!mahaLord || !antarLord) return `${scope === 'day' ? 'आज' : scope === 'week' ? 'इस सप्ताह' : 'इस महीने'}: तटस्थ काल, स्थिर प्रगति अपेक्षित।`;
     const dominantHouse = focus[0]?.natalHouse ?? natal.planets.find((pl) => pl.id === mahaLord)!.house;
-    return `${scope === 'day' ? 'Today' : scope === 'week' ? 'This week' : 'This month'}: ${mahaLord}/${antarLord} focus on ${HOUSE_FOCUS[dominantHouse]}.`;
+    return `${scope === 'day' ? 'आज' : scope === 'week' ? 'इस सप्ताह' : 'इस महीने'}: ${mahaLord}/${antarLord} — ${HOUSE_FOCUS[dominantHouse]} पर ध्यान।`;
   })();
 
   return {
@@ -118,11 +118,11 @@ export function buildHoroscope(natal: KundaliResult, scope: HoroscopeScope, when
     moon: {
       signNum: p.nakshatra.num ? natal.planets.find((pl) => pl.id === 'MO')!.rashi.num : natal.planets.find((pl) => pl.id === 'MO')!.rashi.num,
       signName: natal.planets.find((pl) => pl.id === 'MO')!.rashi.name,
-      nakshatraName: p.nakshatra.name,
+      nakshatraName: p.nakshatra.nameHi,
     },
     panchang: {
       tithi: `${p.tithi.paksha} ${p.tithi.name}`,
-      nakshatra: p.nakshatra.name,
+      nakshatra: p.nakshatra.nameHi,
       vara: p.vara.name,
       yoga: p.yoga.name,
     },

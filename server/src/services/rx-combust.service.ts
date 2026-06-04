@@ -17,11 +17,11 @@ import { computeBody, computeAllGrahas } from './ephemeris.service';
 const { SE_SUN } = swisseph;
 
 export type RxEventKind =
-  | 'retrograde-start'
-  | 'retrograde-end'
-  | 'stationary'
-  | 'combust-start'
-  | 'combust-end';
+  | 'वक्री आरम्भ'
+  | 'वक्री समाप्त'
+  | 'स्थिर'
+  | 'अस्त आरम्भ'
+  | 'अस्त समाप्त';
 
 export interface RxEvent {
   planet: PlanetId;
@@ -82,7 +82,7 @@ export function buildRxCombustTimeline(opts: RxCombustOptions): RxEvent[] {
         if (prev.retro !== nowRetro) {
           events.push({
             planet: def.id,
-            kind: nowRetro ? 'retrograde-start' : 'retrograde-end',
+            kind: nowRetro ? 'वक्री आरम्भ' : 'वक्री समाप्त',
             utc: jdToDate(jd).toISOString(),
             longitude: p.longitude,
             signNum: signOf(p.longitude),
@@ -91,7 +91,7 @@ export function buildRxCombustTimeline(opts: RxCombustOptions): RxEvent[] {
         if (prev.combust !== nowCombust) {
           events.push({
             planet: def.id,
-            kind: nowCombust ? 'combust-start' : 'combust-end',
+            kind: nowCombust ? 'अस्त आरम्भ' : 'अस्त समाप्त',
             utc: jdToDate(jd).toISOString(),
             longitude: p.longitude,
             signNum: signOf(p.longitude),
@@ -101,7 +101,7 @@ export function buildRxCombustTimeline(opts: RxCombustOptions): RxEvent[] {
         if (Math.sign(prev.speed) !== Math.sign(p.speed) && Math.abs(p.speed) < 0.05) {
           events.push({
             planet: def.id,
-            kind: 'stationary',
+            kind: 'स्थिर',
             utc: jdToDate(jd).toISOString(),
             longitude: p.longitude,
             signNum: signOf(p.longitude),

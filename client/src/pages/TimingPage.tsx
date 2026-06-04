@@ -168,10 +168,10 @@ export function TimingPage() {
                         <td className="py-1 tabular-nums">{new Date(e.utc).toLocaleDateString()}</td>
                         <td className="font-bold text-vedicMaroon">{al.planet(e.planet)}</td>
                         {/* TODO(i18n-server): localize rx event.kind */}
-                        <td lang="hi" className={
-                          e.kind.startsWith('retrograde') ? 'text-amber-700'
-                          : e.kind.startsWith('combust') ? 'text-red-700'
-                          : 'text-vedicMaroon/80'
+                        <td className={
+                          e.kind.startsWith('वक्री') ? 'text-amber-700'
+                          : e.kind.startsWith('अस्त') ? 'text-red-700'
+                          : 'text-slate-600'
                         }>{e.kind}</td>
                         <td className="tabular-nums">{al.rashi(e.signNum)}</td>
                       </tr>

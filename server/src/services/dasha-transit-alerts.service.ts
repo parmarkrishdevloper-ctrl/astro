@@ -38,18 +38,18 @@ export interface DashaTransitAlert {
 }
 
 const HOUSE_TOPIC: Record<number, string> = {
-  1:  'Self, body, identity',
-  2:  'Wealth, family, speech',
-  3:  'Siblings, courage, effort',
-  4:  'Home, mother, property',
-  5:  'Creativity, children, studies',
-  6:  'Enemies, health, work',
-  7:  'Partnership, marriage',
-  8:  'Transformation, crises',
-  9:  'Fortune, father, travel',
- 10:  'Career, fame, authority',
- 11:  'Gains, friends, fulfilment',
- 12:  'Losses, moksha, foreign',
+  1:  'स्वयं, शरीर, पहचान',
+  2:  'धन, परिवार, वाणी',
+  3:  'भाई-बहन, साहस, प्रयास',
+  4:  'घर, माता, संपत्ति',
+  5:  'रचनात्मकता, संतान, शिक्षा',
+  6:  'शत्रु, स्वास्थ्य, कार्य',
+  7:  'साझेदारी, विवाह',
+  8:  'परिवर्तन, संकट',
+  9:  'भाग्य, पिता, यात्रा',
+ 10:  'करियर, प्रसिद्धि, अधिकार',
+ 11:  'लाभ, मित्र, पूर्ति',
+ 12:  'हानि, मोक्ष, विदेश',
 };
 
 function houseOfPlanetInNatal(k: KundaliResult, planetId: PlanetId): number {

@@ -17,13 +17,13 @@ export interface EventCategory {
 }
 
 export const EVENT_CATEGORIES: EventCategory[] = [
-  { key: 'marriage',    label: 'Marriage',         houses: [7, 2, 11] },
-  { key: 'children',    label: 'Children',         houses: [5, 9] },
-  { key: 'career',      label: 'Career growth',    houses: [10, 6, 11] },
-  { key: 'property',    label: 'Property',         houses: [4, 11] },
-  { key: 'travel',      label: 'Foreign travel',   houses: [9, 12, 3] },
-  { key: 'health',      label: 'Health concern',   houses: [6, 8, 12] },
-  { key: 'wealth',      label: 'Financial gains',  houses: [2, 11, 9] },
+  { key: 'marriage',    label: 'विवाह',             houses: [7, 2, 11] },
+  { key: 'children',    label: 'संतान',             houses: [5, 9] },
+  { key: 'career',      label: 'करियर में वृद्धि',        houses: [10, 6, 11] },
+  { key: 'property',    label: 'संपत्ति',             houses: [4, 11] },
+  { key: 'travel',      label: 'विदेश यात्रा',       houses: [9, 12, 3] },
+  { key: 'health',      label: 'स्वास्थ्य संबंधी चिंता', houses: [6, 8, 12] },
+  { key: 'wealth',      label: 'वित्तीय लाभ',        houses: [2, 11, 9] },
 ];
 
 export interface EventWindow {
@@ -55,17 +55,17 @@ function planetConnectedToHouse(k: KundaliResult, planet: PlanetId, targetHouse:
   const targetSign = ((lagnaSign - 1 + (targetHouse - 1)) % 12) + 1;
   // Ownership
   const ownsTarget = RASHIS[targetSign - 1].lord === planet;
-  if (ownsTarget) return { connected: true, reason: `${planet} owns ${targetHouse}H` };
+  if (ownsTarget) return { connected: true, reason: `${planet} ${targetHouse} भाव का स्वामी है` };
   const p = k.planets.find((x) => x.id === planet);
   if (!p) return { connected: false, reason: '' };
   // Occupation
   if (p.house === targetHouse) {
-    return { connected: true, reason: `${planet} occupies ${targetHouse}H` };
+    return { connected: true, reason: `${planet} ${targetHouse} भाव में स्थित है` };
   }
   // Aspect
   const aspected = aspectingHouses(planet, p.house);
   if (aspected.includes(targetHouse)) {
-    return { connected: true, reason: `${planet} aspects ${targetHouse}H` };
+    return { connected: true, reason: `${planet} की ${targetHouse} भाव पर दृष्टि है` };
   }
   return { connected: false, reason: '' };
 }
@@ -81,9 +81,9 @@ function scoreCombo(
   const reasons: string[] = [];
   for (const h of cat.houses) {
     const m = planetConnectedToHouse(k, maha, h);
-    if (m.connected) { score += 2; reasons.push('Maha:' + m.reason); }
+    if (m.connected) { score += 2; reasons.push('महा: ' + m.reason); }
     const a = planetConnectedToHouse(k, antar, h);
-    if (a.connected) { score += 1; reasons.push('Antar:' + a.reason); }
+    if (a.connected) { score += 1; reasons.push('अंतर: ' + a.reason); }
   }
   if (score === 0) return null;
   const prob: EventWindow['probability'] = score >= 4 ? 'High' : score >= 2 ? 'Medium' : 'Low';
