@@ -326,21 +326,21 @@ export interface PatternSearchResult {
 
 function describeLeaf(l: Leaf): string {
   switch (l.kind) {
-    case 'planet-in-sign':      return `${l.planet} in ${RASHIS[l.sign - 1].name}`;
-    case 'planet-in-house':     return `${l.planet} in ${l.house}H`;
-    case 'planet-retrograde':   return `${l.planet} retrograde`;
-    case 'planet-exalted':      return `${l.planet} exalted`;
-    case 'planet-debilitated':  return `${l.planet} debilitated`;
-    case 'planet-combust':      return `${l.planet} combust`;
-    case 'planet-own':          return `${l.planet} in own sign`;
-    case 'planet-strong':       return `${l.planet} strong (≥5 rupas)`;
-    case 'planet-with-planet':  return `${l.a} with ${l.b}`;
-    case 'planet-aspects-planet': return `${l.from} aspects ${l.to}`;
-    case 'planet-aspects-house':  return `${l.from} aspects ${l.house}H`;
-    case 'lagna-in-sign':       return `Lagna in ${RASHIS[l.sign - 1].name}`;
-    case 'moon-in-sign':        return `Moon in ${RASHIS[l.sign - 1].name}`;
-    case 'nak-lord':            return `Nak-lord = ${l.planet}`;
-    case 'yoga':                return `yoga "${l.name}"`;
+    case 'planet-in-sign':      return `${l.planet} ${RASHIS[l.sign - 1].name} में`;
+    case 'planet-in-house':     return `${l.planet} ${l.house} भाव में`;
+    case 'planet-retrograde':   return `${l.planet} वक्री`;
+    case 'planet-exalted':      return `${l.planet} उच्च`;
+    case 'planet-debilitated':  return `${l.planet} नीच`;
+    case 'planet-combust':      return `${l.planet} अस्त`;
+    case 'planet-own':          return `${l.planet} स्वराशि में`;
+    case 'planet-strong':       return `${l.planet} बली (≥5 रूप)`;
+    case 'planet-with-planet':  return `${l.a} ${l.b} के साथ`;
+    case 'planet-aspects-planet': return `${l.from} की ${l.to} पर दृष्टि`;
+    case 'planet-aspects-house':  return `${l.from} की ${l.house} भाव पर दृष्टि`;
+    case 'lagna-in-sign':       return `लग्न ${RASHIS[l.sign - 1].name} में`;
+    case 'moon-in-sign':        return `चंद्रमा ${RASHIS[l.sign - 1].name} में`;
+    case 'nak-lord':            return `नक्षत्र स्वामी = ${l.planet}`;
+    case 'yoga':                return `योग "${l.name}"`;
     case 'bad':                 return `⚠ ${l.why}`;
   }
 }
@@ -358,14 +358,14 @@ export function searchPattern(k: KundaliResult, query: string): PatternSearchRes
 
 // Catalog of presets — pre-built patterns for UI dropdowns
 export const PATTERN_PRESETS: { id: string; label: string; query: string }[] = [
-  { id: 'gajakesari',   label: 'Gaja-Kesari (JU kendra from MO)', query: 'yoga gajakesari' },
-  { id: 'mahalakshmi',  label: 'Mahalakshmi (VE + MO in kendra/kona)', query: 'yoga lakshmi' },
-  { id: 'raja-rajyoga', label: 'Raja Yoga (kendra-kona lord link)', query: 'yoga raja' },
-  { id: 'neechabhanga', label: 'Neecha-Bhanga (debilitated but cancelled)', query: 'yoga neecha' },
-  { id: 'kemadruma',    label: 'Kemadruma (Moon isolated)', query: 'yoga kemadruma' },
-  { id: 'sasa',         label: 'Sasa Yoga (Saturn in kendra own/exalt)', query: 'SA in capricorn or SA in aquarius or SA in libra' },
-  { id: 'budhaditya',   label: 'Budha-Aditya (SU + ME)', query: 'SU with ME' },
-  { id: 'guru-mangal',  label: 'Guru-Mangala (JU + MA)', query: 'JU with MA' },
-  { id: 'scholar',      label: 'Scholar (JU in 5H, strong)', query: 'JU in 5h and JU strong' },
-  { id: 'wealth-2-11',  label: 'Wealth link 2L–11L', query: '(ME in 11h or SA in 11h or VE in 11h) and JU aspects 2h' },
+  { id: 'gajakesari',   label: 'गजकेसरी (चंद्रमा से गुरु केंद्र में)', query: 'yoga gajakesari' },
+  { id: 'mahalakshmi',  label: 'महालक्ष्मी (शुक्र + चंद्रमा केंद्र/त्रिकोण में)', query: 'yoga lakshmi' },
+  { id: 'raja-rajyoga', label: 'राज योग (केंद्र-त्रिकोण स्वामी संबंध)', query: 'yoga raja' },
+  { id: 'neechabhanga', label: 'नीच भंग (नीचत्व रद्द)', query: 'yoga neecha' },
+  { id: 'kemadruma',    label: 'केमद्रुम (चंद्रमा अकेला)', query: 'yoga kemadruma' },
+  { id: 'sasa',         label: 'शश योग (शनि केंद्र में स्व/उच्च का)', query: 'SA in capricorn or SA in aquarius or SA in libra' },
+  { id: 'budhaditya',   label: 'बुधादित्य (सूर्य + बुध)', query: 'SU with ME' },
+  { id: 'guru-mangal',  label: 'गुरु-मंगल (गुरु + मंगल)', query: 'JU with MA' },
+  { id: 'scholar',      label: 'विद्वान (गुरु 5वें भाव में, बली)', query: 'JU in 5h and JU strong' },
+  { id: 'wealth-2-11',  label: 'धन संबंध 2L–11L', query: '(ME in 11h or SA in 11h or VE in 11h) and JU aspects 2h' },
 ];

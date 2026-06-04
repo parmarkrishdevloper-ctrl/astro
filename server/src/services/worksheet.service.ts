@@ -35,27 +35,27 @@ export async function shutdownWorksheetEngine(): Promise<void> {
 // Each entry maps a friendly id → ordered section list. New report variants
 // are added simply by extending this map.
 export const REPORT_BUNDLES: Record<string, { title: string; sections: SectionId[] }> = {
-  brief:          { title: 'Brief Kundali', sections: ['birth', 'planets', 'vimshottari'] },
-  full:           { title: 'Full Vedic Report', sections: [
+  brief:          { title: 'संक्षिप्त कुण्डली', sections: ['birth', 'planets', 'vimshottari'] },
+  full:           { title: 'सम्पूर्ण वैदिक रिपोर्ट', sections: [
                     'birth', 'planets', 'shadbala', 'yogas', 'vimshottari',
                     'ashtakavarga', 'jaimini', 'avasthas', 'sudarshana',
                     'interpretation', 'remedies'] },
-  predictive:     { title: 'Predictive Report', sections: [
+  predictive:     { title: 'भविष्यफल रिपोर्ट', sections: [
                     'birth', 'planets', 'vimshottari', 'transits', 'yogas', 'interpretation'] },
-  varshaphala:    { title: 'Varshaphala (Annual)', sections: [
+  varshaphala:    { title: 'वर्षफल (वार्षिक)', sections: [
                     'birth', 'planets', 'varshaphala'] },
-  jaimini:        { title: 'Jaimini Report', sections: ['birth', 'planets', 'jaimini'] },
-  kp:             { title: 'KP Report', sections: ['birth', 'planets', 'kp'] },
-  ashtakavarga:   { title: 'Ashtakavarga Report', sections: ['birth', 'planets', 'ashtakavarga'] },
-  shadbala:       { title: 'Shadbala Report', sections: ['birth', 'planets', 'shadbala'] },
-  yoga:           { title: 'Yoga Detection Report', sections: ['birth', 'planets', 'yogas'] },
-  remedies:       { title: 'Remedies Report', sections: ['birth', 'planets', 'remedies'] },
-  transits:       { title: 'Current Transits', sections: ['birth', 'transits'] },
-  interpretation: { title: 'Interpretation Report', sections: ['birth', 'planets', 'interpretation'] },
-  sudarshana:     { title: 'Sudarshana Chakra', sections: ['birth', 'planets', 'sudarshana'] },
-  avasthas:       { title: 'Avasthas Report', sections: ['birth', 'planets', 'avasthas'] },
+  jaimini:        { title: 'जैमिनी रिपोर्ट', sections: ['birth', 'planets', 'jaimini'] },
+  kp:             { title: 'के॰पी॰ पद्धति', sections: ['birth', 'planets', 'kp'] },
+  ashtakavarga:   { title: 'अष्टकवर्ग रिपोर्ट', sections: ['birth', 'planets', 'ashtakavarga'] },
+  shadbala:       { title: 'षड्बल रिपोर्ट', sections: ['birth', 'planets', 'shadbala'] },
+  yoga:           { title: 'योग रिपोर्ट', sections: ['birth', 'planets', 'yogas'] },
+  remedies:       { title: 'उपाय रिपोर्ट', sections: ['birth', 'planets', 'remedies'] },
+  transits:       { title: 'वर्तमान गोचर', sections: ['birth', 'transits'] },
+  interpretation: { title: 'व्याख्या रिपोर्ट', sections: ['birth', 'planets', 'interpretation'] },
+  sudarshana:     { title: 'सुदर्शन चक्र', sections: ['birth', 'planets', 'sudarshana'] },
+  avasthas:       { title: 'अवस्था रिपोर्ट', sections: ['birth', 'planets', 'avasthas'] },
   // Phase 20C — long-form family-heirloom edition. Everything in one book.
-  book:           { title: 'Kundali Book — Complete Edition', sections: [
+  book:           { title: 'कुण्डली पुस्तक — सम्पूर्ण संस्करण', sections: [
                     'birth', 'planets', 'chalit', 'upagrahas', 'sensitivePoints',
                     'vimshottari', 'shadbala', 'yogas', 'ashtakavarga',
                     'jaimini', 'kp', 'avasthas', 'sudarshana', 'varshaphala',

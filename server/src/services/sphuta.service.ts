@@ -194,48 +194,48 @@ export function calculateSphutas(k: KundaliResult): SphutaResult {
   if (pp != null) {
     entries.push(build('PRANAPADA', 'Pranapada', pp, asc,
       "Sun + (vighatis/60)×12°",
-      'Fine time-of-birth marker; used to cross-check rectification'));
+      'जन्म के समय का सटीक सूचक; सुधार की जाँच के लिए उपयोग किया जाता है'));
   }
 
   const beeja = normDeg(sun + ven + jup);
   entries.push(build('BEEJA', 'Beeja Sphuta', beeja, asc,
     'Sun + Venus + Jupiter',
-    'Progeny (male) — strength of procreative yoga'));
+    'संतान (पुरुष) — संतान योग की शक्ति'));
 
   const kshetra = normDeg(moon + mars + jup);
   entries.push(build('KSHETRA', 'Kshetra Sphuta', kshetra, asc,
     'Moon + Mars + Jupiter',
-    'Progeny (female) — fertility indicator'));
+    'संतान (स्त्री) — प्रजनन क्षमता का सूचक'));
 
   const triSphuta = normDeg(asc + moon + sun);
   entries.push(build('TRI_SPHUTA', 'Tri-Sphuta', triSphuta, asc,
     'Lagna + Moon + Sun',
-    'Life force — adverse transits here mark vitality dips'));
+    'जीवन शक्ति — यहाँ प्रतिकूल गोचर ऊर्जा में गिरावट को दर्शाते हैं'));
 
   const chatuh = normDeg(triSphuta + gulika);
   entries.push(build('CHATUH_SPHUTA', 'Chatuh-Sphuta', chatuh, asc,
     'Tri-Sphuta + Gulika',
-    'BPHS longevity sum — afflicted trine markers shorten life'));
+    'BPHS आयु योग — पीड़ित त्रिकोण आयु कम करते हैं'));
 
   const pancha = normDeg(chatuh + rahu);
   entries.push(build('PANCHA_SPHUTA', 'Pancha-Sphuta', pancha, asc,
     'Chatuh-Sphuta + Rahu',
-    'Full longevity sum; used for Maraka-dasha confirmation'));
+    'पूर्ण आयु योग; मारक-दशा की पुष्टि के लिए उपयोग किया जाता है'));
 
   const ayur = normDeg(sat + moon + asc);
   entries.push(build('AYUR', 'Ayur Sphuta', ayur, asc,
     'Saturn + Moon + Lagna',
-    'Lifespan point — transits by Saturn here are critical'));
+    'आयु बिंदु — यहाँ शनि का गोचर महत्वपूर्ण है'));
 
   // Yogi / Avayogi — classical "Sun + Moon + 93°20'" gives the Yogi point.
   const yogi = normDeg(sun + moon + 93 + 20 / 60);
   entries.push(build('YOGI', 'Yogi Sphuta', yogi, asc,
     "Sun + Moon + 93°20'",
-    'Yogi — nakshatra lord is highly auspicious; rashi lord is duplicate Yogi'));
+    'योगी — नक्षत्र स्वामी अत्यधिक शुभ है; राशि स्वामी डुप्लिकेट योगी है'));
   const avayogi = normDeg(yogi + 186 + 40 / 60);
   entries.push(build('AVAYOGI', 'Avayogi Sphuta', avayogi, asc,
     "Yogi + 186°40'",
-    'Avayogi — nakshatra lord causes obstructions'));
+    'अवयोगी — नक्षत्र स्वामी बाधाएँ उत्पन्न करता है'));
 
   const induSign = induLagnaSign(k);
   const varnadaSign = varnadaLagnaSign(k);

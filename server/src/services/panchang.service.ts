@@ -196,7 +196,7 @@ export interface PanchangResult {
   sun:  { longitude: number; rashi: string; rashiNum: number; degInRashi: number; nakshatra: string };
   moon: { longitude: number; rashi: string; rashiNum: number; degInRashi: number; nakshatra: string };
 
-  ayana: 'Uttarayana' | 'Dakshinayana';
+  ayana: 'उत्तरायण' | 'दक्षिणायन';
   ritu: string;
   masa: { amanta: string; purnimanta: string };
   samvat: { vikram: number; shaka: number; kali: number };
@@ -380,8 +380,8 @@ export function calculatePanchang(dateInput: Date, lat: number, lng: number): Pa
     }
   }
 
-  const ayana: 'Uttarayana' | 'Dakshinayana' =
-    sun.longitude >= 270 || sun.longitude < 90 ? 'Uttarayana' : 'Dakshinayana';
+  const ayana: 'उत्तरायण' | 'दक्षिणायन' =
+    sun.longitude >= 270 || sun.longitude < 90 ? 'उत्तरायण' : 'दक्षिणायन';
   const ritu = rituFromSunRashi(sunR.num);
   const masa = lunarMasa(jd);
   const samvat = samvatYears(refDate);

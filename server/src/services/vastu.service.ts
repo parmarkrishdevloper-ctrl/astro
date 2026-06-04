@@ -174,27 +174,27 @@ export function computeVastuReport(k: KundaliResult, _locale: _VastuLocale = 'en
   const ketu = k.planets.find((p) => p.id === 'KE')!;
   if (rahu.house === 4 || ketu.house === 4) {
     doshaChecks.push({
-      dosha: `${rahu.house === 4 ? 'Rahu' : 'Ketu'} afflicts 4th house (sukha-sthana)`,
+      dosha: `${rahu.house === 4 ? 'राहु' : 'केतु'} चौथे भाव (सुख स्थान) को पीड़ित कर रहा है`,
       severity: 'high',
-      remedy: 'Install a kalash with water in the NE corner. Keep NE corner clutter-free. Donate on Saturdays.',
+      remedy: 'ईशान कोण (NE) में जल भरा कलश स्थापित करें। ईशान कोण को साफ-सुथरा रखें। शनिवार को दान करें।',
     });
   }
   // Saturn in 4th → delays + coldness at home
   const saturn = k.planets.find((p) => p.id === 'SA')!;
   if (saturn.house === 4) {
     doshaChecks.push({
-      dosha: 'Saturn in 4th — coldness, structural delays at home',
+      dosha: 'चतुर्थ भाव में शनि — घर में उदासीनता और निर्माण में विलंब',
       severity: 'medium',
-      remedy: 'Keep SW quadrant weighted (heavy furniture). Plant a peepal in an open plot if possible.',
+      remedy: 'नैऋत्य (SW) भाग को भारी रखें (भारी फर्नीचर)। यदि संभव हो तो खुले भूखंड में पीपल का पेड़ लगाएँ।',
     });
   }
   // Mars in 4th → disputes/fire accidents
   const mars = k.planets.find((p) => p.id === 'MA')!;
   if (mars.house === 4) {
     doshaChecks.push({
-      dosha: 'Mars in 4th — fire/accident risk at home, discord',
+      dosha: 'चतुर्थ भाव में मंगल — घर में आग/दुर्घटना का जोखिम, विवाद',
       severity: 'medium',
-      remedy: 'Kitchen (Agni zone) must be strictly SE. Install a Hanuman image facing south.',
+      remedy: 'रसोई (अग्नि क्षेत्र) strictly आग्नेय (SE) में होनी चाहिए। दक्षिणमुखी हनुमान जी का चित्र स्थापित करें।',
     });
   }
   // 4th lord debilitated or in 6/8/12
@@ -202,21 +202,21 @@ export function computeVastuReport(k: KundaliResult, _locale: _VastuLocale = 'en
   const fourthLordP = k.planets.find((p) => p.id === fourthLord)!;
   if (fourthLordP.debilitated || [6,8,12].includes(fourthLordP.house)) {
     doshaChecks.push({
-      dosha: `4th lord ${fourthLord} is ${fourthLordP.debilitated ? 'debilitated' : 'in dusthana'} — property gain delayed`,
+      dosha: `चतुर्थेश ${fourthLord} ${fourthLordP.debilitated ? 'नीच का' : 'दुःस्थान में'} है — संपत्ति लाभ में विलंब`,
       severity: 'medium',
-      remedy: 'Keep NE corner luminous (always a lamp at dusk). Donate land/seeds on Mondays.',
+      remedy: 'ईशान कोण (NE) को प्रकाशमान रखें (शाम को हमेशा एक दीपक जलाएं)। सोमवार को भूमि/बीज का दान करें।',
     });
   }
   // Universal doshas (architectural, not chart-based)
   doshaChecks.push(
-    { dosha: 'Toilet in NE corner', severity: 'high',
-      remedy: 'If unavoidable, keep it sealed, install copper pyramid, salt-bowl in corner, change annually.' },
-    { dosha: 'Kitchen in NE', severity: 'high',
-      remedy: 'Relocate stove to SE corner of the kitchen. Install bagua mirror outside.' },
-    { dosha: 'Staircase in center (Brahmasthan)', severity: 'high',
-      remedy: 'Keep Brahmasthan void; place a skylight above. Hang copper mass below staircase.' },
-    { dosha: 'Sleeping with head towards North', severity: 'high',
-      remedy: `Change orientation — head toward ${DIRECTIONS[headDir].name} (personalised for your Moon nakshatra lord).` },
+    { dosha: 'ईशान कोण (NE) में शौचालय', severity: 'high',
+      remedy: 'यदि अपरिहार्य हो, तो इसे सील रखें, तांबे का पिरामिड स्थापित करें, कोने में नमक का कटोरा रखें, इसे प्रतिवर्ष बदलें।' },
+    { dosha: 'ईशान कोण (NE) में रसोई', severity: 'high',
+      remedy: 'चूल्हे को रसोई के आग्नेय (SE) कोने में ले जाएं। बाहर बागुआ दर्पण (bagua mirror) स्थापित करें।' },
+    { dosha: 'केंद्र (ब्रह्मस्थान) में सीढ़ियाँ', severity: 'high',
+      remedy: 'ब्रह्मस्थान को खाली रखें; ऊपर एक रोशनदान (skylight) लगाएं। सीढ़ियों के नीचे तांबे का पिंड लटकाएं।' },
+    { dosha: 'उत्तर दिशा की ओर सिर करके सोना', severity: 'high',
+      remedy: `दिशा बदलें — सिर ${DIRECTIONS[headDir].name} की ओर रखें (आपके चंद्रमा के नक्षत्र स्वामी के अनुसार वैयक्तिकृत)।` },
   );
 
   return {

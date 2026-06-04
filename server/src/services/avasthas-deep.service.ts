@@ -63,15 +63,15 @@ function readingFor(verdict: DeepVerdict, planet: PlanetId, baladi: BaladiState,
   const activeStr = active.length ? ` (${active.join(' + ')})` : '';
   switch (verdict) {
     case 'excellent':
-      return `${planet} delivers its karakas with full strength — ${baladi}/${deep}${activeStr}.`;
+      return `${planet} अपने कारक तत्वों को पूर्ण शक्ति के साथ देता है — ${baladi}/${deep}${activeStr}।`;
     case 'good':
-      return `${planet} is well-placed; its significations fructify with moderate delay.`;
+      return `${planet} अच्छी स्थिति में है; इसके कारकत्व मध्यम विलंब के साथ फलीभूत होते हैं।`;
     case 'neutral':
-      return `${planet} gives mixed results; depends on dasha and transit support.`;
+      return `${planet} मिश्रित परिणाम देता है; दशा और गोचर के समर्थन पर निर्भर करता है।`;
     case 'weak':
-      return `${planet} is weakened${activeStr}; its karakas may be delayed or diminished.`;
+      return `${planet} कमजोर है${activeStr}; इसके कारक तत्व विलंबित या क्षीण हो सकते हैं।`;
     case 'afflicted':
-      return `${planet} is severely afflicted${activeStr}; karakas suffer significantly.`;
+      return `${planet} गंभीर रूप से पीड़ित है${activeStr}; कारक तत्वों को काफी नुकसान होता है।`;
   }
 }
 

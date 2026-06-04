@@ -42,7 +42,7 @@ export const NAK_META: NakshatraMeta[] = [
 ];
 
 /** Disha-shool: direction to avoid travelling for the given weekday (0=Sun..6=Sat). */
-export const DISHA_SHOOL = ['West', 'East', 'North', 'North', 'South', 'West', 'East'];
+export const DISHA_SHOOL = ['पश्चिम', 'पूर्व', 'उत्तर', 'उत्तर', 'दक्षिण', 'पश्चिम', 'पूर्व'];
 
 /** Chandra-bala: given Moon's rashi (1..12), the rashis where Chandra is benefic for travel/work. */
 export function chandraBalaFor(moonRashi: number): number[] {
@@ -71,13 +71,13 @@ export function taraBalaFor(moonNak: number): { favorable: number[]; inauspiciou
 export function rituFromSunRashi(sunRashi: number): string {
   // Vasanta (spring) = Mesha+Vrishabha, Grishma = Mithuna+Karka, Varsha = Simha+Kanya,
   // Sharad = Tula+Vrishchika, Hemanta = Dhanu+Makara, Shishira = Kumbha+Meena.
-  const map = ['Vasanta','Vasanta','Grishma','Grishma','Varsha','Varsha',
-               'Sharad','Sharad','Hemanta','Hemanta','Shishira','Shishira'];
+  const map = ['वसंत','वसंत','ग्रीष्म','ग्रीष्म','वर्षा','वर्षा',
+               'शरद','शरद','हेमंत','हेमंत','शिशिर','शिशिर'];
   return map[sunRashi - 1];
 }
 
 /** Amanta lunar month names, keyed by the solar rashi containing the new moon. */
 export const AMANTA_MASA = [
-  'Chaitra','Vaishakha','Jyeshtha','Ashadha','Shravana','Bhadrapada',
-  'Ashwin','Kartika','Margashirsha','Pausha','Magha','Phalguna',
+  'चैत्र','वैशाख','ज्येष्ठ','आषाढ़','श्रावण','भाद्रपद',
+  'अश्विन','कार्तिक','मार्गशीर्ष','पौष','माघ','फाल्गुन',
 ];

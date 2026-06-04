@@ -24,12 +24,16 @@ async function getBrowser(): Promise<Browser> {
   if (_browser && _browser.connected) return _browser;
   if (_launching) return _launching;
   _launching = puppeteer.launch({
-    headless: true,
+    headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   }).then((b) => {
     _browser = b;
     _launching = null;
     return b;
+  }).catch((err) => {
+    console.error('Puppeteer launch failed:', err);
+    _launching = null;
+    throw err;
   });
   return _launching;
 }

@@ -83,15 +83,15 @@ export type PrashnaCategory =
 interface CategoryHouses { positive: number[]; destroyer: number[]; primary: number; label: string }
 
 const CATEGORY_HOUSES: Record<PrashnaCategory, CategoryHouses> = {
-  marriage:   { primary: 7,  positive: [2, 7, 11],  destroyer: [1, 6, 10],  label: 'Marriage' },
-  career:     { primary: 10, positive: [2, 6, 10, 11], destroyer: [5, 8, 12], label: 'Career / Job' },
-  health:     { primary: 1,  positive: [1, 5, 11],  destroyer: [6, 8, 12],  label: 'Health' },
-  progeny:    { primary: 5,  positive: [2, 5, 11],  destroyer: [1, 4, 10],  label: 'Children' },
-  property:   { primary: 4,  positive: [4, 11, 12], destroyer: [3, 5, 10],  label: 'Property' },
-  travel:     { primary: 3,  positive: [3, 9, 12],  destroyer: [4, 8, 11],  label: 'Travel' },
-  litigation: { primary: 6,  positive: [6, 11],     destroyer: [5, 8, 12],  label: 'Litigation' },
-  finance:    { primary: 2,  positive: [2, 6, 11],  destroyer: [5, 8, 12],  label: 'Finance' },
-  education:  { primary: 4,  positive: [4, 9, 11],  destroyer: [3, 8, 12],  label: 'Education' },
+  marriage:   { primary: 7,  positive: [2, 7, 11],  destroyer: [1, 6, 10],  label: 'विवाह' },
+  career:     { primary: 10, positive: [2, 6, 10, 11], destroyer: [5, 8, 12], label: 'करियर / नौकरी' },
+  health:     { primary: 1,  positive: [1, 5, 11],  destroyer: [6, 8, 12],  label: 'स्वास्थ्य' },
+  progeny:    { primary: 5,  positive: [2, 5, 11],  destroyer: [1, 4, 10],  label: 'संतान' },
+  property:   { primary: 4,  positive: [4, 11, 12], destroyer: [3, 5, 10],  label: 'संपत्ति' },
+  travel:     { primary: 3,  positive: [3, 9, 12],  destroyer: [4, 8, 11],  label: 'यात्रा' },
+  litigation: { primary: 6,  positive: [6, 11],     destroyer: [5, 8, 12],  label: 'मुकदमेबाजी' },
+  finance:    { primary: 2,  positive: [2, 6, 11],  destroyer: [5, 8, 12],  label: 'वित्त' },
+  education:  { primary: 4,  positive: [4, 9, 11],  destroyer: [3, 8, 12],  label: 'शिक्षा' },
 };
 
 export type PrashnaVerdict = 'yes' | 'no' | 'mixed';
@@ -155,10 +155,10 @@ export function computePrashnaVerdict(
   const rulingPlanets = computeRulingPlanets(prashna.whenUTC, prashna.chart.input.lat, prashna.chart.input.lng).ruling;
 
   const reasoning = [
-    `Category: ${houses.label} · primary house ${houses.primary}.`,
-    `Positive houses: ${houses.positive.join(', ')} · destroyer: ${houses.destroyer.join(', ')}.`,
-    `Sub-lords — Asc: ${ascSub}, Moon: ${moonSub}, Primary: ${primarySub}.`,
-    `YES signals: ${yesCount}/3. NO signals: ${noCount}/3.`,
+    `श्रेणी: ${houses.label} · मुख्य भाव ${houses.primary}।`,
+    `सकारात्मक भाव: ${houses.positive.join(', ')} · बाधक: ${houses.destroyer.join(', ')}।`,
+    `उप-स्वामी — लग्न: ${ascSub}, चंद्र: ${moonSub}, मुख्य: ${primarySub}।`,
+    `हाँ संकेत: ${yesCount}/3। ना संकेत: ${noCount}/3।`,
   ].join(' ');
 
   return {

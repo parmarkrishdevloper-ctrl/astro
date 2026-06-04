@@ -25,12 +25,12 @@ export type ShadAvasthaKey =
   | 'Lajjita' | 'Garvita' | 'Kshudhita' | 'Trashita' | 'Mudita' | 'Kshobhita';
 
 export const SHAD_AVASTHA_INFO: Record<ShadAvasthaKey, { label: string; mood: string; verdict: 'good' | 'bad' | 'mixed' }> = {
-  Lajjita:   { label: 'Lajjita (ashamed)',   mood: 'loss of honour, compromised karaka',        verdict: 'bad' },
-  Garvita:   { label: 'Garvita (proud)',     mood: 'confident, gives independent good result',   verdict: 'good' },
-  Kshudhita: { label: 'Kshudhita (hungry)',  mood: 'starved, weak, unable to deliver',           verdict: 'bad' },
-  Trashita:  { label: 'Trashita (thirsty)',  mood: 'longing, unfulfilled, emotionally depleted', verdict: 'bad' },
-  Mudita:    { label: 'Mudita (delighted)',  mood: 'content, blesses the karaka and house',      verdict: 'good' },
-  Kshobhita: { label: 'Kshobhita (agitated)', mood: 'severely disturbed, destroys karaka',        verdict: 'bad' },
+  Lajjita:   { label: 'लज्जित (शर्मिंदा)',   mood: 'सम्मान की हानि, कारक तत्व से समझौता',        verdict: 'bad' },
+  Garvita:   { label: 'गर्वित (गौरवान्वित)',     mood: 'आत्मविश्वासी, स्वतंत्र रूप से अच्छे परिणाम देता है',   verdict: 'good' },
+  Kshudhita: { label: 'क्षुधित (भूखा)',  mood: 'कमजोर, फल देने में असमर्थ',           verdict: 'bad' },
+  Trashita:  { label: 'तृषित (प्यासा)',  mood: 'लालसा, अतृप्त, भावनात्मक रूप से क्षीण', verdict: 'bad' },
+  Mudita:    { label: 'मुदित (प्रसन्न)',  mood: 'संतुष्ट, कारक और भाव को आशीर्वाद देता है',      verdict: 'good' },
+  Kshobhita: { label: 'क्षोभित (क्षुब्ध)', mood: 'अत्यधिक अशांत, कारक तत्व को नष्ट करता है',        verdict: 'bad' },
 };
 
 // Benefics/malefics (natural).
@@ -172,28 +172,28 @@ function reasonFor(state: ShadAvasthaKey, p: PlanetPosition, all: PlanetPosition
   switch (state) {
     case 'Lajjita': {
       const bad = peers.filter((x) => x.house === 5 && ['SU','SA','MA','RA','KE'].includes(x.id)).map((x) => x.id);
-      return `in 5H with ${bad.join(', ')}`;
+      return `5वें भाव में ${bad.join(', ')} के साथ`;
     }
     case 'Garvita':
-      return p.exalted ? `exalted in ${p.rashi.name}` : `moolatrikona in ${p.rashi.name}`;
+      return p.exalted ? `${p.rashi.name} में उच्च का` : `${p.rashi.name} में मूलत्रिकोण`;
     case 'Kshudhita': {
       const enemies = ENEMIES[p.id] ?? [];
-      if (enemies.includes(signLord(p.rashi.num))) return `in enemy sign ${p.rashi.name} (lord ${signLord(p.rashi.num)})`;
+      if (enemies.includes(signLord(p.rashi.num))) return `शत्रु राशि ${p.rashi.name} (स्वामी ${signLord(p.rashi.num)}) में`;
       const conj = peers.find((x) => enemies.includes(x.id) && x.house === p.house);
-      if (conj) return `with enemy ${conj.id}`;
+      if (conj) return `शत्रु ${conj.id} के साथ`;
       const asp  = peers.find((x) => enemies.includes(x.id) && aspectsBetween(x, p));
-      return asp ? `aspected by enemy ${asp.id}` : 'enemy influence';
+      return asp ? `शत्रु ${asp.id} से दृष्ट` : 'शत्रु का प्रभाव';
     }
     case 'Trashita':
-      return `in watery ${p.rashi.name}, aspected by malefic with no benefic relief`;
+      return `जल तत्व राशि ${p.rashi.name} में, पाप ग्रह से दृष्ट, कोई शुभ प्रभाव नहीं`;
     case 'Mudita': {
       const lord = signLord(p.rashi.num);
-      if ((FRIENDS[p.id] ?? []).includes(lord)) return `in friend sign (${p.rashi.name}, lord ${lord})`;
+      if ((FRIENDS[p.id] ?? []).includes(lord)) return `मित्र राशि (${p.rashi.name}, स्वामी ${lord}) में`;
       const ben = peers.find((x) => ['JU','VE','MO'].includes(x.id) && (x.house === p.house || aspectsBetween(x, p)));
-      return ben ? `blessed by ${ben.id}` : 'friendly influence';
+      return ben ? `${ben.id} का आशीर्वाद` : 'मित्र का प्रभाव';
     }
     case 'Kshobhita':
-      return 'combust + with enemy + aspected by malefic — severe disturbance';
+      return 'अस्त + शत्रु के साथ + पाप ग्रह से दृष्ट — अत्यधिक अशांति';
   }
 }
 

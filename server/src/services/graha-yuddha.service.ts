@@ -55,15 +55,15 @@ function decideWinner(
   if (a === 'VE' || b === 'VE') {
     const w = 'VE' as PlanetId;
     const l = a === 'VE' ? b : a;
-    return { winner: w, loser: l, reason: 'Venus is never defeated (classical exception).' };
+    return { winner: w, loser: l, reason: 'शुक्र कभी पराजित नहीं होता (शास्त्रीय अपवाद)।' };
   }
   if ((a === 'SA' && b === 'JU') || (b === 'SA' && a === 'JU')) {
-    return { winner: 'JU', loser: 'SA', reason: 'Jupiter always defeats Saturn (classical).' };
+    return { winner: 'JU', loser: 'SA', reason: 'बृहस्पति हमेशा शनि को पराजित करता है (शास्त्रीय)।' };
   }
   // Latitude rule: more northerly wins
-  if (latA > latB) return { winner: a, loser: b, reason: `${a} is further north in latitude (${latA.toFixed(2)}° vs ${latB.toFixed(2)}°).` };
-  if (latB > latA) return { winner: b, loser: a, reason: `${b} is further north in latitude (${latB.toFixed(2)}° vs ${latA.toFixed(2)}°).` };
-  return { winner: a, loser: b, reason: 'Equal latitudes — tiebreaker by planet order.' };
+  if (latA > latB) return { winner: a, loser: b, reason: `${a} अक्षांश में अधिक उत्तर में है (${latA.toFixed(2)}° बनाम ${latB.toFixed(2)}°)।` };
+  if (latB > latA) return { winner: b, loser: a, reason: `${b} अक्षांश में अधिक उत्तर में है (${latB.toFixed(2)}° बनाम ${latA.toFixed(2)}°)।` };
+  return { winner: a, loser: b, reason: 'समान अक्षांश — ग्रह क्रम द्वारा टाईब्रेकर।' };
 }
 
 function sampleDay(jd: number): Record<PlanetId, { lon: number; lat: number }> {
