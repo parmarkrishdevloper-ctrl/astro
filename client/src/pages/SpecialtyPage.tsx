@@ -19,28 +19,45 @@ type Tab = 'vastu' | 'medical' | 'marital' | 'career' | 'financial';
 type T = (key: string, fallback?: string) => string;
 
 function localizeKind(t: T, k: string): string {
-  return t(`specialty.kind.${k}`, k);
+  const map: Record<string, string> = { vastu: 'वास्तु', medical: 'चिकित्सा', marital: 'वैवाहिक', career: 'करियर', financial: 'वित्तीय' };
+  return t(`specialty.kind.${k}`, map[k] || k);
 }
 function localizeSeverity(t: T, s: string): string {
-  return t(`specialty.severity.${s}`, s);
+  const map: Record<string, string> = { low: 'कम', moderate: 'मध्यम', elevated: 'बढ़ा हुआ', medium: 'मध्यम', high: 'उच्च' };
+  return t(`specialty.severity.${s}`, map[s] || s);
 }
 function localizeState(t: T, s: string): string {
-  return t(`specialty.medical.state.${s}`, s);
+  const map: Record<string, string> = { strong: 'मजबूत', afflicted: 'पीड़ित', neutral: 'तटस्थ', weak: 'कमजोर' };
+  return t(`specialty.medical.state.${s}`, map[s] || s);
 }
 function localizeFlag(t: T, b: boolean): string {
-  return b ? t('specialty.value.yes', 'yes') : t('specialty.value.no', 'no');
+  return b ? t('specialty.value.yes', 'हाँ') : t('specialty.value.no', 'नहीं');
 }
 function localizeScore(t: T, s: string): string {
-  return t(`specialty.score.${s}`, s);
+  const map: Record<string, string> = {
+    excellent: 'उत्कृष्ट', good: 'अच्छा', fair: 'सामान्य', poor: 'खराब',
+    strong: 'मजबूत', favourable: 'अनुकूल', mixed: 'मिश्रित', challenged: 'चुनौतीपूर्ण',
+    'high-achievement': 'उच्च उपलब्धि', moderate: 'मध्यम', struggle: 'संघर्षपूर्ण',
+    exceptional: 'असाधारण', prosperous: 'समृद्ध', slow: 'धीमा'
+  };
+  return t(`specialty.score.${s}`, map[s] || s);
 }
 function localizeLordState(t: T, s: string): string {
-  return t(`specialty.lordState.${s}`, s);
+  const map: Record<string, string> = { strong: 'मजबूत', neutral: 'तटस्थ', weak: 'कमजोर' };
+  return t(`specialty.lordState.${s}`, map[s] || s);
 }
 function localizeLongevity(t: T, s: string): string {
-  return t(`specialty.longevity.${s}`, s);
+  const map: Record<string, string> = { 'purna (72-108)': 'पूर्ण (72-108)', 'madhya (36-72)': 'मध्य (36-72)', 'alpa (0-36)': 'अल्प (0-36)' };
+  return t(`specialty.longevity.${s}`, map[s] || s);
 }
 function localizeDirection(t: T, d: string): string {
-  return t(`specialty.direction.${d}`, d);
+  const map: Record<string, string> = {
+    East: 'पूर्व', 'South-East': 'दक्षिण-पूर्व', South: 'दक्षिण', 'South-West': 'दक्षिण-पश्चिम',
+    West: 'पश्चिम', 'North-West': 'उत्तर-पश्चिम', North: 'उत्तर', 'North-East': 'पूर्वोत्तर',
+    E: 'पूर्व', SE: 'दक्षिण-पूर्व', S: 'दक्षिण', SW: 'दक्षिण-पश्चिम',
+    W: 'पश्चिम', NW: 'उत्तर-पश्चिम', N: 'उत्तर', NE: 'पूर्वोत्तर', C: 'केंद्र'
+  };
+  return t(`specialty.direction.${d}`, map[d] || d);
 }
 
 export function SpecialtyPage() {

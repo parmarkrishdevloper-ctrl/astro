@@ -47,12 +47,12 @@ export function NumerologyPage() {
 
       {data && (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProfileCard title={t('numerology.moolank', 'Moolank (Root)')} subtitle={t('numerology.moolankSub', 'From birth day digit sum')} profile={data.moolank} />
-          <ProfileCard title={t('numerology.bhagyank', 'Bhagyank (Destiny)')} subtitle={t('numerology.bhagyankSub', 'From full DOB digit sum')} profile={data.bhagyank} />
+          <ProfileCard title={t('numerology.moolank', 'मूलांक')} subtitle={t('numerology.moolankSub', 'जन्म दिन के अंकों के योग से')} profile={data.moolank} />
+          <ProfileCard title={t('numerology.bhagyank', 'भाग्यांक')} subtitle={t('numerology.bhagyankSub', 'पूर्ण जन्म तिथि के अंकों के योग से')} profile={data.bhagyank} />
           {data.nameNumber && (
             <ProfileCard
-              title={t('numerology.nameNo', 'Name Number')}
-              subtitle={`${t('numerology.chaldeanSum', 'Chaldean sum')}: ${data.nameNumber.rawSum}`}
+              title={t('numerology.nameNo', 'नाम संख्या')}
+              subtitle={`${t('numerology.chaldeanSum', 'काल्डियन योग')}: ${data.nameNumber.rawSum}`}
               profile={data.nameNumber}
             />
           )}
@@ -70,7 +70,7 @@ function ProfileCard({ title, subtitle, profile }: { title: string; subtitle: st
       <div className="flex items-center gap-4 mb-4">
         <div className="text-5xl font-bold text-saffron tabular-nums">{profile.number}</div>
         <div>
-          <div className="text-xs text-vedicMaroon/60">{t('numerology.planet', 'Ruling Planet')}</div>
+          <div className="text-xs text-vedicMaroon/60">{t('numerology.planet', 'शासक ग्रह')}</div>
           {/* TODO(i18n-server): localize NumerologyProfile.rulingPlanet */}
           <div className="text-base font-semibold text-vedicMaroon" lang="hi">{profile.rulingPlanet}</div>
         </div>
@@ -78,10 +78,10 @@ function ProfileCard({ title, subtitle, profile }: { title: string; subtitle: st
       {/* TODO(i18n-server): localize NumerologyProfile.personality */}
       <p className="text-xs text-vedicMaroon/80 mb-4 italic" lang="hi">{profile.personality}</p>
       <dl className="text-xs space-y-1.5">
-        <KV label={t('numerology.colors', 'Lucky Colors')} value={profile.luckyColors.join(', ')} />
-        <KV label={t('numerology.days', 'Lucky Days')}   value={profile.luckyDays.join(', ')} />
-        <KV label={t('numerology.numbers', 'Lucky Numbers')} value={profile.luckyNumbers.join(', ')} />
-        <KV label={t('numerology.gem', 'Lucky Gem')}    value={profile.luckyGem} />
+        <KV label={t('numerology.colors', 'शुभ रंग')} value={profile.luckyColors.join(', ')} />
+        <KV label={t('numerology.days', 'शुभ दिन')}   value={profile.luckyDays.join(', ')} />
+        <KV label={t('numerology.numbers', 'शुभ अंक')} value={profile.luckyNumbers.join(', ')} />
+        <KV label={t('numerology.gem', 'शुभ रत्न')}    value={profile.luckyGem} />
       </dl>
     </Card>
   );

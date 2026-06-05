@@ -78,16 +78,16 @@ function mangalDoshaStatus(k: KundaliResult): {
   // Mars with JU/VE conjunction; Mars aspected by JU.
   const notes: string[] = [];
   let cancelled = false;
-  if (mars.ownSign) { cancelled = true; notes.push('Mars in own sign — dosha cancelled.'); }
-  if (mars.exalted) { cancelled = true; notes.push('Mars exalted — dosha cancelled.'); }
+  if (mars.ownSign) { cancelled = true; notes.push('मंगल अपनी राशि में — दोष निरस्त।'); }
+  if (mars.exalted) { cancelled = true; notes.push('मंगल उच्च का — दोष निरस्त।'); }
   const mateConj = k.planets.find((p) => p.house === mars.house && (p.id === 'JU' || p.id === 'VE'));
-  if (mateConj) { cancelled = true; notes.push(`Mars conjunct ${mateConj.id} — softened.`); }
+  if (mateConj) { cancelled = true; notes.push(`मंगल के साथ ${mateConj.id} की युति — दोष नरम हुआ।`); }
   // JU aspect to Mars
   const jup = k.planets.find((p) => p.id === 'JU')!;
   const jupToMars = ((mars.house - jup.house + 12) % 12) + 1;
   if (jupToMars === 5 || jupToMars === 9 || jupToMars === 7) {
     cancelled = true;
-    notes.push('Jupiter aspects Mars — dosha mitigated.');
+    notes.push('मंगल पर गुरु की दृष्टि — दोष कम हुआ।');
   }
   return {
     active: fromLagna || fromMoon || fromVenus,
@@ -109,24 +109,24 @@ function describeSpouse(k: KundaliResult): {
   const nature: string[] = [];
   const appearance: string[] = [];
   switch (r.element) {
-    case 'Fire':  nature.push('passionate, driven, temperamental'); appearance.push('athletic, ruddy complexion'); break;
-    case 'Earth': nature.push('stable, practical, resource-oriented'); appearance.push('well-built, earthy tones'); break;
-    case 'Air':   nature.push('communicative, social, restless'); appearance.push('slender, fair skin'); break;
-    case 'Water': nature.push('emotional, sensitive, home-loving'); appearance.push('soft features, watery eyes'); break;
+    case 'Fire':  nature.push('भावुक, प्रेरित, उग्र'); appearance.push('एथलेटिक, लालिमायुक्त रंग'); break;
+    case 'Earth': nature.push('स्थिर, व्यावहारिक, संसाधन-उन्मुख'); appearance.push('सुगठित शरीर, मिट्टी जैसे रंग'); break;
+    case 'Air':   nature.push('संवादकुशल, सामाजिक, बेचैन'); appearance.push('पतला, गोरा रंग'); break;
+    case 'Water': nature.push('भावनात्मक, संवेदनशील, घर-प्रेमी'); appearance.push('मुलायम नैन-नक्श, जलमय आंखें'); break;
   }
   switch (r.quality) {
-    case 'Movable': nature.push('ambitious, initiating'); break;
-    case 'Fixed':   nature.push('loyal, stubborn'); break;
-    case 'Dual':    nature.push('adaptable, dual-natured'); break;
+    case 'Movable': nature.push('महत्वाकांक्षी, पहल करने वाला'); break;
+    case 'Fixed':   nature.push('वफादार, जिद्दी'); break;
+    case 'Dual':    nature.push('अनुकूलनीय, दोहरे स्वभाव वाला'); break;
   }
   // Lord placement hint
   const origin = (() => {
-    if (seventhLordP.house === 12) return 'Likely from a distant place or foreign background.';
-    if (seventhLordP.house === 9) return 'Likely from a respected lineage / different cultural background.';
-    if (seventhLordP.house === 3) return 'Likely from your neighbourhood or through siblings\' network.';
-    if (seventhLordP.house === 7) return 'Classical placement — spouse from your peer group.';
-    if (seventhLordP.house === 1) return 'Spouse resembles you; early acquaintance or your own social circle.';
-    return 'Origin indicated by 7th lord\'s house context.';
+    if (seventhLordP.house === 12) return 'संभवतः किसी दूर के स्थान या विदेशी पृष्ठभूमि से।';
+    if (seventhLordP.house === 9) return 'संभवतः एक सम्मानित वंश / अलग सांस्कृतिक पृष्ठभूमि से।';
+    if (seventhLordP.house === 3) return 'संभवतः आपके पड़ोस से या भाई-बहनों के नेटवर्क के माध्यम से।';
+    if (seventhLordP.house === 7) return 'शास्त्रीय स्थिति — जीवनसाथी आपके सहकर्मी समूह (peer group) से।';
+    if (seventhLordP.house === 1) return 'जीवनसाथी आपके जैसा ही दिखता है; शुरुआती जान-पहचान या आपका अपना सामाजिक दायरा।';
+    return '7वें भाव के स्वामी की स्थिति से जीवनसाथी की पृष्ठभूमि का संकेत मिलता है।';
   })();
 
   return { nature, appearance, origin };
@@ -147,11 +147,11 @@ function marriageTimings(k: KundaliResult): {
   const ulSignNum = upa.signNum;
   const ulLord = RASHIS[ulSignNum - 1].lord;
   const windows: ReturnType<typeof marriageTimings> = [];
-  const interesting: Record<PlanetId, string> = {
-    [seventhLord]: '7th lord — primary marriage ruler',
-    [ulLord]: 'UL-lord — classical spouse indicator',
-    VE: 'Venus — spouse karaka',
-    JU: 'Jupiter — husband karaka (classical, for women)',
+  const interesting: Partial<Record<PlanetId, string>> = {
+    [seventhLord]: '7वें भाव का स्वामी — विवाह का प्राथमिक शासक',
+    [ulLord]: 'UL-स्वामी — शास्त्रीय जीवनसाथी संकेतक',
+    VE: 'शुक्र — पत्नी कारक',
+    JU: 'गुरु — पति कारक (शास्त्रीय, महिलाओं के लिए)',
   };
   for (const m of mahas) {
     if (m.lord in interesting) {
@@ -160,7 +160,7 @@ function marriageTimings(k: KundaliResult): {
         lord: m.lord as PlanetId,
         startISO: m.start.slice(0, 10),
         endISO: m.end.slice(0, 10),
-        why: interesting[m.lord as PlanetId],
+        why: interesting[m.lord as PlanetId]!,
       });
     }
   }
@@ -217,10 +217,10 @@ export function computeMaritalDeep(k: KundaliResult, _locale: _MaritalLocale = '
   const lordState: 'strong' | 'neutral' | 'weak' =
     seventhLordP.exalted || seventhLordP.ownSign ? 'strong' :
     seventhLordP.debilitated || seventhLordP.combust || [6,8,12].includes(seventhLordP.house) ? 'weak' : 'neutral';
-  if (lordState === 'strong') factors.push({ kind: 'positive', text: `7th lord ${seventhLord} is ${seventhLordP.exalted ? 'exalted' : 'in own sign'}.`, weight: 10 });
-  if (lordState === 'weak')   factors.push({ kind: 'negative', text: `7th lord ${seventhLord} is ${seventhLordP.debilitated ? 'debilitated' : seventhLordP.combust ? 'combust' : 'in dusthana'}.`, weight: -10 });
-  if (benefOcc.length) factors.push({ kind: 'positive', text: `Benefics in 7th: ${benefOcc.join(', ')}.`, weight: 6 * benefOcc.length });
-  if (malefOcc.length) factors.push({ kind: 'negative', text: `Malefics in 7th: ${malefOcc.join(', ')}.`, weight: -6 * malefOcc.length });
+  if (lordState === 'strong') factors.push({ kind: 'positive', text: `7वें भाव का स्वामी ${seventhLord} ${seventhLordP.exalted ? 'उच्च का' : 'अपनी राशि में'} है।`, weight: 10 });
+  if (lordState === 'weak')   factors.push({ kind: 'negative', text: `7वें भाव का स्वामी ${seventhLord} ${seventhLordP.debilitated ? 'नीच का' : seventhLordP.combust ? 'अस्त' : 'दुःस्थान में'} है।`, weight: -10 });
+  if (benefOcc.length) factors.push({ kind: 'positive', text: `7वें भाव में शुभ ग्रह: ${benefOcc.join(', ')}।`, weight: 6 * benefOcc.length });
+  if (malefOcc.length) factors.push({ kind: 'negative', text: `7वें भाव में पाप ग्रह: ${malefOcc.join(', ')}।`, weight: -6 * malefOcc.length });
 
   const r7 = RASHIS[k.houses[6].rashiNum - 1];
 
@@ -231,7 +231,7 @@ export function computeMaritalDeep(k: KundaliResult, _locale: _MaritalLocale = '
   const d9SeventhLordPos = d9.positions.find((p) => p.id === d9SeventhLord)!;
   const venusInD9 = d9.positions.find((p) => p.id === 'VE')!;
   const venusVargottama = venusInD9.vargottama;
-  if (venusVargottama) factors.push({ kind: 'positive', text: 'Venus vargottama (D9 = D1) — strong spouse indicator.', weight: 8 });
+  if (venusVargottama) factors.push({ kind: 'positive', text: 'शुक्र वर्गोत्तम है (D9 = D1) — मजबूत जीवनसाथी का संकेत।', weight: 8 });
 
   // UL
   const ul = upaPada(k);
@@ -241,8 +241,8 @@ export function computeMaritalDeep(k: KundaliResult, _locale: _MaritalLocale = '
   const ulBenefics = ulOccupants.filter((p) => BENEFICS.includes(p));
   const ulMalefics = ulOccupants.filter((p) => MALEFICS.includes(p));
   const ulLord = RASHIS[ul.signNum - 1].lord;
-  if (ulBenefics.length) factors.push({ kind: 'positive', text: `Benefics in UL: ${ulBenefics.join(', ')}.`, weight: 5 });
-  if (ulMalefics.length) factors.push({ kind: 'negative', text: `Malefics in UL: ${ulMalefics.join(', ')}.`, weight: -5 });
+  if (ulBenefics.length) factors.push({ kind: 'positive', text: `UL में शुभ ग्रह: ${ulBenefics.join(', ')}।`, weight: 5 });
+  if (ulMalefics.length) factors.push({ kind: 'negative', text: `UL में पाप ग्रह: ${ulMalefics.join(', ')}।`, weight: -5 });
 
   // Jaimini karakas
   const karakas = calculateKarakas(k);

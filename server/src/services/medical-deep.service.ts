@@ -17,44 +17,44 @@ import { Locale as _MedLocale } from '../i18n';
 // Scorpio=genitals, Sagittarius=hips/thighs, Capricorn=knees, Aquarius=calves,
 // Pisces=feet.
 export const RASHI_BODY_PART: Record<number, string> = {
-  1:  'Head, brain, skull',
-  2:  'Face, neck, throat, vocal cords',
-  3:  'Arms, hands, lungs, shoulders, upper ribs',
-  4:  'Chest, breasts, stomach, oesophagus',
-  5:  'Heart, upper back, spine (thoracic)',
-  6:  'Intestines, abdomen, bowel, pancreas',
-  7:  'Kidneys, lower back, lumbar spine',
-  8:  'Genitals, bladder, rectum, reproductive organs',
-  9:  'Hips, thighs, sciatic nerve, liver',
-  10: 'Knees, joints, skin, skeletal structure',
-  11: 'Calves, ankles, circulation, nervous system',
-  12: 'Feet, toes, lymphatic system',
+  1:  'सिर, मस्तिष्क, खोपड़ी',
+  2:  'चेहरा, गर्दन, गला, स्वरयंत्र',
+  3:  'बांहें, हाथ, फेफड़े, कंधे, ऊपरी पसलियाँ',
+  4:  'छाती, स्तन, पेट, अन्नप्रणाली',
+  5:  'हृदय, ऊपरी पीठ, रीढ़ की हड्डी (वक्ष)',
+  6:  'आंतें, पेट का निचला हिस्सा, आंत्र, अग्न्याशय',
+  7:  'किडनी, निचली पीठ, काठ की रीढ़',
+  8:  'जननांग, मूत्राशय, मलाशय, प्रजनन अंग',
+  9:  'कूल्हे, जांघें, कटिस्नायुशूल तंत्रिका, लिवर',
+  10: 'घुटने, जोड़, त्वचा, कंकाल संरचना',
+  11: 'पिंडलियां, टखने, रक्त संचार, तंत्रिका तंत्र',
+  12: 'पैर, पैर की उंगलियां, लसीका तंत्र',
 };
 
 // Planet → body systems / functions
 export const PLANET_BODY: Record<PlanetId, string[]> = {
-  SU: ['Heart', 'Spine (marrow)', 'Right eye (men)', 'Vitality (ojas)', 'Circulatory system'],
-  MO: ['Stomach', 'Breasts', 'Left eye (men)', 'Body fluids', 'Lymph', 'Mind / emotions'],
-  MA: ['Blood', 'Muscles', 'Bone-marrow', 'Energy (pitta)', 'Reproductive heat'],
-  ME: ['Nervous system', 'Skin', 'Speech organs', 'Respiratory (shared)', 'Memory'],
-  JU: ['Liver', 'Fat metabolism', 'Pancreas', 'Arterial system', 'Ears (hearing)'],
-  VE: ['Kidneys', 'Reproductive system', 'Skin (beauty)', 'Hormones (oestrogen)', 'Eyes (beauty)'],
-  SA: ['Bones', 'Teeth', 'Knees', 'Nerves (degenerative)', 'Chronic inflammation', 'Hair'],
-  RA: ['Mysterious/undiagnosed illness', 'Skin allergies', 'Poisoning', 'Anxiety', 'Phobias'],
-  KE: ['Immune system', 'Parasitic/viral infection', 'Nerve disorders', 'Scars', 'Moksha-bhava'],
+  SU: ['हृदय', 'रीढ़ (मज्जा)', 'दाहिनी आँख (पुरुष)', 'जीवन शक्ति (ओज)', 'रक्त संचार प्रणाली'],
+  MO: ['पेट', 'स्तन', 'बाईं आँख (पुरुष)', 'शरीर के तरल पदार्थ', 'लसीका', 'मन / भावनाएं'],
+  MA: ['रक्त', 'मांसपेशियां', 'अस्थि-मज्जा', 'ऊर्जा (पित्त)', 'प्रजनन ताप'],
+  ME: ['तंत्रिका तंत्र', 'त्वचा', 'वाक् अंग', 'श्वसन (साझा)', 'स्मृति'],
+  JU: ['लिवर', 'वसा चयापचय', 'अग्न्याशय', 'धमनी प्रणाली', 'कान (सुनना)'],
+  VE: ['किडनी', 'प्रजनन प्रणाली', 'त्वचा (सुंदरता)', 'हार्मोन (एस्ट्रोजन)', 'आंखें (सुंदरता)'],
+  SA: ['हड्डियां', 'दांत', 'घुटने', 'नसें (अपक्षयी)', 'पुरानी सूजन', 'बाल'],
+  RA: ['रहस्यमय/अज्ञात बीमारी', 'त्वचा एलर्जी', 'विषाक्तता', 'चिंता', 'भय'],
+  KE: ['प्रतिरक्षा प्रणाली', 'परजीवी/वायरल संक्रमण', 'तंत्रिका विकार', 'निशान', 'मोक्ष-भाव'],
 };
 
 // Diseases classically linked to each planet when afflicted
 export const PLANET_DISEASES: Record<PlanetId, string[]> = {
-  SU: ['Heart disease', 'Spinal issues', 'Bone fever', 'Blood pressure', 'Eye strain'],
-  MO: ['Anaemia', 'Depression', 'Insomnia', 'Menstrual disorders', 'Pulmonary congestion', 'Water-retention'],
-  MA: ['Inflammation', 'Accidents / surgery', 'Blood disorders', 'Ulcers', 'Fever', 'Measles / pox'],
-  ME: ['Nervous disorders', 'Skin conditions', 'Stammer', 'Epilepsy', 'Memory loss', 'Respiratory'],
-  JU: ['Diabetes', 'Liver/pancreas failure', 'Obesity', 'Ear disorders', 'Tumour (benign)', 'Jaundice'],
-  VE: ['Kidney stones', 'UTI', 'Reproductive disorders', 'Venereal diseases', 'Diabetes (sweet tooth)', 'Cataracts'],
-  SA: ['Arthritis', 'Rheumatism', 'Chronic fatigue', 'Dental decay', 'Paralysis', 'Cancer (chronic)'],
-  RA: ['Undiagnosed illness', 'Poisoning', 'Skin allergies', 'Mental aberrations', 'Snake bite'],
-  KE: ['Fistula', 'Parasitic infection', 'Nerve degeneration', 'Viral fever', 'Sudden illness'],
+  SU: ['हृदय रोग', 'रीढ़ की समस्या', 'अस्थि ज्वर', 'रक्तचाप', 'आंखों पर जोर'],
+  MO: ['एनीमिया', 'अवसाद', 'अनिद्रा', 'मासिक धर्म विकार', 'फेफड़ों में जकड़न', 'जल प्रतिधारण'],
+  MA: ['सूजन', 'दुर्घटनाएं / सर्जरी', 'रक्त विकार', 'अल्सर', 'बुखार', 'खसरा / चेचक'],
+  ME: ['तंत्रिका विकार', 'त्वचा रोग', 'हकलाना', 'मिर्गी', 'स्मृति हानि', 'श्वसन समस्या'],
+  JU: ['मधुमेह', 'लिवर/अग्न्याशय विफलता', 'मोटापा', 'कान के विकार', 'ट्यूमर (सौम्य)', 'पीलिया'],
+  VE: ['किडनी की पथरी', 'यूटीआई', 'प्रजनन विकार', 'यौन रोग', 'मधुमेह (मीठे की लालसा)', 'मोतियाबिंद'],
+  SA: ['गठिया', 'रुमेटिज्म', 'पुरानी थकान', 'दांतों की सड़न', 'लकवा', 'कैंसर (जीर्ण)'],
+  RA: ['अज्ञात बीमारी', 'विषाक्तता', 'त्वचा एलर्जी', 'मानसिक विकार', 'सर्पदंश'],
+  KE: ['फिस्टुला', 'परजीवी संक्रमण', 'तंत्रिका पतन', 'वायरल बुखार', 'अचानक बीमारी'],
 };
 
 const MALEFICS: PlanetId[] = ['SA', 'MA', 'RA', 'KE', 'SU'];
@@ -261,16 +261,16 @@ export function computeMedicalDeep(k: KundaliResult, _locale: _MedLocale = 'en')
   const recommendations: string[] = [];
   const highRisks = bodyVulnerability.filter((v) => v.risk === 'high' || v.risk === 'elevated');
   if (highRisks.length) {
-    recommendations.push(`Elevated risk for: ${highRisks.map((v) => v.part).slice(0, 3).join('; ')}.`);
+    recommendations.push(`इनके लिए अधिक जोखिम: ${highRisks.map((v) => v.part).slice(0, 3).join('; ')}.`);
   }
   const afflictedIds = planetHealth.filter((p) => p.state === 'afflicted').map((p) => p.planet);
-  if (afflictedIds.includes('SA')) recommendations.push('Saturn afflicted — monitor bones, joints; avoid cold/damp foods.');
-  if (afflictedIds.includes('MA')) recommendations.push('Mars afflicted — blood pressure, inflammation; avoid pungent excess.');
-  if (afflictedIds.includes('ME')) recommendations.push('Mercury afflicted — nervous system; daily pranayama, reduce screen exposure.');
-  if (afflictedIds.includes('MO')) recommendations.push('Moon afflicted — emotional/stomach; regular meal schedule, full-moon routines.');
-  if (afflictedIds.includes('SU')) recommendations.push('Sun afflicted — cardiac care; surya-arghya daily at sunrise.');
-  if (afflictedIds.includes('RA') || afflictedIds.includes('KE')) recommendations.push('Nodes afflicted — unusual/mysterious symptoms possible; keep second-opinion medical review.');
-  recommendations.push('Full-annual checkup during 6th/8th lord major periods; avoid surgery in Moon-waning + Saturn-transit-8th windows.');
+  if (afflictedIds.includes('SA')) recommendations.push('शनि पीड़ित है — हड्डियों, जोड़ों का ध्यान रखें; ठंडे/नम भोजन से बचें।');
+  if (afflictedIds.includes('MA')) recommendations.push('मंगल पीड़ित है — रक्तचाप, सूजन; अधिक तीखे भोजन से बचें।');
+  if (afflictedIds.includes('ME')) recommendations.push('बुध पीड़ित है — तंत्रिका तंत्र; रोज़ाना प्राणायाम करें, स्क्रीन का समय कम करें।');
+  if (afflictedIds.includes('MO')) recommendations.push('चंद्र पीड़ित है — भावनात्मक/पेट; भोजन का समय नियमित रखें, पूर्णिमा की दिनचर्या।');
+  if (afflictedIds.includes('SU')) recommendations.push('सूर्य पीड़ित है — हृदय की देखभाल; सूर्योदय के समय रोज़ाना सूर्य को अर्घ्य दें।');
+  if (afflictedIds.includes('RA') || afflictedIds.includes('KE')) recommendations.push('राहु/केतु पीड़ित हैं — असामान्य/रहस्यमय लक्षण संभव हैं; दूसरी मेडिकल राय ज़रूर लें।');
+  recommendations.push('6वें/8वें भाव के स्वामी की महादशा के दौरान वार्षिक फुल-बॉडी चेकअप कराएं; चंद्र (कृष्ण पक्ष) + शनि के 8वें गोचर में सर्जरी से बचें।');
 
   return {
     overallScore: overall,

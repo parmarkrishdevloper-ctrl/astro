@@ -3,51 +3,51 @@
 // colors/numbers/days/gems, and a short personality summary.
 
 const RULING_PLANET: Record<number, string> = {
-  1: 'Sun',
-  2: 'Moon',
-  3: 'Jupiter',
-  4: 'Rahu',
-  5: 'Mercury',
-  6: 'Venus',
-  7: 'Ketu',
-  8: 'Saturn',
-  9: 'Mars',
+  1: 'सूर्य',
+  2: 'चंद्र',
+  3: 'गुरु',
+  4: 'राहु',
+  5: 'बुध',
+  6: 'शुक्र',
+  7: 'केतु',
+  8: 'शनि',
+  9: 'मंगल',
 };
 
 const LUCKY_COLORS: Record<number, string[]> = {
-  1: ['Gold', 'Orange', 'Yellow'],
-  2: ['White', 'Cream', 'Silver'],
-  3: ['Yellow', 'Saffron', 'Pink'],
-  4: ['Grey', 'Khaki', 'Electric Blue'],
-  5: ['Green', 'Light Grey', 'White'],
-  6: ['White', 'Pink', 'Light Blue'],
-  7: ['Sea Green', 'Light Yellow'],
-  8: ['Black', 'Dark Blue', 'Purple'],
-  9: ['Red', 'Crimson', 'Maroon'],
+  1: ['सोनेहरा', 'नारंगी', 'पीला'],
+  2: ['सफेद', 'क्रीम', 'चांदी'],
+  3: ['पीला', 'भगवा', 'गुलाबी'],
+  4: ['स्लेटी', 'खाकी', 'इलेक्ट्रिक ब्लू'],
+  5: ['हरा', 'हल्का स्लेटी', 'सफेद'],
+  6: ['सफेद', 'गुलाबी', 'हल्का नीला'],
+  7: ['समुद्री हरा', 'हल्का पीला'],
+  8: ['काला', 'गहरा नीला', 'बैंगनी'],
+  9: ['लाल', 'गहरा लाल', 'मैरून'],
 };
 
 const LUCKY_DAYS: Record<number, string[]> = {
-  1: ['Sunday', 'Monday'],
-  2: ['Monday', 'Friday'],
-  3: ['Thursday', 'Tuesday', 'Friday'],
-  4: ['Saturday', 'Sunday'],
-  5: ['Wednesday', 'Friday'],
-  6: ['Friday', 'Wednesday'],
-  7: ['Sunday', 'Monday'],
-  8: ['Saturday', 'Friday'],
-  9: ['Tuesday', 'Thursday'],
+  1: ['रविवार', 'सोमवार'],
+  2: ['सोमवार', 'शुक्रवार'],
+  3: ['गुरुवार', 'मंगलवार', 'शुक्रवार'],
+  4: ['शनिवार', 'रविवार'],
+  5: ['बुधवार', 'शुक्रवार'],
+  6: ['शुक्रवार', 'बुधवार'],
+  7: ['रविवार', 'सोमवार'],
+  8: ['शनिवार', 'शुक्रवार'],
+  9: ['मंगलवार', 'गुरुवार'],
 };
 
 const LUCKY_GEMS: Record<number, string> = {
-  1: 'Ruby',
-  2: 'Pearl',
-  3: 'Yellow Sapphire',
-  4: 'Hessonite (Gomed)',
-  5: 'Emerald',
-  6: 'Diamond',
-  7: 'Cat\u2019s Eye (Lehsunia)',
-  8: 'Blue Sapphire',
-  9: 'Red Coral',
+  1: 'माणिक्य (Ruby)',
+  2: 'मोती (Pearl)',
+  3: 'पुखराज (Yellow Sapphire)',
+  4: 'गोमेद (Hessonite)',
+  5: 'पन्ना (Emerald)',
+  6: 'हीरा (Diamond)',
+  7: 'लहसुनिया (Cat’s Eye)',
+  8: 'नीलम (Blue Sapphire)',
+  9: 'मूंगा (Red Coral)',
 };
 
 const LUCKY_NUMBERS: Record<number, number[]> = {
@@ -63,15 +63,15 @@ const LUCKY_NUMBERS: Record<number, number[]> = {
 };
 
 const PERSONALITY: Record<number, string> = {
-  1: 'Independent, ambitious, natural leader; commanding presence and creative drive.',
-  2: 'Sensitive, intuitive, diplomatic; thrives on cooperation and emotional bonds.',
-  3: 'Optimistic, expressive, wisdom-seeking; teacher, philosopher, communicator.',
-  4: 'Unconventional, hardworking, system-builder; original thinker who challenges norms.',
-  5: 'Versatile, witty, adaptable; loves travel, learning, and quick communication.',
-  6: 'Charming, artistic, family-oriented; appreciates beauty, comfort, and harmony.',
-  7: 'Mystical, introspective, analytical; spiritually inclined and deeply reflective.',
-  8: 'Disciplined, persistent, patient; long climb to material success and authority.',
-  9: 'Courageous, energetic, action-oriented; warrior spirit and humanitarian drive.',
+  1: 'स्वतंत्र, महत्वाकांक्षी, स्वाभाविक नेता; प्रभावशाली व्यक्तित्व और रचनात्मक।',
+  2: 'संवेदनशील, सहजज्ञ, कूटनीतिक; सहयोग और भावनात्मक संबंधों पर पनपने वाले।',
+  3: 'आशावादी, अभिव्यंजक, ज्ञान-साधक; शिक्षक, दार्शनिक, संचारक।',
+  4: 'अपरंपरागत, मेहनती, प्रणाली-निर्माता; मूल विचारक जो मानदंडों को चुनौती देते हैं।',
+  5: 'बहुमुखी, चतुर, अनुकूलनीय; यात्रा, सीखना और त्वरित संचार पसंद है।',
+  6: 'आकर्षक, कलात्मक, परिवार-उन्मुख; सौंदर्य, आराम और सद्भाव की सराहना करते हैं।',
+  7: 'रहस्यमय, आत्मनिरीक्षण करने वाले, विश्लेषणात्मक; आध्यात्मिक रूप से प्रवृत्त।',
+  8: 'अनुशासित, दृढ़निश्चयी, धैर्यवान; भौतिक सफलता और अधिकार की लंबी चढ़ाई।',
+  9: 'साहसी, ऊर्जावान, कार्य-उन्मुख; योद्धा भावना और मानवीय अभियान।',
 };
 
 // ─── DIGIT REDUCTION ────────────────────────────────────────────────────────

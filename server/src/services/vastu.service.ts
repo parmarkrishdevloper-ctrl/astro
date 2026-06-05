@@ -163,7 +163,7 @@ export function computeVastuReport(k: KundaliResult, _locale: _VastuLocale = 'en
     }
     roomAdvice[room] = {
       best, avoid,
-      note: best.length ? `Place in ${best.map((x) => DIRECTIONS[x].name).join(', ')}` : 'No strong preference.',
+      note: best.length ? `इसे ${best.map((x) => DIRECTIONS[x].sanskrit).join(', ')} में रखें` : 'कोई विशेष प्राथमिकता नहीं।',
     };
   }
 
@@ -234,11 +234,11 @@ export function computeVastuReport(k: KundaliResult, _locale: _VastuLocale = 'en
     roomAdvice,
     doshaChecks,
     notes: [
-      `Ascendant is ${k.ascendant.rashi.name} — rashi-direction is ${DIRECTIONS[ascDir].name}.`,
-      `Moon sign is ${RASHIS[moonPlanet.rashi.num - 1].name}; Moon direction is ${DIRECTIONS[moonDir].name}.`,
-      `Strongest planet (approx.) is ${strongest}. Face ${DIRECTIONS[oppositeDirection(strongestDir)].name} while working — this draws that planet's energy toward you.`,
-      `Head-while-sleeping is ${DIRECTIONS[headDir].name} — from your Moon-nakshatra-lord (${moonNakLord}).`,
-      `Wealth corner (after Kubera's North) is ${DIRECTIONS[wealthDir].name} — your 2nd-lord's direction. Keep cash, safes, and deities here.`,
+      `लग्न ${k.ascendant.rashi.name} है — राशि की दिशा ${DIRECTIONS[ascDir].sanskrit} है।`,
+      `चंद्र राशि ${RASHIS[moonPlanet.rashi.num - 1].name} है; चंद्र की दिशा ${DIRECTIONS[moonDir].sanskrit} है।`,
+      `सबसे प्रबल ग्रह (अनुमानित) ${strongest} है। काम करते समय ${DIRECTIONS[oppositeDirection(strongestDir)].sanskrit} की ओर मुख करें — यह उस ग्रह की ऊर्जा को आपकी ओर आकर्षित करता है।`,
+      `सोते समय सिर ${DIRECTIONS[headDir].sanskrit} की ओर होना चाहिए — यह आपके चंद्र-नक्षत्र-स्वामी (${moonNakLord}) के अनुसार है।`,
+      `धन का कोना (कुबेर की उत्तर दिशा के बाद) ${DIRECTIONS[wealthDir].sanskrit} है — यह आपके दूसरे भाव के स्वामी की दिशा है। नकद, तिजोरी और इष्ट देव को यहाँ रखें।`,
     ],
   };
 }

@@ -31,6 +31,44 @@ function fmtDeg(d: number): string {
   return `${deg}° ${String(min).padStart(2, '0')}′ ${String(sec).padStart(2, '0')}″`;
 }
 
+function localizeGana(g: string): string {
+  const map: Record<string, string> = { Deva: 'देव', Manushya: 'मनुष्य', Rakshasa: 'राक्षस' };
+  return map[g] || g;
+}
+function localizeVarna(v: string): string {
+  const map: Record<string, string> = { Brahmin: 'ब्राह्मण', Kshatriya: 'क्षत्रिय', Vaishya: 'वैश्य', Shudra: 'शूद्र' };
+  return map[v] || v;
+}
+function localizeNadi(n: string): string {
+  const map: Record<string, string> = { Adi: 'आदि', Madhya: 'मध्य', Antya: 'अन्त्य' };
+  return map[n] || n;
+}
+function localizeAyana(a: string): string {
+  const map: Record<string, string> = { Uttarayana: 'उत्तरायण', Dakshinayana: 'दक्षिणायन' };
+  return map[a] || a;
+}
+function localizeRitu(r: string): string {
+  const map: Record<string, string> = { Vasant: 'वसंत', Grishma: 'ग्रीष्म', Varsha: 'वर्षा', Sharad: 'शरद', Hemant: 'हेमंत', Shishir: 'शिशिर' };
+  return map[r] || r;
+}
+function localizeMasa(m: string): string {
+  const map: Record<string, string> = {
+    Chaitra: 'चैत्र', Vaisakha: 'वैशाख', Jyeshtha: 'ज्येष्ठ', Ashadha: 'आषाढ़', Shravana: 'श्रावण',
+    Bhadrapada: 'भाद्रपद', Ashvin: 'अश्विन', Kartika: 'कार्तिक', Margashirsha: 'मार्गशीर्ष',
+    Pausha: 'पौष', Magha: 'माघ', Phalguna: 'फाल्गुन'
+  };
+  return map[m] || m;
+}
+function localizeYoni(y: string): string {
+  const map: Record<string, string> = {
+    Ashwa: 'अश्व', Gaja: 'गज', Mesha: 'मेष', Sarpa: 'सर्प',
+    Shwan: 'श्वान', Marjala: 'मार्जार', Mushaka: 'मूषक',
+    Gau: 'गौ', Vyaghra: 'व्याघ्र', Mahisha: 'महिष',
+    Mriga: 'मृग', Nakula: 'नकुल', Vanara: 'वानर', Simha: 'सिंह'
+  };
+  return map[y] || y;
+}
+
 export function PanchangPage() {
   const { t, al } = useT();
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
@@ -114,12 +152,11 @@ export function PanchangPage() {
           <Card title={t('panchang.nakshatraAttrs', 'Nakshatra attributes')}>
             <dl className="text-sm space-y-2">
               <Row label={t('panchang.lord', 'Lord')} value={al.planetByName(data.nakshatra.lord)} />
-              {/* TODO(i18n-server): localize nakshatra deity / gana / yoni / varna / nadi names */}
-              <Row label={t('panchang.deity', 'Deity')} value={data.nakshatra.deity} en />
-              <Row label={t('panchang.gana', 'Gana')} value={data.nakshatra.gana} en />
-              <Row label={t('panchang.yoni', 'Yoni')} value={data.nakshatra.yoni} en />
-              <Row label={t('panchang.varna', 'Varna')} value={data.nakshatra.varna} en />
-              <Row label={t('panchang.nadi', 'Nadi')} value={data.nakshatra.nadi} en />
+              <Row label={t('panchang.deity', 'Deity')} value={data.nakshatra.deity} />
+              <Row label={t('panchang.gana', 'Gana')} value={localizeGana(data.nakshatra.gana)} />
+              <Row label={t('panchang.yoni', 'Yoni')} value={localizeYoni(data.nakshatra.yoni)} />
+              <Row label={t('panchang.varna', 'Varna')} value={localizeVarna(data.nakshatra.varna)} />
+              <Row label={t('panchang.nadi', 'Nadi')} value={localizeNadi(data.nakshatra.nadi)} />
             </dl>
           </Card>
 
@@ -127,20 +164,19 @@ export function PanchangPage() {
           <Card title={t('panchang.sunMoon', 'Sun · Moon')}>
             <dl className="text-sm space-y-2">
               <Row label={t('panchang.sunRashi', 'Sun rashi')} value={`${al.rashiByName(data.sun.rashi)} · ${fmtDeg(data.sun.degInRashi)}`} />
-              <Row label={t('panchang.sunNakshatra', 'Sun nakshatra')} value={data.sun.nakshatra} en />
+              <Row label={t('panchang.sunNakshatra', 'Sun nakshatra')} value={al.nakshatraByName(data.sun.nakshatra)} />
               <Row label={t('panchang.moonRashi', 'Moon rashi')} value={`${al.rashiByName(data.moon.rashi)} · ${fmtDeg(data.moon.degInRashi)}`} />
-              <Row label={t('panchang.moonNakshatra', 'Moon nakshatra')} value={data.moon.nakshatra} en />
+              <Row label={t('panchang.moonNakshatra', 'Moon nakshatra')} value={al.nakshatraByName(data.moon.nakshatra)} />
             </dl>
           </Card>
 
           {/* ─── CALENDAR ─── */}
           <Card title={t('panchang.calendarContext', 'Calendar context')}>
             <dl className="text-sm space-y-2">
-              {/* TODO(i18n-server): localize ayana / ritu / masa names */}
-              <Row label={t('panchang.ayana', 'Ayana')} value={data.ayana} en />
-              <Row label={t('panchang.ritu', 'Ritu (Season)')} value={data.ritu} en />
-              <Row label={t('panchang.masaAmanta', 'Masa (Amanta)')} value={data.masa.amanta} en />
-              <Row label={t('panchang.masaPurnimanta', 'Masa (Purnimanta)')} value={data.masa.purnimanta} en />
+              <Row label={t('panchang.ayana', 'Ayana')} value={localizeAyana(data.ayana)} />
+              <Row label={t('panchang.ritu', 'Ritu (Season)')} value={localizeRitu(data.ritu)} />
+              <Row label={t('panchang.masaAmanta', 'Masa (Amanta)')} value={localizeMasa(data.masa.amanta)} />
+              <Row label={t('panchang.masaPurnimanta', 'Masa (Purnimanta)')} value={localizeMasa(data.masa.purnimanta)} />
               <Row label={t('panchang.vikramSamvat', 'Vikram Samvat')} value={String(data.samvat.vikram)} />
               <Row label={t('panchang.shakaSamvat', 'Shaka Samvat')} value={String(data.samvat.shaka)} />
               <Row label={t('panchang.kaliSamvat', 'Kali Samvat')} value={String(data.samvat.kali)} />

@@ -71,27 +71,28 @@ function detectDhanaYogas(k: KundaliResult): DhanaYogaResult[] {
 
   // Classical dhana yogas: 2L–11L, 2L–5L, 2L–9L, 5L–11L, 5L–9L, 9L–11L
   const pairs: [PlanetId, PlanetId, string][] = [
-    [l2, l11, '2L–11L (earning × gains)'],
-    [l2, l5,  '2L–5L (earning × investment)'],
-    [l2, l9,  '2L–9L (earning × fortune)'],
-    [l5, l11, '5L–11L (investment × gains)'],
-    [l5, l9,  '5L–9L (investment × fortune)'],
-    [l9, l11, '9L–11L (fortune × gains) — Lakshmi-adjacent'],
+    [l2, l11, '2L–11L (आय × लाभ)'],
+    [l2, l5,  '2L–5L (आय × निवेश)'],
+    [l2, l9,  '2L–9L (आय × भाग्य)'],
+    [l5, l11, '5L–11L (निवेश × लाभ)'],
+    [l5, l9,  '5L–9L (निवेश × भाग्य)'],
+    [l9, l11, '9L–11L (भाग्य × लाभ) — लक्ष्मी-समान'],
   ];
   for (const [a, b, label] of pairs) {
     if (a === b) {
-      yogas.push({ yoga: label, active: true, strength: 'strong', explanation: `Same planet (${a}) rules both houses — automatic fusion.` });
+      yogas.push({ yoga: label, active: true, strength: 'strong', explanation: `समान ग्रह (${a}) दोनों भावों का स्वामी है — स्वचालित योग।` });
       continue;
     }
     const c = hasConnection(k, a, b);
     if (c.connected) {
+      const modeHindi = c.mode === 'exchange' ? 'परिवर्तन' : c.mode === 'mutual-aspect' ? 'पारस्परिक दृष्टि' : 'युति';
       const strength: DhanaYogaResult['strength'] =
         c.mode === 'exchange' ? 'strong' :
         c.mode === 'mutual-aspect' ? 'moderate' :
         c.mode === 'conjunction' ? 'strong' : 'weak';
-      yogas.push({ yoga: label, active: true, strength, explanation: `${a} and ${b} in ${c.mode}.` });
+      yogas.push({ yoga: label, active: true, strength, explanation: `${a} और ${b} ${modeHindi} में हैं।` });
     } else {
-      yogas.push({ yoga: label, active: false, strength: 'absent', explanation: `${a} and ${b} unconnected.` });
+      yogas.push({ yoga: label, active: false, strength: 'absent', explanation: `${a} और ${b} जुड़े हुए नहीं हैं।` });
     }
   }
 
@@ -106,8 +107,8 @@ function detectDhanaYogas(k: KundaliResult): DhanaYogaResult[] {
     active: lakshmiActive,
     strength: lakshmiActive ? 'strong' : 'absent',
     explanation: lakshmiActive
-      ? `9L ${lord9} exalted/own-sign, and ${jup.exalted || jup.ownSign ? 'Jupiter' : 'Venus'} strong.`
-      : '9L not exalted/own-sign or Jupiter/Venus not strong.',
+      ? `9वें भाव का स्वामी ${lord9} उच्च/स्वराशि का है, और ${jup.exalted || jup.ownSign ? 'गुरु' : 'शुक्र'} मजबूत है।`
+      : '9वें भाव का स्वामी उच्च/स्वराशि का नहीं है या गुरु/शुक्र मजबूत नहीं हैं।',
   });
 
   // Chandra-Mangal yoga — Moon and Mars conjunct or in mutual aspect
@@ -116,7 +117,7 @@ function detectDhanaYogas(k: KundaliResult): DhanaYogaResult[] {
     yoga: 'Chandra-Mangal yoga',
     active: cm.connected,
     strength: cm.connected ? (cm.mode === 'conjunction' ? 'strong' : 'moderate') : 'absent',
-    explanation: cm.connected ? `Moon and Mars in ${cm.mode}.` : 'No Moon–Mars connection.',
+    explanation: cm.connected ? `चंद्र और मंगल ${cm.mode === 'exchange' ? 'परिवर्तन' : cm.mode === 'mutual-aspect' ? 'पारस्परिक दृष्टि' : 'युति'} में हैं।` : 'चंद्र और मंगल में कोई संबंध नहीं।',
   });
 
   // Kubera yoga (simplified) — 2L, 11L strong + JU aspecting 2nd house
@@ -130,8 +131,8 @@ function detectDhanaYogas(k: KundaliResult): DhanaYogaResult[] {
     active: kuberaActive,
     strength: kuberaActive ? 'strong' : 'absent',
     explanation: kuberaActive
-      ? `2L (${l2}) and 11L (${l11}) not weak; Jupiter aspects 2nd house.`
-      : 'Requirements not met.',
+      ? `2L (${l2}) और 11L (${l11}) कमजोर नहीं हैं; गुरु 2रे भाव पर दृष्टि डाल रहा है।`
+      : 'आवश्यकताएं पूरी नहीं हुईं।',
   });
 
   return yogas;
@@ -151,8 +152,8 @@ function marakaTimings(k: KundaliResult): {
   const l7 = k.houses[6].lord;
   const marakas = new Set<PlanetId>([l2, l7]);
   const whyMap: Record<PlanetId, string> = {} as any;
-  whyMap[l2] = '2L — maraka (wealth-loss window)';
-  whyMap[l7] = (whyMap[l7] ? whyMap[l7] + '; ' : '') + '7L — maraka';
+  whyMap[l2] = '2L — मारक (धन-हानि की अवधि)';
+  whyMap[l7] = (whyMap[l7] ? whyMap[l7] + '; ' : '') + '7L — मारक';
   const out: ReturnType<typeof marakaTimings> = [];
   for (const m of mahas) {
     if (marakas.has(m.lord as PlanetId)) {
@@ -182,10 +183,10 @@ function dhanaTimings(k: KundaliResult): {
   const interesting = new Set<PlanetId>([l2, l5, l9, l11]);
   const whyMap: Record<PlanetId, string> = {} as any;
   const addWhy = (p: PlanetId, s: string) => { whyMap[p] = whyMap[p] ? `${whyMap[p]}; ${s}` : s; };
-  addWhy(l2, '2L — earned income');
-  addWhy(l5, '5L — investment / speculation');
-  addWhy(l9, '9L — fortune / mentorship');
-  addWhy(l11, '11L — gains / yield');
+  addWhy(l2, '2L — अर्जित आय');
+  addWhy(l5, '5L — निवेश / सट्टा');
+  addWhy(l9, '9L — भाग्य / मार्गदर्शन');
+  addWhy(l11, '11L — लाभ / प्रतिफल');
   const out: ReturnType<typeof dhanaTimings> = [];
   for (const m of mahas) {
     if (interesting.has(m.lord as PlanetId)) {
@@ -218,15 +219,15 @@ export interface FinancialReport {
 }
 
 const SOURCE_BY_LORD: Record<PlanetId, string> = {
-  SU: 'Government salary / authority income',
-  MO: 'Public / hospitality / liquids / real-estate income',
-  MA: 'Land / property / engineering / action-based income',
-  ME: 'Commerce / trade / communications / writing / software',
-  JU: 'Advisory / teaching / finance / law / wealth-management',
-  VE: 'Arts / fashion / vehicles / luxury / entertainment',
-  SA: 'Long-term service / manual labour / mining / agriculture',
-  RA: 'Foreign / technology / speculation / media',
-  KE: 'Occult / pharma / research / short sudden gains',
+  SU: 'सरकारी वेतन / सत्ता से आय',
+  MO: 'सार्वजनिक / आतिथ्य / तरल पदार्थ / रियल-एस्टेट आय',
+  MA: 'भूमि / संपत्ति / इंजीनियरिंग / कर्म-आधारित आय',
+  ME: 'वाणिज्य / व्यापार / संचार / लेखन / सॉफ्टवेयर',
+  JU: 'परामर्श / शिक्षण / वित्त / कानून / धन-प्रबंधन',
+  VE: 'कला / फैशन / वाहन / लग्जरी / मनोरंजन',
+  SA: 'दीर्घकालिक सेवा / शारीरिक श्रम / खनन (mining) / कृषि',
+  RA: 'विदेशी / तकनीक / सट्टा / मीडिया',
+  KE: 'गुप्त विद्या / फार्मा / अनुसंधान / अचानक छोटे लाभ',
 };
 
 export function computeFinancial(k: KundaliResult, _locale: _FinLocale = 'en'): FinancialReport {
@@ -247,19 +248,19 @@ export function computeFinancial(k: KundaliResult, _locale: _FinLocale = 'en'): 
     fifth:    buildHouse(5),
   };
 
-  for (const [key, h] of [['2nd', wealth.second], ['11th', wealth.eleventh], ['9th', wealth.ninth], ['5th', wealth.fifth]] as const) {
-    if (h.lordState === 'strong') factors.push({ kind: 'positive', text: `${key} lord ${h.lord} is strong.`, weight: 7 });
-    if (h.lordState === 'weak')   factors.push({ kind: 'negative', text: `${key} lord ${h.lord} is weak.`, weight: -6 });
+  for (const [key, h] of [['2रे', wealth.second], ['11वें', wealth.eleventh], ['9वें', wealth.ninth], ['5वें', wealth.fifth]] as const) {
+    if (h.lordState === 'strong') factors.push({ kind: 'positive', text: `${key} भाव का स्वामी ${h.lord} मजबूत है।`, weight: 7 });
+    if (h.lordState === 'weak')   factors.push({ kind: 'negative', text: `${key} भाव का स्वामी ${h.lord} कमजोर है।`, weight: -6 });
     const benefOcc = h.occupants.filter((p) => BENEFICS.includes(p));
     const malefOcc = h.occupants.filter((p) => MALEFICS.includes(p));
-    if (benefOcc.length) factors.push({ kind: 'positive', text: `Benefics in ${key} (${benefOcc.join(', ')}).`, weight: 4 });
-    if (malefOcc.length) factors.push({ kind: 'negative', text: `Malefics in ${key} (${malefOcc.join(', ')}).`, weight: -3 });
+    if (benefOcc.length) factors.push({ kind: 'positive', text: `${key} भाव में शुभ ग्रह (${benefOcc.join(', ')})।`, weight: 4 });
+    if (malefOcc.length) factors.push({ kind: 'negative', text: `${key} भाव में पाप ग्रह (${malefOcc.join(', ')})।`, weight: -3 });
   }
 
   const yogas = detectDhanaYogas(k);
   for (const y of yogas) {
     if (y.active) factors.push({
-      kind: 'positive', text: `${y.yoga} active (${y.strength}).`,
+      kind: 'positive', text: `${y.yoga} सक्रिय है (${y.strength})।`,
       weight: y.strength === 'strong' ? 8 : y.strength === 'moderate' ? 4 : 2,
     });
   }
@@ -267,11 +268,11 @@ export function computeFinancial(k: KundaliResult, _locale: _FinLocale = 'en'): 
   // Liquidity note (Chandra-Mangal or Moon in a water sign)
   const moon = k.planets.find((p) => p.id === 'MO')!;
   const mars = k.planets.find((p) => p.id === 'MA')!;
-  let liquidityNote = 'Average cashflow — wealth accumulates steadily via routine channels.';
+  let liquidityNote = 'औसत नकदी प्रवाह — नियमित चैनलों के माध्यम से संपत्ति स्थिर रूप से बढ़ती है।';
   const chandraMangal = yogas.find((y) => y.yoga === 'Chandra-Mangal yoga')!;
-  if (chandraMangal.active) liquidityNote = 'Chandra-Mangal yoga active — strong commercial drive; expect frequent cash conversion cycles.';
+  if (chandraMangal.active) liquidityNote = 'चंद्र-मंगल योग सक्रिय है — मजबूत व्यावसायिक अभियान; लगातार नकदी प्रवाह की अपेक्षा करें।';
   if (moon.rashi.num === 4 || moon.rashi.num === 8 || moon.rashi.num === 12) {
-    liquidityNote += ' Moon in water sign — wealth flows in emotional waves; retain liquid savings.';
+    liquidityNote += ' चंद्र जल तत्व की राशि में है — धन भावनाओं की लहरों में बहता है; तरल बचत (liquid savings) बनाए रखें।';
   }
 
   // Income sources — from 2L, 11L, 9L
@@ -281,10 +282,10 @@ export function computeFinancial(k: KundaliResult, _locale: _FinLocale = 'en'): 
   }
   // Include strongest dhana-lord's natural karaka if distinct
   if (yogas.some((y) => y.yoga.startsWith('2L–11L') && y.active)) {
-    sources.add('Steady monthly income with matching gains (recurring revenue).');
+    sources.add('समान लाभ के साथ स्थिर मासिक आय (आवर्ती राजस्व)।');
   }
   if (yogas.some((y) => y.yoga.startsWith('5L–9L') && y.active)) {
-    sources.add('Investments and speculation blessed by fortune (equities, long-term calls).');
+    sources.add('भाग्य से आशीर्वाद प्राप्त निवेश और सट्टा (शेयर, दीर्घकालिक)।');
   }
 
   const base = 55 + factors.reduce((s, f) => s + f.weight, 0);

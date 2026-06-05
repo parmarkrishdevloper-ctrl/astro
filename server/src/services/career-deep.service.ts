@@ -21,15 +21,15 @@ const MALEFICS: PlanetId[] = ['SA', 'MA', 'RA', 'KE', 'SU'];
 const BENEFICS: PlanetId[] = ['JU', 'VE', 'ME', 'MO'];
 
 const CAREER_FIELDS: Record<PlanetId, string[]> = {
-  SU: ['Government service', 'Administration', 'Medicine (cardiology)', 'Politics', 'Leadership roles'],
-  MO: ['Public relations', 'Hospitality', 'Marine / liquids', 'Nursing', 'Food industry', 'Real estate (residential)'],
-  MA: ['Military', 'Surgery', 'Engineering', 'Sports', 'Real estate (land)', 'Police / security'],
-  ME: ['Commerce', 'Writing / journalism', 'Accounting', 'IT / software', 'Mathematics', 'Teaching', 'Law'],
-  JU: ['Education / teaching', 'Law', 'Finance (wealth advisory)', 'Priesthood / clergy', 'Counselling'],
-  VE: ['Arts', 'Music', 'Fashion', 'Beauty / cosmetics', 'Entertainment', 'Luxury goods', 'Transport (vehicles)'],
-  SA: ['Civil services (long tenure)', 'Mining', 'Iron / steel', 'Agriculture (manual)', 'Research (long-term)'],
-  RA: ['Foreign affairs', 'IT innovation', 'Media / film', 'Photography', 'Mass communications', 'Aviation'],
-  KE: ['Occult / astrology', 'Spiritual healing', 'Research (esoteric)', 'Surgery (neuro)', 'Pharma'],
+  SU: ['सरकारी नौकरी', 'प्रशासन', 'चिकित्सा (हृदय रोग)', 'राजनीति', 'नेतृत्व भूमिकाएँ'],
+  MO: ['जनसंपर्क', 'आतिथ्य (hospitality)', 'समुद्री / तरल पदार्थ', 'नर्सिंग', 'खाद्य उद्योग', 'रियल एस्टेट (आवासीय)'],
+  MA: ['सैन्य', 'सर्जरी', 'इंजीनियरिंग', 'खेल', 'रियल एस्टेट (भूमि)', 'पुलिस / सुरक्षा'],
+  ME: ['वाणिज्य (commerce)', 'लेखन / पत्रकारिता', 'लेखांकन', 'आईटी / सॉफ्टवेयर', 'गणित', 'शिक्षण', 'कानून'],
+  JU: ['शिक्षा / शिक्षण', 'कानून', 'वित्त (धन सलाहकार)', 'पुरोहिताई', 'परामर्श'],
+  VE: ['कला', 'संगीत', 'फैशन', 'सौंदर्य / सौंदर्य प्रसाधन', 'मनोरंजन', 'लग्जरी सामान', 'परिवहन (वाहन)'],
+  SA: ['सिविल सेवा (लंबा कार्यकाल)', 'खनन (mining)', 'लोहा / स्टील', 'कृषि (मैनुअल)', 'अनुसंधान (दीर्घकालिक)'],
+  RA: ['विदेशी मामले', 'आईटी नवाचार', 'मीडिया / फिल्म', 'फोटोग्राफी', 'जनसंचार', 'विमानन'],
+  KE: ['गुप्त विद्या / ज्योतिष', 'आध्यात्मिक उपचार', 'अनुसंधान (गूढ़)', 'सर्जरी (न्यूरो)', 'फार्मा'],
 };
 
 const PLANET_DIRECTION: Record<PlanetId, string> = {
@@ -134,10 +134,10 @@ export function computeCareerDeep(k: KundaliResult, _locale: Locale = 'en'): Car
   const lordState: 'strong' | 'neutral' | 'weak' =
     tenthLordP.exalted || tenthLordP.ownSign ? 'strong' :
     tenthLordP.debilitated || tenthLordP.combust || [6,8,12].includes(tenthLordP.house) ? 'weak' : 'neutral';
-  if (lordState === 'strong') factors.push({ kind: 'positive', text: `10th lord ${tenthLord} is ${tenthLordP.exalted ? 'exalted' : 'own sign'}.`, weight: 12 });
-  if (lordState === 'weak')   factors.push({ kind: 'negative', text: `10th lord ${tenthLord} is ${tenthLordP.debilitated ? 'debilitated' : tenthLordP.combust ? 'combust' : 'in dusthana'}.`, weight: -10 });
-  if (malefOcc.length) factors.push({ kind: 'positive', text: `Malefics in 10th (${malefOcc.join(', ')}) — drive, digbala.`, weight: 4 * malefOcc.length });
-  if (benefOcc.length) factors.push({ kind: 'positive', text: `Benefics in 10th (${benefOcc.join(', ')}) — ethical, favoured.`, weight: 3 * benefOcc.length });
+  if (lordState === 'strong') factors.push({ kind: 'positive', text: `10वें भाव का स्वामी ${tenthLord} ${tenthLordP.exalted ? 'उच्च का' : 'अपनी राशि में'} है।`, weight: 12 });
+  if (lordState === 'weak')   factors.push({ kind: 'negative', text: `10वें भाव का स्वामी ${tenthLord} ${tenthLordP.debilitated ? 'नीच का' : tenthLordP.combust ? 'अस्त' : 'दुःस्थान में'} है।`, weight: -10 });
+  if (malefOcc.length) factors.push({ kind: 'positive', text: `10वें भाव में पाप ग्रह (${malefOcc.join(', ')}) — कर्मठता, दिग्बल।`, weight: 4 * malefOcc.length });
+  if (benefOcc.length) factors.push({ kind: 'positive', text: `10वें भाव में शुभ ग्रह (${benefOcc.join(', ')}) — नैतिक, अनुकूल।`, weight: 3 * benefOcc.length });
 
   // Amatyakaraka
   const karakas = calculateKarakas(k);
@@ -146,15 +146,15 @@ export function computeCareerDeep(k: KundaliResult, _locale: Locale = 'en'): Car
   const amkStrength: 'strong' | 'neutral' | 'weak' =
     amkP.exalted || amkP.ownSign ? 'strong' :
     amkP.debilitated || amkP.combust ? 'weak' : 'neutral';
-  if (amkStrength === 'strong') factors.push({ kind: 'positive', text: `Amatyakaraka ${amk.planet} is strong.`, weight: 8 });
-  if (amkStrength === 'weak')   factors.push({ kind: 'negative', text: `Amatyakaraka ${amk.planet} is weak.`, weight: -6 });
+  if (amkStrength === 'strong') factors.push({ kind: 'positive', text: `अमात्यकारक ${amk.planet} मजबूत है।`, weight: 8 });
+  if (amkStrength === 'weak')   factors.push({ kind: 'negative', text: `अमात्यकारक ${amk.planet} कमजोर है।`, weight: -6 });
 
   // Shadbala — strongest graha (excluding nodes)
   const sb = calculateShadbala(k);
   const sortedByRupas = sb.planets.slice().sort((a, b) => b.totalRupas - a.totalRupas);
   const strongest = sortedByRupas[0];
   const rankIdx = sortedByRupas.findIndex((p) => p.planet === tenthLord);
-  if (rankIdx >= 0 && rankIdx <= 2) factors.push({ kind: 'positive', text: `10th lord ${tenthLord} is among top-3 by Shadbala.`, weight: 6 });
+  if (rankIdx >= 0 && rankIdx <= 2) factors.push({ kind: 'positive', text: `10वें भाव का स्वामी ${tenthLord} षड्बल द्वारा शीर्ष-3 में है।`, weight: 6 });
 
   // D10 analysis
   const d10 = buildDivisional(k, 'D10');
@@ -162,7 +162,7 @@ export function computeCareerDeep(k: KundaliResult, _locale: Locale = 'en'): Car
   const d10TenthLord = RASHIS[d10TenthSign - 1].lord;
   const d10TenthLordPos = d10.positions.find((p) => p.id === d10TenthLord)!;
   const vargottamaPlanets = d10.positions.filter((p) => p.vargottama).map((p) => p.id);
-  if (vargottamaPlanets.includes(tenthLord as PlanetId)) factors.push({ kind: 'positive', text: `10th lord vargottama in D10 — consistent career direction.`, weight: 7 });
+  if (vargottamaPlanets.includes(tenthLord as PlanetId)) factors.push({ kind: 'positive', text: `10वें भाव का स्वामी D10 में वर्गोत्तम है — करियर की दिशा में निरंतरता।`, weight: 7 });
 
   // Triple analysis
   const triple = {
@@ -187,9 +187,9 @@ export function computeCareerDeep(k: KundaliResult, _locale: Locale = 'en'): Car
   const mahas = computeMahadashas(k, 'vimshottari');
   const interestingLords = new Set<PlanetId>([tenthLord, amk.planet as PlanetId, strongest.planet as PlanetId]);
   const whyMap: Record<PlanetId, string> = {} as any;
-  whyMap[tenthLord] = '10th lord dasha — core career period';
-  whyMap[amk.planet as PlanetId] = (whyMap[amk.planet as PlanetId] ? `${whyMap[amk.planet as PlanetId]}; ` : '') + 'Amatyakaraka dasha';
-  whyMap[strongest.planet as PlanetId] = (whyMap[strongest.planet as PlanetId] ? `${whyMap[strongest.planet as PlanetId]}; ` : '') + 'Strongest-graha dasha';
+  whyMap[tenthLord] = '10वें भाव के स्वामी की दशा — मुख्य करियर अवधि';
+  whyMap[amk.planet as PlanetId] = (whyMap[amk.planet as PlanetId] ? `${whyMap[amk.planet as PlanetId]}; ` : '') + 'अमात्यकारक दशा';
+  whyMap[strongest.planet as PlanetId] = (whyMap[strongest.planet as PlanetId] ? `${whyMap[strongest.planet as PlanetId]}; ` : '') + 'सबसे प्रबल ग्रह की दशा';
   const careerTimings: CareerDeepReport['careerTimings'] = [];
   for (const m of mahas) {
     if (interestingLords.has(m.lord as PlanetId)) {

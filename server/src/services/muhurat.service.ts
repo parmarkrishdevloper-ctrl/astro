@@ -39,6 +39,16 @@ const EVENT_DAYS: Record<MuhuratEvent, number[]> = {
   general:            [1, 2, 3, 4, 5],
 };
 
+const EVENT_NAME_HI: Record<MuhuratEvent, string> = {
+  marriage: 'विवाह',
+  'griha-pravesh': 'गृह प्रवेश',
+  travel: 'यात्रा',
+  business: 'व्यापार',
+  education: 'शिक्षा',
+  'vehicle-purchase': 'वाहन खरीद',
+  general: 'सामान्य कार्य',
+};
+
 // Tithis to avoid (Rikta = 4, 9, 14; Amavasya = 30; Bhadra not encoded here)
 const AVOID_TITHIS = [4, 9, 14, 30];
 
@@ -100,24 +110,24 @@ export function findMuhurat(req: MuhuratRequest): MuhuratResult {
 
     if (okNak.has(p.nakshatra.num)) {
       score += 2;
-      reasons.push(`${p.nakshatra.name} is auspicious for ${event}`);
+      reasons.push(`${p.nakshatra.name} ${EVENT_NAME_HI[event]} के लिए शुभ है`);
     } else {
-      warnings.push(`${p.nakshatra.name} not in preferred nakshatras`);
+      warnings.push(`${p.nakshatra.name} अनुकूल नक्षत्रों में नहीं है`);
     }
 
     if (okDay.has(p.vara.num - 1)) {
       score += 1;
-      reasons.push(`${p.vara.name} is favorable`);
+      reasons.push(`${p.vara.name} अनुकूल है`);
     } else {
-      warnings.push(`${p.vara.name} not preferred for ${event}`);
+      warnings.push(`${p.vara.name} ${EVENT_NAME_HI[event]} के लिए अनुकूल नहीं है`);
     }
 
     if (AVOID_TITHIS.includes(p.tithi.num)) {
       score -= 2;
-      warnings.push(`${p.tithi.name} (Rikta/Amavasya) — generally avoided`);
+      warnings.push(`${p.tithi.name} (रिक्ता/अमावस्या) — वर्जित है`);
     } else {
       score += 1;
-      reasons.push(`${p.tithi.name} is acceptable`);
+      reasons.push(`${p.tithi.name} स्वीकार्य है`);
     }
 
     // Build a candidate window: from sunrise to abhijit muhurat end (or noon).
@@ -129,15 +139,15 @@ export function findMuhurat(req: MuhuratRequest): MuhuratResult {
       const noon = new Date((start.getTime() + end.getTime()) / 2);
       if (withinKaal(noon, p.rahuKaal)) {
         score -= 2;
-        warnings.push('Overlaps Rahu Kaal');
+        warnings.push('राहु काल का समय');
       }
       if (withinKaal(noon, p.yamaghanda)) {
         score -= 1;
-        warnings.push('Overlaps Yamaghanda');
+        warnings.push('यमघण्ट काल का समय');
       }
       if (withinKaal(noon, p.gulika)) {
         score -= 1;
-        warnings.push('Overlaps Gulika Kaal');
+        warnings.push('गुलिक काल का समय');
       }
 
       windows.push({
@@ -343,33 +353,33 @@ export function findMuhuratAdvanced(req: AdvancedMuhuratRequest): AdvancedMuhura
     const reasons: string[] = [];
     const warnings: string[] = [];
 
-    if (okNak.has(p.nakshatra.num)) { score += 3; reasons.push(`Nakshatra ${p.nakshatra.name}`); }
-    else warnings.push(`Nakshatra ${p.nakshatra.name} not preferred`);
+    if (okNak.has(p.nakshatra.num)) { score += 3; reasons.push(`नक्षत्र ${p.nakshatra.name} अनुकूल है`); }
+    else warnings.push(`नक्षत्र ${p.nakshatra.name} अनुकूल नहीं है`);
 
-    if (okDay.has(p.vara.num - 1)) { score += 2; reasons.push(`${p.vara.name} preferred`); }
-    else warnings.push(`${p.vara.name} not preferred`);
+    if (okDay.has(p.vara.num - 1)) { score += 2; reasons.push(`${p.vara.name} अनुकूल है`); }
+    else warnings.push(`${p.vara.name} अनुकूल नहीं है`);
 
-    if (AVOID_TITHIS.includes(p.tithi.num)) { score -= 3; warnings.push(`${p.tithi.name} (Rikta/Amavasya)`); }
-    else { score += 1; reasons.push(`${p.tithi.name} acceptable`); }
+    if (AVOID_TITHIS.includes(p.tithi.num)) { score -= 3; warnings.push(`${p.tithi.name} (रिक्ता/अमावस्या)`); }
+    else { score += 1; reasons.push(`${p.tithi.name} स्वीकार्य है`); }
 
-    if (INAUSPICIOUS_PANCHANG_YOGAS.has(p.yoga.num)) { score -= 3; warnings.push(`Panchang yoga ${p.yoga.name} is inauspicious`); }
-    else reasons.push(`Panchang yoga ${p.yoga.name}`);
+    if (INAUSPICIOUS_PANCHANG_YOGAS.has(p.yoga.num)) { score -= 3; warnings.push(`पंचांग योग ${p.yoga.name} अशुभ है`); }
+    else reasons.push(`पंचांग योग ${p.yoga.name} अनुकूल है`);
 
-    if (chaughadiaQuality === 'good')    { score += 3; reasons.push(`Chaughadia ${chaughadia}`); }
-    else if (chaughadiaQuality === 'bad'){ score -= 3; warnings.push(`Chaughadia ${chaughadia}`); }
+    if (chaughadiaQuality === 'good')    { score += 3; reasons.push(`चौघड़िया ${chaughadia} अनुकूल है`); }
+    else if (chaughadiaQuality === 'bad'){ score -= 3; warnings.push(`चौघड़िया ${chaughadia} अशुभ है`); }
 
-    if (okHora.has(hora)) { score += 2; reasons.push(`Hora ruled by ${hora}`); }
+    if (okHora.has(hora)) { score += 2; reasons.push(`होरा स्वामी ${hora} है`); }
 
-    if (withinKaal(cursor, p.rahuKaal))   { score -= 4; warnings.push('Rahu Kaal'); }
-    if (withinKaal(cursor, p.yamaghanda)) { score -= 2; warnings.push('Yamaghanda'); }
-    if (withinKaal(cursor, p.gulika))     { score -= 2; warnings.push('Gulika Kaal'); }
+    if (withinKaal(cursor, p.rahuKaal))   { score -= 4; warnings.push('राहु काल'); }
+    if (withinKaal(cursor, p.yamaghanda)) { score -= 2; warnings.push('यमघण्ट काल'); }
+    if (withinKaal(cursor, p.gulika))     { score -= 2; warnings.push('गुलिक काल'); }
 
     let tara: AdvancedMuhuratSlot['tara'];
     if (birthNakshatra) {
       tara = taraFor(birthNakshatra, p.nakshatra.num);
       score += tara.score * 2;
-      if (tara.score > 0) reasons.push(`Tara ${tara.name}`);
-      else if (tara.score < 0) warnings.push(`Tara ${tara.name}`);
+      if (tara.score > 0) reasons.push(`तारा ${tara.name} शुभ है`);
+      else if (tara.score < 0) warnings.push(`तारा ${tara.name} अशुभ है`);
     }
 
     slots.push({
