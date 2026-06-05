@@ -51,8 +51,8 @@ const VIMSHOTTARI: DashaSystem = {
     { lord: 'SA', years: 19 },
     { lord: 'ME', years: 17 },
   ],
-  purpose: 'Primary Parashari dasha — 120-year cycle across 9 grahas, ordered by nakshatra lord',
-  condition: 'Universal — applies to all charts',
+  purpose: 'प्राथमिक पाराशरी दशा — 9 ग्रहों में 120 वर्ष का चक्र, नक्षत्र स्वामी द्वारा क्रमित',
+  condition: 'सार्वभौमिक — सभी कुंडलियों पर लागू',
 };
 
 // ─── YOGINI (36 years, 8 yoginis) ───────────────────────────────────────────
@@ -76,8 +76,8 @@ const YOGINI: DashaSystem = {
     { lord: 'VE', years: 7, displayName: 'Siddha',   displayNameHi: 'सिद्धा'  },
     { lord: 'RA', years: 8, displayName: 'Sankata',  displayNameHi: 'संकटा'   },
   ],
-  purpose: '36-year 8-yogini cycle — second opinion alongside Vimshottari, strong for day-to-day timing',
-  condition: 'Universal',
+  purpose: '36-वर्ष 8-योगिनी चक्र — विंशोत्तरी के साथ द्वितीय विकल्प, दिन-प्रतिदिन के समय निर्धारण के लिए मजबूत',
+  condition: 'सार्वभौमिक',
 };
 
 // ─── ASHTOTTARI (108 years, 8 planets — Moon excluded) ────────────────────
@@ -105,8 +105,8 @@ const ASHTOTTARI: DashaSystem = {
     { lord: 'RA', years: 12 },
     { lord: 'VE', years: 21 },
   ],
-  purpose: '108-year Parashari cycle across 8 grahas (no Ketu) — classical alternate to Vimshottari, cross-check for life events',
-  condition: 'Strongest when Rahu is in a trine/quadrant from the lagna lord or in 3rd/6th/8th/12th from lagna (classical). Engine computes it for any chart as a secondary view.',
+  purpose: '8 ग्रहों (केतु रहित) में 108-वर्ष का पाराशरी चक्र — विंशोत्तरी का शास्त्रीय विकल्प, जीवन की घटनाओं की पुष्टि के लिए',
+  condition: 'सबसे मजबूत तब होता है जब राहु लग्न स्वामी से त्रिकोण/केंद्र में हो या लग्न से 3/6/8/12 भाव में हो (शास्त्रीय)। इंजन इसे द्वितीयक दृश्य के रूप में किसी भी कुंडली के लिए गणना करता है।',
 };
 
 // ─── SHODASOTTARI (116 years, 8 grahas — no Ketu) ─────────────────────────
@@ -129,8 +129,8 @@ const SHODASOTTARI: DashaSystem = {
     { lord: 'RA', years: 16 },
     { lord: 'VE', years: 24 },
   ],
-  purpose: '116-year 8-graha cycle (no Ketu) — classical alternate for specific paksha-time combinations',
-  condition: 'Krishna-paksha night birth or Shukla-paksha day birth (BPHS)',
+  purpose: '116-वर्ष 8-ग्रह चक्र (केतु रहित) — विशिष्ट पक्ष-समय संयोजनों के लिए शास्त्रीय विकल्प',
+  condition: 'कृष्ण-पक्ष रात्रि जन्म या शुक्ल-पक्ष दिन जन्म (बृहत् पाराशर होरा शास्त्र)',
 };
 
 // ─── DWADASHOTTARI (112 years, 8 grahas) ─────────────────────────────────
@@ -151,8 +151,8 @@ const DWADASHOTTARI: DashaSystem = {
     { lord: 'SA', years: 19 },
     { lord: 'RA', years: 21 },
   ],
-  purpose: '112-year 8-graha cycle — arithmetic progression of years, applies to specific navamsha-lagna conditions',
-  condition: 'Lagna falls in a Pushkara navamsha or Sun\'s navamsha (BPHS)',
+  purpose: '112-वर्ष 8-ग्रह चक्र — वर्षों की अंकगणितीय प्रगति, विशिष्ट नवमांश-लग्न स्थितियों पर लागू होता है',
+  condition: 'लग्न पुष्कर नवमांश या सूर्य के नवमांश में आता है (बृहत् पाराशर होरा शास्त्र)',
 };
 
 // ─── PANCHOTTARI (105 years, 7 grahas — no nodes) ────────────────────────
@@ -172,8 +172,8 @@ const PANCHOTTARI: DashaSystem = {
     { lord: 'VE', years: 21 },
     { lord: 'SA', years: 20 },
   ],
-  purpose: '105-year 7-graha cycle (no Rahu/Ketu) — applies when ascendant falls in a water navamsha',
-  condition: 'Lagna in Cancer navamsha (BPHS)',
+  purpose: '105-वर्ष 7-ग्रह चक्र (राहु/केतु रहित) — तब लागू होता है जब लग्न जल नवमांश में आता है',
+  condition: 'लग्न कर्क नवमांश में (बृहत् पाराशर होरा शास्त्र)',
 };
 
 // ─── SHATABDIKA (100 years, 8 grahas) ────────────────────────────────────
@@ -194,8 +194,8 @@ const SHATABDIKA: DashaSystem = {
     { lord: 'SA', years: 15 },
     { lord: 'RA', years: 20 },
   ],
-  purpose: '100-year 8-graha cycle — clean centennial framing for long-life charts',
-  condition: 'Lagna in Vargottama navamsha (BPHS)',
+  purpose: '100-वर्ष 8-ग्रह चक्र — लंबी आयु वाली कुंडलियों के लिए स्पष्ट शताब्दी रूपरेखा',
+  condition: 'लग्न वर्गोत्तम नवमांश में (बृहत् पाराशर होरा शास्त्र)',
 };
 
 // ─── NAISARGIKA (natural / 120 years) ─────────────────────────────────────
@@ -217,8 +217,8 @@ const NAISARGIKA: DashaSystem = {
     { lord: 'SU', years: 20, displayName: 'Mature'      },
     { lord: 'SA', years: 50, displayName: 'Elderhood'   },
   ],
-  purpose: 'Natural life-stage dasha — same cycle for every chart, infancy to elderhood',
-  condition: 'Universal — not chart-dependent. Use as a life-stage overlay beside Vimshottari',
+  purpose: 'प्राकृतिक जीवन-स्तर दशा — हर कुंडली के लिए समान चक्र, शैशवावस्था से वृद्धावस्था तक',
+  condition: 'सार्वभौमिक — कुंडली पर निर्भर नहीं। विंशोत्तरी के साथ जीवन-स्तर आवरण के रूप में उपयोग करें',
 };
 
 // ─── KALACHAKRA (108 years, 9 grahas, pada-triggered) ───────────────────
@@ -244,8 +244,8 @@ const KALACHAKRA: DashaSystem = {
     { lord: 'SA', years: 16 },
     { lord: 'ME', years: 15 },
   ],
-  purpose: '108-year wheel-of-time dasha — event-precision timing keyed to navamsha pada',
-  condition: 'Simplified variant — uses Vimshottari-style order; classical amsha table pending',
+  purpose: '108-वर्ष कालचक्र दशा — नवमांश पद से जुड़ी घटना-सटीक समय निर्धारण',
+  condition: 'सरलीकृत रूप — विंशोत्तरी-शैली क्रम का उपयोग करता है; शास्त्रीय अंश तालिका लंबित',
 };
 
 export const DASHA_SYSTEMS: Record<DashaSystemKey, DashaSystem> = {

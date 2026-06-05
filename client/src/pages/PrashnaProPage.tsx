@@ -275,14 +275,17 @@ function NarchintamaniView({ data }: { data: any }) {
   const overall = data.overall || 'neutral';
   const tone = overall === 'favorable' ? 'good' : overall === 'unfavorable' ? 'bad' : 'warn';
   const ps = data.panchaSwaras || {};
+  const locOverall = overall === 'favorable' ? t('prashnaPro.overall.fav', 'अनुकूल') : overall === 'unfavorable' ? t('prashnaPro.overall.unfav', 'प्रतिकूल') : t('prashnaPro.overall.neutral', 'तटस्थ');
+  const locStrength = (s: string) => s === 'strong' ? 'मज़बूत' : s === 'weak' ? 'कमज़ोर' : 'मध्यम';
+
   return (
     <div className="space-y-3">
-      <Card title={t('prashnaPro.narchHeader', 'Narchintamani — {v}').replace('{v}', String(overall).toUpperCase())}>
+      <Card title={t('prashnaPro.narchHeader', 'Narchintamani — {v}').replace('{v}', locOverall)}>
         <div className="flex flex-wrap gap-2 mb-3">
-          {/* TODO(i18n-server): localize overall */}
-          <Pill tone={tone as any}><span lang="hi">{overall}</span></Pill>
-          <Pill tone="info">{t('prashnaPro.lagnaPill', 'Lagna: {s}').replace('{s}', String(data.lagnaStrength))}</Pill>
-          <Pill tone="info">{t('prashnaPro.moonPill', 'Moon: {s}').replace('{s}', String(data.moonStrength))}</Pill>
+          {/* Localized overall */}
+          <Pill tone={tone as any}><span lang="hi">{locOverall}</span></Pill>
+          <Pill tone="info">{t('prashnaPro.lagnaPill', 'Lagna: {s}').replace('{s}', locStrength(data.lagnaStrength))}</Pill>
+          <Pill tone="info">{t('prashnaPro.moonPill', 'Moon: {s}').replace('{s}', locStrength(data.moonStrength))}</Pill>
           {/* TODO(i18n-server): localize tithiGroup */}
           {data.tithiGroup && <Pill tone="neutral">{t('prashnaPro.tithiPill', 'Tithi: {t}').replace('{t}', String(data.tithiGroup))}</Pill>}
         </div>
@@ -323,12 +326,13 @@ function ShatpanchasikaView({ data }: { data: any }) {
   const fired = data.firedSutras || [];
   const verdict = data.verdict || 'mixed';
   const tone = verdict === 'yes' ? 'good' : verdict === 'no' ? 'bad' : 'warn';
+  const locVerdict = verdict === 'yes' ? 'हाँ' : verdict === 'no' ? 'नहीं' : 'मिश्रित';
   return (
     <div className="space-y-3">
-      <Card title={t('prashnaPro.shatHeader', 'Shatpanchasika — {v}').replace('{v}', String(verdict).toUpperCase())}>
+      <Card title={t('prashnaPro.shatHeader', 'Shatpanchasika — {v}').replace('{v}', locVerdict)}>
         <div className="flex gap-2 flex-wrap">
-          {/* TODO(i18n-server): localize verdict word */}
-          <Pill tone={tone as any}>{t('prashnaPro.verdictPill', 'Verdict: {v}').replace('{v}', String(verdict))}</Pill>
+          {/* Localized verdict word */}
+          <Pill tone={tone as any}>{t('prashnaPro.verdictPill', 'Verdict: {v}').replace('{v}', locVerdict)}</Pill>
           <Pill tone="info">{t('prashnaPro.scorePill', 'Score {n}').replace('{n}', String(data.score))}</Pill>
           <Pill tone="good">{t('prashnaPro.positive', 'Positive {n}').replace('{n}', String(data.positive ?? 0))}</Pill>
           <Pill tone="bad">{t('prashnaPro.negative', 'Negative {n}').replace('{n}', String(data.negative ?? 0))}</Pill>
@@ -396,7 +400,7 @@ function SwaraView({ data }: { data: any }) {
           {/* TODO(i18n-server): localize directionMatch */}
           <Pill tone={dirTone as any}>{t('prashnaPro.directionPill', 'Direction: {d}').replace('{d}', String(data.directionMatch))}</Pill>
           <Pill tone={data.verdict === 'yes' ? 'good' : data.verdict === 'no' ? 'bad' : 'warn'}>
-            {t('prashnaPro.swaraVerdict', 'Verdict: {v}').replace('{v}', String(data.verdict || '').toUpperCase())}
+            {t('prashnaPro.swaraVerdict', 'Verdict: {v}').replace('{v}', data.verdict === 'yes' ? 'हाँ' : data.verdict === 'no' ? 'नहीं' : 'अनिश्चित')}
           </Pill>
         </div>
         {Array.isArray(data.notes) && data.notes.length > 0 && (
@@ -428,6 +432,7 @@ function ArudhaView({ data }: { data: any }) {
   const padas = data.arudhaPadas || [];
   const lagnaPada = padas.find((p: any) => p.house === 1);
   const qa = data.quesitedArudha;
+  const locCat = qa ? t(`prashnaPro.cat.${qa.category}` as any, qa.category) : '';
   return (
     <div className="space-y-3">
       <Card title={t('prashnaPro.arudhaHeader', 'Arudha Lagna — house {h}').replace('{h}', String(data.arudhaLagna))}>
@@ -435,7 +440,7 @@ function ArudhaView({ data }: { data: any }) {
           {lagnaPada && <Pill tone="info">{t('prashnaPro.arudhaLagnaLord', 'Lagna lord: {lord} in H{h}').replace('{lord}', al.planetByName(lagnaPada.lord)).replace('{h}', String(lagnaPada.lordHouse))}</Pill>}
           {qa && (
             <Pill tone="warn">
-              {t('prashnaPro.arudhaQuesited', '{cat} arudha: H{q} → pada H{a}').replace('{cat}', qa.category).replace('{q}', String(qa.quesitedHouse)).replace('{a}', String(qa.arudha))}
+              {t('prashnaPro.arudhaQuesited', '{cat} arudha: H{q} → pada H{a}').replace('{cat}', locCat).replace('{q}', String(qa.quesitedHouse)).replace('{a}', String(qa.arudha))}
               {qa.tenants?.length
                 ? t('prashnaPro.arudhaTenants', '· {t}').replace('{t}', qa.tenants.map((p: string) => al.planetByName(p)).join(', '))
                 : t('prashnaPro.arudhaEmpty', '· empty')}

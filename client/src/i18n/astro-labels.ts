@@ -34,15 +34,15 @@ export const PLANET_LABELS: Record<string, Record<AstroLang, string>> = {
 
 // ─── Short 1-2 char planet glyphs (for compact chart cells) ─────────────────
 export const PLANET_SHORT_LABELS: Record<string, Record<AstroLang, string>> = {
-  SU: { en: 'SU', hi: 'सू', gu: 'સૂ', sa: 'सू' },
-  MO: { en: 'MO', hi: 'चं', gu: 'ચં', sa: 'चं' },
-  MA: { en: 'MA', hi: 'मं', gu: 'મં', sa: 'मं' },
-  ME: { en: 'ME', hi: 'बु', gu: 'બુ', sa: 'बु' },
-  JU: { en: 'JU', hi: 'गु', gu: 'ગુ', sa: 'गु' },
-  VE: { en: 'VE', hi: 'शु', gu: 'શુ', sa: 'शु' },
-  SA: { en: 'SA', hi: 'श',  gu: 'શ',  sa: 'श'  },
-  RA: { en: 'RA', hi: 'रा', gu: 'રા', sa: 'रा' },
-  KE: { en: 'KE', hi: 'के', gu: 'કે', sa: 'के' },
+  SU: { en: 'सूर्य', hi: 'सूर्य', gu: 'સૂર્ય', sa: 'सूर्यः' },
+  MO: { en: 'चंद्र', hi: 'चंद्र', gu: 'ચંદ્ર', sa: 'चन्द्रः' },
+  MA: { en: 'मंगल', hi: 'मंगल', gu: 'મંગળ', sa: 'मङ्गलः' },
+  ME: { en: 'बुध', hi: 'बुध', gu: 'બુધ', sa: 'बुधः' },
+  JU: { en: 'गुरु', hi: 'गुरु', gu: 'ગુરુ', sa: 'गुरुः' },
+  VE: { en: 'शुक्र', hi: 'शुक्र', gu: 'શુક્ર', sa: 'शुक्रः' },
+  SA: { en: 'शनि', hi: 'शनि',  gu: 'શ',  sa: 'शनिः'  },
+  RA: { en: 'राहु', hi: 'राहु', gu: 'રાહુ', sa: 'राहुः' },
+  KE: { en: 'केतु', hi: 'केतु', gu: 'કેતુ', sa: 'केतुः' },
 };
 
 // ─── Short rashi glyph (1-2 chars, for chart cells) ─────────────────────────
@@ -523,6 +523,11 @@ export function makeAstroTranslator(locale: Locale) {
     rashiByName: (name: string) => {
       const num = Object.entries(RASHI_LABELS).find(([, v]) => v.en === name)?.[0];
       return num ? RASHI_LABELS[Number(num)][lang] : name;
+    },
+    /** Translate a nakshatra name already in English. */
+    nakshatraByName: (name: string) => {
+      const num = Object.entries(NAKSHATRA_LABELS).find(([, v]) => v.en === name)?.[0];
+      return num ? NAKSHATRA_LABELS[Number(num)][lang] : name;
     },
   };
 }

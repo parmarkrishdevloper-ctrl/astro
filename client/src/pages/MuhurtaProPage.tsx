@@ -162,7 +162,7 @@ function DayView({ data, t, al, ut }: { data: any; t: T; al: AstroTranslator; ut
       <Card title={`${data.date} · ${data.weekday ? al.vara(data.weekday) : ''}`}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
           <Tile label={t('muhurtaPro.tile.tithi', 'Tithi')}     value={data.summary?.tithi} />
-          <Tile label={t('muhurtaPro.tile.nakshatra', 'Nakshatra')} value={data.summary?.nakshatra} />
+          <Tile label={t('muhurtaPro.tile.nakshatra', 'Nakshatra')} value={data.summary?.nakshatra ? al.nakshatraByName(data.summary.nakshatra) : '—'} />
           <Tile label={t('muhurtaPro.tile.yoga', 'Yoga')}      value={data.summary?.yoga} />
           <Tile label={t('muhurtaPro.tile.karana', 'Karana')}    value={data.summary?.karana} />
         </div>
@@ -246,7 +246,7 @@ function WeekView({ days, t, al }: { days: any[]; t: T; al: AstroTranslator }) {
               <td className="py-1 font-mono">{d.date}</td>
               <td>{d.weekday ? al.vara(d.weekday) : ''}</td>
               <td className="text-[11px]">{d.summary?.tithi}</td>
-              <td className="text-[11px]">{d.summary?.nakshatra}</td>
+              <td className="text-[11px]">{d.summary?.nakshatra ? al.nakshatraByName(d.summary.nakshatra) : '—'}</td>
               <td className="text-[11px]">{d.summary?.yoga}</td>
               <td>
                 <div className="flex flex-wrap gap-1">
@@ -301,7 +301,7 @@ function PresetsView({ presets, t }: { presets: any[]; t: T }) {
 
 // ─── Varjyam widget ──────────────────────────────────────────
 
-function VarjyamView({ data, t, al: _al, ut }: { data: any[]; t: T; al: AstroTranslator; ut: string }) {
+function VarjyamView({ data, t, al, ut }: { data: any[]; t: T; al: AstroTranslator; ut: string }) {
   return (
     <Card title={t('muhurtaPro.varjyamTitle', 'Varjyam · Amrit-kaal · Rahu-kaal — rolling 7 days')}>
       <table className="w-full text-xs">
@@ -318,8 +318,8 @@ function VarjyamView({ data, t, al: _al, ut }: { data: any[]; t: T; al: AstroTra
           {data.map((d, i) => (
             <tr key={i} className="border-t border-vedicGold/10">
               <td className="py-1 font-mono">{d.date}</td>
-              {/* TODO(i18n-server): nakshatra is a string here; would prefer an ID for al.nakshatra */}
-              <td lang="hi">{d.nakshatra}</td>
+              {/* Localized nakshatra using al.nakshatraByName */}
+              <td lang="hi">{al.nakshatraByName(d.nakshatra)}</td>
               <td className="font-mono text-[11px] text-red-700">
                 {d.varjyam ? `${fmt(d.varjyam.start, ut)} → ${fmt(d.varjyam.end, ut)}` : '—'}
               </td>

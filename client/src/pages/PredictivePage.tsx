@@ -256,8 +256,8 @@ function ReturnsView({ data, t, al }: { data: PredictiveBundle['returns']; t: T;
                     <td className="py-1 pr-2">{al.rashiByName(r.signName)}</td>
                     <td className="py-1 pr-2 text-right tabular-nums text-vedicMaroon/60">{r.degInSign.toFixed(2)}°</td>
                     <td className="py-1 text-vedicMaroon/70">
-                      {/* TODO(i18n-server): localize nakshatraName by ID */}
-                      <span lang="hi">{r.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {r.nakshatraPada}</span>
+                      {/* Localized nakshatraName via al */}
+                      <span lang="hi">{al.nakshatraByName(r.nakshatraName)}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {r.nakshatraPada}</span>
                     </td>
                   </tr>
                 ))}
@@ -303,8 +303,8 @@ function ProgressionsView({ data, t, al }: { data: PredictiveBundle['progression
                 <td className="py-1 pr-2">{al.rashiByName(p.signName)}</td>
                 <td className="py-1 pr-2 text-right tabular-nums text-vedicMaroon/60">{p.degInSign.toFixed(2)}°</td>
                 <td className="py-1 pr-2 text-vedicMaroon/70">
-                  {/* TODO(i18n-server): localize nakshatraName by ID */}
-                  <span lang="hi">{p.nakshatraName}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {p.nakshatraPada}</span>
+                  {/* Localized nakshatraName via al */}
+                  <span lang="hi">{al.nakshatraByName(p.nakshatraName)}</span> <span className="text-[10px] text-vedicMaroon/40">{t('predictive.returns.pada', 'pada')} {p.nakshatraPada}</span>
                 </td>
                 <td className="py-1 pr-2 text-right font-semibold text-vedicMaroon">{p.natalHouseNow}</td>
                 <td className="py-1 text-right tabular-nums text-vedicMaroon/60">{p.delta >= 0 ? '+' : ''}{p.delta.toFixed(1)}°</td>

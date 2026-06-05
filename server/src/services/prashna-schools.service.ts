@@ -239,18 +239,18 @@ export function computeNarchintamani(
 
   const notes: string[] = [];
   let score = 0;
-  if (lagnaStrength === 'strong') { score += 2; notes.push('Lagna lord well-placed'); }
-  if (lagnaStrength === 'weak')   { score -= 2; notes.push('Lagna lord afflicted'); }
-  if (moonStrength === 'strong')  { score += 2; notes.push('Moon strongly placed'); }
-  if (moonStrength === 'weak')    { score -= 2; notes.push('Moon weak'); }
+  if (lagnaStrength === 'strong') { score += 2; notes.push('लग्न स्वामी अच्छी स्थिति में'); }
+  if (lagnaStrength === 'weak')   { score -= 2; notes.push('लग्न स्वामी पीड़ित'); }
+  if (moonStrength === 'strong')  { score += 2; notes.push('चंद्र अच्छी स्थिति में'); }
+  if (moonStrength === 'weak')    { score -= 2; notes.push('चंद्र कमज़ोर'); }
   score += kendraBens.length - kendraMals.length;
   score += trikBens.length - trikMals.length;
-  if (kendraBens.length) notes.push(`${kendraBens.length} natural benefic(s) in kendra`);
-  if (kendraMals.length) notes.push(`${kendraMals.length} natural malefic(s) in kendra`);
+  if (kendraBens.length) notes.push(`${kendraBens.length} नैसर्गिक शुभ ग्रह केंद्र में`);
+  if (kendraMals.length) notes.push(`${kendraMals.length} नैसर्गिक अशुभ ग्रह केंद्र में`);
 
   const tithiGroup = tithiNum ? TITHI_GROUP[tithiNum] ?? 'Purna' : 'Purna';
-  if (['Jaya', 'Purna'].includes(tithiGroup)) { score += 1; notes.push(`Tithi group ${tithiGroup} favors success`); }
-  if (tithiGroup === 'Rikta') { score -= 2; notes.push('Rikta tithi — caution'); }
+  if (['Jaya', 'Purna'].includes(tithiGroup)) { score += 1; notes.push(`तिथि समूह ${tithiGroup} सफलता के अनुकूल`); }
+  if (tithiGroup === 'Rikta') { score -= 2; notes.push('रिक्ता तिथि — सावधानी बरतें'); }
 
   const overall: 'favorable' | 'neutral' | 'unfavorable' =
     score >= 3 ? 'favorable' : score <= -2 ? 'unfavorable' : 'neutral';
@@ -283,60 +283,60 @@ const ANGULAR = [1, 4, 7, 10];
 const DUSTHANA = [6, 8, 12];
 
 const SUTRAS: Sutra[] = [
-  { id: 1, text: 'Lagna occupied by benefic — success of the endeavor', polarity: 'positive',
+  { id: 1, text: 'लग्न में शुभ ग्रह — कार्य में सफलता', polarity: 'positive',
     fires: (p) => p.chart.planets.some((x) => NATURAL_BENEFICS.includes(x.id) && x.house === 1) },
-  { id: 2, text: 'Lagna occupied by malefic — obstructions', polarity: 'negative',
+  { id: 2, text: 'लग्न में अशुभ ग्रह — बाधाएँ', polarity: 'negative',
     fires: (p) => p.chart.planets.some((x) => NATURAL_MALEFICS.includes(x.id) && x.house === 1) },
-  { id: 3, text: 'Moon in kendra — swift outcome', polarity: 'positive',
+  { id: 3, text: 'चंद्र केंद्र में — तीव्र परिणाम', polarity: 'positive',
     fires: (p) => { const m = p.chart.planets.find((x) => x.id === 'MO')!; return ANGULAR.includes(m.house); } },
-  { id: 4, text: 'Moon in dusthana — delay or denial', polarity: 'negative',
+  { id: 4, text: 'चंद्र त्रिक भाव में — विलंब या इनकार', polarity: 'negative',
     fires: (p) => { const m = p.chart.planets.find((x) => x.id === 'MO')!; return DUSTHANA.includes(m.house); } },
-  { id: 5, text: 'Jupiter aspects Lagna — protective and auspicious', polarity: 'positive',
+  { id: 5, text: 'गुरु की लग्न पर दृष्टि — रक्षात्मक और शुभ', polarity: 'positive',
     fires: (p) => {
       const j = p.chart.planets.find((x) => x.id === 'JU')!;
       return [1, 5, 7, 9].includes(((((1 - j.house) + 12) % 12) + 1));
     } },
-  { id: 6, text: 'Saturn in 1/4/7/10 — obstacles, slow result', polarity: 'negative',
+  { id: 6, text: 'शनि 1/4/7/10 में — बाधाएँ, धीमा परिणाम', polarity: 'negative',
     fires: (p) => { const s = p.chart.planets.find((x) => x.id === 'SA')!; return ANGULAR.includes(s.house); } },
-  { id: 7, text: 'Lagna lord combust — querent anxiety, lack of support', polarity: 'negative',
+  { id: 7, text: 'लग्न स्वामी अस्त — पृच्छक की चिंता, समर्थन का अभाव', polarity: 'negative',
     fires: (p) => {
       const ascSign = Math.floor(normDeg(p.chart.ascendant.longitude) / 30) + 1;
       const l = p.chart.planets.find((x) => x.id === RASHIS[ascSign - 1].lord);
       return !!l && l.combust;
     } },
-  { id: 8, text: 'Lagna lord exalted — favorable outcome with dignity', polarity: 'positive',
+  { id: 8, text: 'लग्न स्वामी उच्च का — सम्मान के साथ अनुकूल परिणाम', polarity: 'positive',
     fires: (p) => {
       const ascSign = Math.floor(normDeg(p.chart.ascendant.longitude) / 30) + 1;
       const l = p.chart.planets.find((x) => x.id === RASHIS[ascSign - 1].lord);
       return !!l && l.exalted;
     } },
-  { id: 9, text: 'Moon in Mrigashira / Chitra / Anuradha / Revati — auspicious movable', polarity: 'positive',
+  { id: 9, text: 'चंद्र मृगशिरा / चित्रा / अनुराधा / रेवती में — शुभ चर', polarity: 'positive',
     fires: (p) => [5, 14, 17, 27].includes(p.chart.planets.find((x) => x.id === 'MO')!.nakshatra.num) },
-  { id: 10, text: 'Moon in Bharani / Krittika / Mula / Jyeshtha — harsh', polarity: 'negative',
+  { id: 10, text: 'चंद्र भरणी / कृत्तिका / मूल / ज्येष्ठा में — कठोर', polarity: 'negative',
     fires: (p) => [2, 3, 19, 18].includes(p.chart.planets.find((x) => x.id === 'MO')!.nakshatra.num) },
-  { id: 11, text: 'Venus in kendra — comfort, pleasure, union likely', polarity: 'positive',
+  { id: 11, text: 'शुक्र केंद्र में — सुख, आनंद, मिलन की संभावना', polarity: 'positive',
     fires: (p) => ANGULAR.includes(p.chart.planets.find((x) => x.id === 'VE')!.house) },
-  { id: 12, text: 'Mars in 7 or 8 — conflict, rupture', polarity: 'negative',
+  { id: 12, text: 'मंगल 7 या 8 में — संघर्ष, अलगाव', polarity: 'negative',
     fires: (p) => [7, 8].includes(p.chart.planets.find((x) => x.id === 'MA')!.house) },
-  { id: 13, text: 'Mercury in kendra/trikona — clarity, communication, good news', polarity: 'positive',
+  { id: 13, text: 'बुध केंद्र/त्रिकोण में — स्पष्टता, संचार, शुभ समाचार', polarity: 'positive',
     fires: (p) => [1, 4, 5, 7, 9, 10].includes(p.chart.planets.find((x) => x.id === 'ME')!.house) },
-  { id: 14, text: 'Rahu in 6/8/12 with malefic — hidden obstacles', polarity: 'negative',
+  { id: 14, text: 'राहु 6/8/12 में अशुभ ग्रह के साथ — छिपी बाधाएँ', polarity: 'negative',
     fires: (p) => {
       const r = p.chart.planets.find((x) => x.id === 'RA')!;
       if (!DUSTHANA.includes(r.house)) return false;
       return p.chart.planets.some((x) => NATURAL_MALEFICS.includes(x.id) && x.id !== 'RA' && x.house === r.house);
     } },
-  { id: 15, text: 'Ketu in 1 — detachment, likely failure of material query', polarity: 'negative',
+  { id: 15, text: 'केतु 1 में — वैराग्य, भौतिक प्रश्न की विफलता संभव', polarity: 'negative',
     fires: (p) => p.chart.planets.find((x) => x.id === 'KE')!.house === 1 },
-  { id: 16, text: 'Sun in 10 — fame, recognition, yes for career', polarity: 'positive',
+  { id: 16, text: 'सूर्य 10 में — यश, पहचान, करियर के लिए हाँ', polarity: 'positive',
     fires: (p) => p.chart.planets.find((x) => x.id === 'SU')!.house === 10 },
-  { id: 17, text: 'Lagna in movable sign — change/movement/new beginnings', polarity: 'neutral',
+  { id: 17, text: 'लग्न चर राशि में — परिवर्तन/गति/नई शुरुआत', polarity: 'neutral',
     fires: (p) => [1, 4, 7, 10].includes(Math.floor(normDeg(p.chart.ascendant.longitude) / 30) + 1) },
-  { id: 18, text: 'Lagna in fixed sign — stability, slow but sure', polarity: 'neutral',
+  { id: 18, text: 'लग्न स्थिर राशि में — स्थिरता, धीमा लेकिन निश्चित', polarity: 'neutral',
     fires: (p) => [2, 5, 8, 11].includes(Math.floor(normDeg(p.chart.ascendant.longitude) / 30) + 1) },
-  { id: 19, text: 'Lagna in dual sign — dual-natured outcome, delay', polarity: 'neutral',
+  { id: 19, text: 'लग्न द्विस्वभाव राशि में — दोहरे स्वभाव का परिणाम, विलंब', polarity: 'neutral',
     fires: (p) => [3, 6, 9, 12].includes(Math.floor(normDeg(p.chart.ascendant.longitude) / 30) + 1) },
-  { id: 20, text: 'Moon waxing — growing prospects', polarity: 'positive',
+  { id: 20, text: 'चंद्रमा शुक्ल पक्ष का — बढ़ती संभावनाएं', polarity: 'positive',
     fires: (p) => {
       const m = p.chart.planets.find((x) => x.id === 'MO')!;
       const s = p.chart.planets.find((x) => x.id === 'SU')!;
@@ -447,13 +447,13 @@ export function computeSwaraPrashna(input: SwaraPrashnaInput): SwaraPrashnaResul
 
   const notes: string[] = [];
   let score = 0;
-  if (nostril === 'Ida') { score += 1; notes.push('Ida (left) nostril — gentle, receptive queries favored'); }
-  if (nostril === 'Pingala') { score += 1; notes.push('Pingala (right) nostril — dynamic, action queries favored'); }
-  if (nostril === 'Sushumna') { score -= 1; notes.push('Sushumna active — prashna should be postponed'); }
-  if (bhutaQuality === 'auspicious') { score += 1; notes.push(`${bhuta} tattva supports the query`); }
-  if (bhutaQuality === 'inauspicious') { score -= 1; notes.push(`${bhuta} tattva is unfavorable`); }
-  if (directionMatch === 'favorable') { score += 1; notes.push('Questioner is in a favorable direction'); }
-  if (directionMatch === 'unfavorable') { score -= 1; notes.push('Questioner faces unfavorable direction'); }
+  if (nostril === 'Ida') { score += 1; notes.push('इड़ा (बायां) स्वर — सौम्य, ग्रहणशील प्रश्नों के लिए अनुकूल'); }
+  if (nostril === 'Pingala') { score += 1; notes.push('पिंगला (दायां) स्वर — गतिशील, क्रियाशील प्रश्नों के लिए अनुकूल'); }
+  if (nostril === 'Sushumna') { score -= 1; notes.push('सुषुम्ना सक्रिय — प्रश्न टाल देना चाहिए'); }
+  if (bhutaQuality === 'auspicious') { score += 1; notes.push(`${bhuta} तत्त्व प्रश्न का समर्थन करता है`); }
+  if (bhutaQuality === 'inauspicious') { score -= 1; notes.push(`${bhuta} तत्त्व प्रतिकूल है`); }
+  if (directionMatch === 'favorable') { score += 1; notes.push('पृच्छक अनुकूल दिशा में है'); }
+  if (directionMatch === 'unfavorable') { score -= 1; notes.push('पृच्छक की दिशा प्रतिकूल है'); }
 
   const verdict: SwaraPrashnaResult['verdict'] =
     score >= 2 ? 'yes' : score <= -1 ? 'no' : 'uncertain';
@@ -513,13 +513,13 @@ export function computeArudhaPrashna(
   }
 
   const notes: string[] = [];
-  notes.push(`Arudha Lagna (AL) is in bhava ${AL}`);
+  notes.push(`अरुढ़ लग्न (AL) भाव ${AL} में है`);
   if (quesitedArudha) {
-    notes.push(`${category} shows through arudha-pada in bhava ${quesitedArudha.arudha}`);
+    notes.push(`${category} भाव ${quesitedArudha.arudha} में अरुढ़-पद के माध्यम से दिखता है`);
     if (quesitedArudha.tenants.length)
-      notes.push(`Arudha-pada tenanted by ${quesitedArudha.tenants.join(', ')}`);
+      notes.push(`अरुढ़-पद में ${quesitedArudha.tenants.join(', ')} स्थित हैं`);
     else
-      notes.push('Arudha-pada is empty — matter unsupported by active energies');
+      notes.push('अरुढ़-पद खाली है — विषय को सक्रिय ऊर्जा का समर्थन नहीं है');
   }
 
   return { arudhaLagna: AL, arudhaPadas: padas, quesitedArudha, notes };
